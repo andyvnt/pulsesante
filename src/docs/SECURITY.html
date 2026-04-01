@@ -1,0 +1,170 @@
+<!-- ==============================================================
+PULSE SANTÉ — PAGE ACCUEIL SÉCURISÉE
+Documentation des mesures de sécurité implémentées
+============================================================== -->
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sécurité du site — Pulse Santé</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230a2540'/><polyline points='2,16 8,16 10,8 13,24 16,12 19,20 22,16 30,16' stroke='%234da6ff' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 900px; margin: 0 auto; padding: 4rem 2rem; background: #f5f5f5; }
+  h1 { color: #0a2540; border-bottom: 3px solid #1a73e8; padding-bottom: 1rem; }
+  h2 { color: #0a2540; margin-top: 2rem; }
+  .section { background: white; padding: 2rem; margin: 2rem 0; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  .check-item { display: flex; align-items: center; padding: 0.5rem 0; }
+  .check-item::before { content: '✓'; color: #0e8a6e; font-weight: bold; margin-right: 1rem; font-size: 1.2em; }
+  .warning-item { display: flex; align-items: center; padding: 0.5rem 0; color: #c24; }
+  .warning-item::before { content: '⚠'; margin-right: 1rem; font-size: 1.2em; }
+  code { background: #f0f0f0; padding: 0.2rem 0.5rem; border-radius: 3px; font-family: 'Courier New', monospace; }
+  .badge { display: inline-block; background: #1a73e8; color: white; padding: 0.3rem 0.7rem; border-radius: 20px; font-size: 0.85rem; margin-right: 0.5rem; }
+  a { color: #1a73e8; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+  table th, table td { padding: 0.8rem; text-align: left; border-bottom: 1px solid #ddd; }
+  table th { background: #f5f5f5; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<h1>🔒 Rapport de Sécurité — Pulse Santé</h1>
+<div class="section">
+  <p>Ce document détaille les mesures de sécurité implémentées sur le site Pulse Santé pour protéger les données des utilisateurs et prévenir les attaques courantes.</p>
+  <p><strong>Dernière mise à jour :</strong> 31 mars 2026</p>
+</div>
+
+<!-- SÉCURITÉ SERVEUR -->
+<div class="section">
+  <h2>🖥️ Sécurité Serveur (.htaccess)</h2>
+  <div class="check-item">Configuration des en-têtes de sécurité HTTP</div>
+  <div class="check-item">HSTS activé (force HTTPS pendant 1 an)</div>
+  <div class="check-item">Prévention du clickjacking (X-Frame-Options: SAMEORIGIN)</div>
+  <div class="check-item">Prévention du MIME sniffing (X-Content-Type-Options: nosniff)</div>
+  <div class="check-item">Protection XSS héritage (X-XSS-Protection)</div>
+  <div class="check-item">Politique Referrer stricte</div>
+  <div class="check-item">Permissions-Policy restrictive (géolocalisation, caméra, micro désactivés)</div>
+  <div class="check-item">Blocage des fichiers sensibles (.env, .git, config)</div>
+  <div class="check-item">Compression GZIP pour les assets</div>
+  <div class="check-item">Cache avec expiration intelligente</div>
+  <div class="check-item">Blocage des attaques SQL Injection et XSS basiques</div>
+  <div class="check-item">Protection contre le hotlinking</div>
+</div>
+
+<!-- CSP -->
+<div class="section">
+  <h2>🛡️ Content Security Policy (CSP)</h2>
+  <table>
+    <tr>
+      <th>Directive</th>
+      <th>Valeur</th>
+      <th>Raison</th>
+    </tr>
+    <tr>
+      <td><code>default-src</code></td>
+      <td><code>'self'</code></td>
+      <td>Autorise uniquement les ressources du même domaine par défaut</td>
+    </tr>
+    <tr>
+      <td><code>script-src</code></td>
+      <td><code>'self' + CDN fiables</code></td>
+      <td>Prévient l'injection de scripts malveillants</td>
+    </tr>
+    <tr>
+      <td><code>style-src</code></td>
+      <td><code>'self' + 'unsafe-inline'</code></td>
+      <td>Permet les styles inline (nécessaires pour le design)</td>
+    </tr>
+    <tr>
+      <td><code>form-action</code></td>
+      <td><code>'self'</code></td>
+      <td>Les formulaires ne peuvent être soumis qu'au même domaine</td>
+    </tr>
+    <tr>
+      <td><code>frame-ancestors</code></td>
+      <td><code>'self'</code></td>
+      <td>Le site ne peut être embédé que par lui-même</td>
+    </tr>
+  </table>
+</div>
+
+<!-- VALIDATIONS FORMULAIRE -->
+<div class="section">
+  <h2>📝 Validation des Formulaires</h2>
+  <div class="check-item">Validation côté client (email, téléphone, longueur)</div>
+  <div class="check-item">Sanitization de tous les inputs</div>
+  <div class="check-item">Vérification du format email (regex)</div>
+  <div class="check-item">Vérification du format téléphone</div>
+  <div class="check-item">Limitation de la taille du message (1000 caractères max)</div>
+  <div class="check-item">Échappement XSS des données avant envoi</div>
+  <div class="check-item">Token CSRF généré au runtime</div>
+  <div class="check-item">Gestion d'erreurs sécurisée (sans exposer d'infos internes)</div>
+</div>
+
+<!-- DÉPENDANCES EXTERNES -->
+<div class="section">
+  <h2>📦 Dépendances Externes avec SRI (Subresource Integrity)</h2>
+  <div class="check-item">Google Fonts (sans SRI requis, domaine fiable)</div>
+  <div class="check-item">EmailJS v4 avec hash SRI validé</div>
+  <div class="check-item">Toutes les ressources en HTTPS</div>
+  <div class="check-item">Crossorigin=\"anonymous\" pour les ressources tierces</div>
+  <p><strong>Clés publiques :</strong> Seule la clé publique EmailJS est exposée (sans risque). Les secrets restent côté serveur.</p>
+</div>
+
+<!-- PROTECTION DES DONNÉES -->
+<div class="section">
+  <h2>🔐 Protection des Données (FormEmail)</h2>
+  <div class="check-item">Les données sont envoyées via EmailJS (service tiers sécurisé)</div>
+  <div class="check-item">HTTPS obligatoire pour toutes les transmissions</div>
+  <div class="check-item">Aucune données sensible n'est stockée en client</div>
+  <div class="check-item">Validation complète avant envoi</div>
+  <div class="check-item">RGPD conforme (collecte consentie, droit d'accès)</div>
+  <p><strong>TODO :</strong> Implémenter une page privacy/cookies pour RGPD complet.</p>
+</div>
+
+<!-- FICHIERS DE SÉCURITÉ -->
+<div class="section">
+  <h2>📄 Fichiers de Configuration de Sécurité</h2>
+  <div class="check-item"><code>.htaccess</code> — Configuration serveur Apache</div>
+  <div class="check-item"><code>robots.txt</code> — Instructions pour les crawlers</div>
+  <div class="check-item"><code>.well-known/security.txt</code> — Infos contact sécurité</div>
+</div>
+
+<!-- RECOMMANDATIONS ADDITIONNELLES -->
+<div class="section">
+  <h2>⚡ Recommandations pour Production</h2>
+  <div class="warning-item">Configurer un WAF (Web Application Firewall)</div>
+  <div class="warning-item">Activer le monitoring et les logs de sécurité</div>
+  <div class="warning-item">Implémenter reCAPTCHA sur les formulaires</div>
+  <div class="warning-item">Mettre en place un système de rate-limiting</div>
+  <div class="warning-item">Utiliser un service de gestion des secrets (HashiCorp Vault)</div>
+  <div class="warning-item">Auditer régulièrement les dépendances (npm audit)</div>
+  <div class="warning-item">Faire des backups réguliers</div>
+  <div class="warning-item">Implémenter un monitoring et alertes</div>
+  <div class="warning-item">Certificat SSL/TLS à jour et auto-renouvelé</div>
+  <div class="warning-item">Tester aux vulnérabilités OWASP Top 10</div>
+</div>
+
+<!-- COMPLIANCE -->
+<div class="section">
+  <h2>✅ Conformité</h2>
+  <div class="check-item"><span class=\"badge\">HTTPS</span> SSL/TLS configuré</div>
+  <div class="check-item"><span class=\"badge\">CSP</span> Content Security Policy implémentée</div>
+  <div class=\"check-item\"><span class=\"badge\">HSTS</span> HTTP Strict Transport Security activé</div>
+  <div class=\"check-item\"><span class=\"badge\">XSS\"></span> Protection contre injection XSS</div>
+  <div class=\"check-item\"><span class=\"badge\">CSRF</span> Token CSRF côté client</div>
+  <div class=\"check-item\"><span class=\"badge\">Clickjacking</span> Protection X-Frame-Options</div>
+  <div class=\"check-item\"><span class=\"badge\">RGPD</span> Conformité partielle (détails dans confidentialité.html)</div>
+</div>
+
+<!-- SUPPORT -->
+<div class=\"section\">
+  <h2>📧 Support Sécurité</h2>
+  <p>Pour signaler une vulnérabilité : <strong>security@pulsesante.fr</strong></p>
+  <p>Consultez <a href=\".well-known/security.txt\">security.txt</a> pour plus d'infos.</p>
+</div>
+
+</body>
+</html>
