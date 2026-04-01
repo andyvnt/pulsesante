@@ -30,3 +30,13 @@ security-keys/
 
 ## Configuration
 admin.json
+# Local admin config
+src/config/admin.json
+
+# Deployment and security docs (keep out of VCS)
+DEPLOYMENT.md
+SECURITY.md
+SECURITY.html
+
+# GitHub metadata (local instructions only)
+.github/
