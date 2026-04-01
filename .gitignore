@@ -10,6 +10,7 @@
 *.swo
 *~
 
+
 # OS
 .DS_Store
 Thumbs.db
@@ -26,3 +27,6 @@ npm-debug.log*
 # Security
 .security.env
 security-keys/
+
+## Configuration
+admin.json
