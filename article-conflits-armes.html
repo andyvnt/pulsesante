@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conflits armés et santé mentale en Afrique subsaharienne — Pulse Santé</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230a2540'/><polyline points='2,16 8,16 10,8 13,24 16,12 19,20 22,16 30,16' stroke='%234da6ff' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep: #0a2540;
+    --green-accent: #1a73e8;
+    --green-light: #4da6ff;
+    --cream: #f0f4fa;
+    --cream-dark: #dde6f5;
+    --white: #ffffff;
+    --text-dark: #0a1628;
+    --text-mid: #2d4a6e;
+    --text-light: #6b8eb5;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--text-dark); }
+
+  nav {
+    position:fixed; top:0; left:0; width:100%; z-index:200;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1.3rem 6vw;
+    background:rgba(240,244,250,0.97); backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(10,37,64,0.08);
+  }
+  .nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:600; color:var(--green-deep); display:flex; align-items:center; gap:8px; text-decoration:none; }
+  .nav-logo span { color:var(--green-accent); }
+  nav ul { display:flex; gap:2.2rem; list-style:none; }
+  nav ul a { text-decoration:none; font-size:0.8rem; font-weight:400; letter-spacing:0.09em; text-transform:uppercase; color:var(--text-mid); transition:color 0.2s; }
+  nav ul a:hover { color:var(--green-accent); }
+  .nav-cta { background:var(--green-deep); color:var(--cream)!important; padding:0.55rem 1.3rem; border-radius:2px; }
+
+  /* HERO ARTICLE */
+  .article-hero {
+    background:var(--green-deep);
+    padding:9rem 6vw 5rem;
+    position:relative; overflow:hidden;
+  }
+  .article-hero::before {
+    content:''; position:absolute; right:-10%; top:-20%;
+    width:55vw; height:55vw; border-radius:50%;
+    background:radial-gradient(circle, rgba(77,166,255,0.1) 0%, transparent 70%);
+  }
+  .back-link { display:inline-flex; align-items:center; gap:0.5rem; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(247,244,239,0.45); text-decoration:none; margin-bottom:2rem; transition:color 0.2s; }
+  .back-link:hover { color:var(--green-light); }
+  .article-meta { display:flex; align-items:center; gap:1rem; margin-bottom:1.4rem; flex-wrap:wrap; }
+  .badge-published { display:inline-flex; align-items:center; gap:0.4rem; background:rgba(26,115,232,0.2); color:var(--green-light); font-size:0.65rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; padding:0.3rem 0.8rem; border-radius:20px; }
+  .badge-published .dot { width:6px; height:6px; border-radius:50%; background:var(--green-light); }
+  .article-domain { font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(247,244,239,0.4); }
+  .article-hero h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,3.6rem); font-weight:300; color:var(--white); line-height:1.1; max-width:820px; margin-bottom:1.5rem; }
+  .article-hero h1 em { font-style:italic; color:var(--green-light); }
+  .article-intro { font-size:1rem; line-height:1.8; color:rgba(247,244,239,0.65); max-width:680px; font-weight:300; }
+
+  /* CONTENU ARTICLE */
+  .article-wrap { max-width:780px; margin:0 auto; padding:5rem 6vw 7rem; }
+
+  /* STATS VISUELLES */
+  .stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin:2.5rem 0; }
+  .stat-box { background:var(--white); border-radius:12px; padding:1.6rem; text-align:center; border-top:2px solid var(--green-accent); box-shadow:0 4px 16px rgba(10,37,64,0.06); }
+  .stat-box .num { font-family:'Cormorant Garamond',serif; font-size:2.4rem; font-weight:500; color:var(--green-deep); line-height:1; }
+  .stat-box .lbl { font-size:0.72rem; color:var(--text-light); text-transform:uppercase; letter-spacing:0.08em; margin-top:0.4rem; line-height:1.4; }
+
+  /* CARTE GÉOGRAPHIQUE VISUELLE */
+  .geo-visual { background:var(--green-deep); border-radius:16px; padding:2.5rem; margin:2.5rem 0; position:relative; overflow:hidden; }
+  .geo-visual::before { content:''; position:absolute; right:-5%; top:-10%; width:40%; height:100%; border-radius:50%; background:radial-gradient(circle, rgba(77,166,255,0.1) 0%, transparent 70%); }
+  .geo-visual h4 { font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:400; color:var(--cream); margin-bottom:1.2rem; }
+  .geo-zones { display:flex; flex-direction:column; gap:0.75rem; }
+  .geo-zone { display:flex; align-items:flex-start; gap:1rem; padding:0.9rem 1.1rem; background:rgba(255,255,255,0.05); border-radius:8px; border-left:2px solid var(--green-light); }
+  .geo-zone-icon { font-size:1rem; }
+  .geo-zone-text { font-size:0.83rem; line-height:1.6; color:rgba(247,244,239,0.75); font-weight:300; }
+  .geo-zone-text strong { color:var(--cream); font-weight:500; }
+
+  /* DÉFINITIONS */
+  .def-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1.5rem 0; }
+  .def-card { background:var(--white); border-radius:10px; padding:1.4rem; border-left:3px solid var(--green-accent); }
+  .def-card h5 { font-family:'Cormorant Garamond',serif; font-size:1.05rem; font-weight:500; color:var(--green-deep); margin-bottom:0.5rem; }
+  .def-card p { font-size:0.8rem; line-height:1.65; color:var(--text-mid); font-weight:300; }
+
+  /* TEXTE ARTICLE */
+  .article-section { margin-bottom:3.5rem; }
+  .section-label { display:inline-flex; align-items:center; gap:0.5rem; font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--green-accent); font-weight:500; margin-bottom:0.8rem; }
+  .section-label::before { content:''; width:1.5rem; height:1px; background:var(--green-accent); }
+  .article-section h2 { font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:400; color:var(--green-deep); line-height:1.2; margin-bottom:1.2rem; }
+  .article-section h2 em { font-style:italic; color:var(--green-accent); }
+  .article-section p { font-size:0.9rem; line-height:1.85; color:var(--text-mid); font-weight:300; margin-bottom:1rem; }
+  .article-section p:last-child { margin-bottom:0; }
+
+  /* DONNÉES PAYS */
+  .pays-card { background:var(--white); border-radius:12px; padding:2rem; margin:1.5rem 0; box-shadow:0 4px 20px rgba(10,37,64,0.06); }
+  .pays-header { display:flex; align-items:center; gap:1rem; margin-bottom:1.2rem; padding-bottom:1rem; border-bottom:1px solid var(--cream-dark); }
+  .pays-flag { width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; }
+  .pays-flag.mali { background:rgba(26,115,232,0.1); }
+  .pays-flag.nigeria { background:rgba(26,115,232,0.1); }
+  .pays-flag.rdc { background:rgba(26,115,232,0.1); }
+  .pays-name { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:500; color:var(--green-deep); }
+  .pays-tag { font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-light); }
+  .pays-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:0.8rem; margin-bottom:1rem; }
+  .pays-stat { text-align:center; background:var(--cream); border-radius:8px; padding:0.8rem; }
+  .pays-stat .n { font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:500; color:var(--green-accent); }
+  .pays-stat .l { font-size:0.66rem; color:var(--text-light); text-transform:uppercase; letter-spacing:0.07em; margin-top:0.2rem; }
+  .pays-card p { font-size:0.83rem; line-height:1.7; color:var(--text-mid); font-weight:300; }
+
+  /* INTERVENTIONS */
+  .interventions-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1.5rem 0; }
+  .intervention-card { border-radius:10px; padding:1.3rem; }
+  .intervention-card.success { background:rgba(26,115,232,0.06); border:1px solid rgba(26,115,232,0.15); }
+  .intervention-card.limit { background:rgba(10,37,64,0.04); border:1px solid rgba(10,37,64,0.1); }
+  .intervention-card h5 { font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; font-weight:500; margin-bottom:0.7rem; }
+  .intervention-card.success h5 { color:var(--green-accent); }
+  .intervention-card.limit h5 { color:var(--text-light); }
+  .intervention-card ul { padding-left:1rem; }
+  .intervention-card ul li { font-size:0.82rem; line-height:1.65; color:var(--text-mid); font-weight:300; margin-bottom:0.3rem; }
+
+  /* PERSPECTIVES */
+  .perspectives-list { display:flex; flex-direction:column; gap:0.75rem; margin:1.5rem 0; }
+  .perspective-item { display:flex; gap:1rem; align-items:flex-start; background:var(--white); border-radius:10px; padding:1.1rem 1.3rem; }
+  .perspective-item .ico { width:32px; height:32px; border-radius:8px; background:rgba(26,115,232,0.1); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--green-accent); }
+  .perspective-item p { font-size:0.83rem; line-height:1.65; color:var(--text-mid); font-weight:300; margin:0; }
+  .perspective-item strong { color:var(--green-deep); font-weight:500; }
+
+  /* CONCLUSION */
+  .conclusion-box { background:var(--green-deep); border-radius:14px; padding:2.5rem; margin:3rem 0; position:relative; overflow:hidden; }
+  .conclusion-box::before { content:''; position:absolute; right:-5%; bottom:-10%; width:35%; height:100%; border-radius:50%; background:radial-gradient(circle, rgba(77,166,255,0.12) 0%, transparent 70%); }
+  .conclusion-box p { font-size:0.92rem; line-height:1.85; color:rgba(247,244,239,0.75); font-weight:300; position:relative; z-index:1; }
+  .conclusion-box p strong { color:var(--cream); font-weight:500; }
+
+  /* RÉFÉRENCES */
+  .refs { margin-top:4rem; padding-top:2rem; border-top:1px solid var(--cream-dark); }
+  .refs h4 { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:500; color:var(--green-deep); margin-bottom:1rem; }
+  .refs ol { padding-left:1.2rem; }
+  .refs ol li { font-size:0.78rem; line-height:1.7; color:var(--text-light); margin-bottom:0.5rem; }
+  .refs ol li a { color:var(--green-accent); text-decoration:none; }
+  .refs ol li a:hover { text-decoration:underline; }
+
+  @media(max-width:700px) {
+    .stat-row, .def-grid, .pays-stats, .interventions-grid { grid-template-columns:1fr; }
+  }
+
+  footer { background:var(--text-dark); padding:2.8rem 6vw; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+  .footer-logo { font-family:'Cormorant Garamond',serif; font-size:1.25rem; font-weight:600; color:var(--cream); display:flex; align-items:center; gap:7px; }
+  .footer-logo span { color:var(--green-light); }
+  footer p { font-size:0.72rem; color:rgba(247,244,239,0.28); }
+  .footer-links { display:flex; gap:1.5rem; }
+  .footer-links a { font-size:0.72rem; color:rgba(247,244,239,0.35); text-decoration:none; }
+  .footer-links a:hover { color:var(--green-light); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    Pulse<span>Santé</span>
+    <svg width="26" height="13" viewBox="0 0 28 14" fill="none">
+      <polyline points="0,7 6,7 8,2 10,12 12,5 14,9 16,7 28,7" stroke="#1a73e8" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+  <ul>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#methode">Méthode</a></li>
+    <li><a href="index.html#secteurs">Secteurs</a></li>
+    <li><a href="index.html#equipe">Équipe</a></li>
+    <li><a href="travaux.html">Travaux</a></li>
+    <li><a href="index.html#rdv" class="nav-cta">Prendre RDV</a></li>
+  </ul>
+</nav>
+
+<div class="article-hero">
+  <a href="travaux.html" class="back-link">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 8H3M7 4l-4 4 4 4"/></svg>
+    Retour aux travaux
+  </a>
+  <div class="article-meta">
+    <div class="badge-published"><span class="dot"></span>Publié</div>
+    <div class="article-domain">Santé mentale · Épidémiologie · Afrique subsaharienne</div>
+  </div>
+  <h1>Conflits armés et santé mentale<br>en <em>Afrique subsaharienne</em></h1>
+  <p class="article-intro">Revue de littérature portant sur les impacts psychosociaux des conflits armés au Sahel, dans le bassin du lac Tchad et en République démocratique du Congo, à partir de données épidémiologiques et d'études interventionnelles publiées.</p>
+</div>
+
+<div class="article-wrap">
+
+  <!-- CHIFFRES CLÉS -->
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="num">50,1%</div>
+      <div class="lbl">ESPT chez les personnes exposées à la violence en RDC</div>
+    </div>
+    <div class="stat-box">
+      <div class="num">56,4%</div>
+      <div class="lbl">Scores d'anxiété extrême au Mali (étude trinationale)</div>
+    </div>
+    <div class="stat-box">
+      <div class="num">75%</div>
+      <div class="lbl">Sans prise en charge parmi les malades mentaux en RDC</div>
+    </div>
+  </div>
+
+  <!-- INTRODUCTION -->
+  <div class="article-section">
+    <div class="section-label">Introduction</div>
+    <h2>Une crise de santé publique <em>peu médiatisée</em></h2>
+    <p>Les conflits qui frappent l'Afrique sahélienne et équatoriale génèrent des conséquences sanitaires massives, quasi-invisibles dans le débat public international. Au-delà des victimes directes, ce sont les populations civiles qui subissent des traumatismes psychologiques durables, dans des contextes où l'offre de soins mentaux est quasi-inexistante.</p>
+    <p>Cette revue de littérature analyse les données épidémiologiques disponibles au Mali, au Nigeria et en République démocratique du Congo, trois épicentres distincts de la violence armée en Afrique subsaharienne, en portant une attention particulière aux prévalences des troubles mentaux, aux facteurs d'exposition et aux dispositifs d'intervention évalués.</p>
+  </div>
+
+  <!-- CADRE CONCEPTUEL -->
+  <div class="article-section">
+    <div class="section-label">Cadre conceptuel</div>
+    <h2>Définitions <em>opérationnelles</em></h2>
+    <div class="def-grid">
+      <div class="def-card">
+        <h5>Santé mentale <small style="font-size:0.7rem;color:var(--text-light);font-family:'DM Sans',sans-serif;font-weight:300">(OMS)</small></h5>
+        <p>État de bien-être permettant à l'individu de faire face aux sources de stress, de réaliser son potentiel et de contribuer à la vie de sa communauté. Composante indissociable de la santé globale.</p>
+      </div>
+      <div class="def-card">
+        <h5>ESPT / PTSD</h5>
+        <p>Trouble anxieux sévère se développant à la suite d'un événement traumatique intense. S'installe durablement, perturbe le quotidien et peut évoluer vers une dépression caractérisée en l'absence de prise en charge.</p>
+      </div>
+      <div class="def-card">
+        <h5>Dépression</h5>
+        <p>Perturbation persistante de l'humeur (tristesse, anhédonie) durant plus de deux semaines, avec retentissement fonctionnel significatif : troubles du sommeil, de l'appétit, des fonctions cognitives et isolement social.</p>
+      </div>
+      <div class="def-card">
+        <h5>MHPSS</h5>
+        <p>Mental Health and Psychosocial Support — ensemble des interventions humanitaires visant à protéger ou promouvoir le bien-être psychosocial des populations affectées par les crises.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARTOGRAPHIE DES CONFLITS -->
+  <div class="article-section">
+    <div class="section-label">Cartographie</div>
+    <h2>Trois zones de <em>conflit distinctes</em></h2>
+    <div class="geo-visual">
+      <h4>Foyers d'instabilité en Afrique subsaharienne</h4>
+      <div class="geo-zones">
+        <div class="geo-zone">
+          <div class="geo-zone-icon">🔴</div>
+          <div class="geo-zone-text"><strong>Sahel central</strong> — L'épicentre de l'activité djihadiste se concentre entre le Mali, le Niger et le Burkina Faso. Deux groupes principaux s'affrontent : le JNIM (affilié Al-Qaïda) et l'État islamique au Grand Sahara (EIGS). Le Mali, classé 4e pays le plus impacté par le terrorisme au monde, a vu l'armée française être remplacée par le groupe Wagner.</div>
+        </div>
+        <div class="geo-zone">
+          <div class="geo-zone-icon">🔴</div>
+          <div class="geo-zone-text"><strong>Bassin du lac Tchad</strong> — La zone frontalière entre le Nigeria, le Niger, le Cameroun et le Tchad est marquée par l'activité persistante de Boko Haram et ses dissidences. Le Nigeria, 6e pays le plus impacté par le terrorisme, présente une fracture nord-sud structurelle aggravant les inégalités d'accès aux soins.</div>
+        </div>
+        <div class="geo-zone">
+          <div class="geo-zone-icon">🔴</div>
+          <div class="geo-zone-text"><strong>Est de la RDC</strong> — Conflits multidimensionnels à dimension intercommunautaire (tribale et ethnique), alimentés par des enjeux de gouvernance historiques. La fragmentation des groupes armés et l'instabilité chronique rendent toute intervention sanitaire particulièrement complexe.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DONNÉES PAR PAYS -->
+  <div class="article-section">
+    <div class="section-label">Données épidémiologiques</div>
+    <h2>Prévalences par <em>contexte national</em></h2>
+
+    <div class="pays-card">
+      <div class="pays-header">
+        <div class="pays-flag mali">🇲🇱</div>
+        <div>
+          <div class="pays-name">Mali</div>
+          <div class="pays-tag">Pays à revenu faible · 4e index mondial du terrorisme</div>
+        </div>
+      </div>
+      <div class="pays-stats">
+        <div class="pays-stat"><div class="n">56,4%</div><div class="l">Anxiété extrême</div></div>
+        <div class="pays-stat"><div class="n">36,6%</div><div class="l">Dépression</div></div>
+        <div class="pays-stat"><div class="n">5,97%</div><div class="l">Stress sévère</div></div>
+      </div>
+      <p>Ces données sont issues d'une étude multinationale (Mali, Nigeria, RDC) dont 27 % des participants étaient maliens. La majorité des victimes de violence recensées sont des civils. La présence militaire étrangère et les rivalités entre groupes armés complexifient l'accès aux populations vulnérables.</p>
+    </div>
+
+    <div class="pays-card">
+      <div class="pays-header">
+        <div class="pays-flag nigeria">🇳🇬</div>
+        <div>
+          <div class="pays-name">Nigeria</div>
+          <div class="pays-tag">Revenu intermédiaire inférieur · 6e index mondial du terrorisme</div>
+        </div>
+      </div>
+      <div class="pays-stats">
+        <div class="pays-stat"><div class="n">60%</div><div class="l">≥ 1 symptôme de santé mentale</div></div>
+        <div class="pays-stat"><div class="n">30%</div><div class="l">Structures de santé fonctionnelles</div></div>
+        <div class="pays-stat"><div class="n">4M</div><div class="l">Personnes en insécurité alimentaire</div></div>
+      </div>
+      <p>Selon une étude descriptive transversale portant sur les besoins en santé mentale des personnes déplacées par Boko Haram, 75 % des répondants rapportant des symptômes déclaraient une altération fonctionnelle associée. Les hommes adultes apparaissaient plus touchés que les femmes. Les symptômes les plus fréquents incluaient la rumination, les troubles du sommeil, l'irritabilité, la peur, l'anxiété et le recours à des substances. Les causes rapportées étaient principalement le fait d'assister à la mort d'un proche et l'interdiction de pratique religieuse.</p>
+      <p style="margin-top:0.8rem;">La consommation de tramadol — opioïde utilisé à fortes doses pour ses effets stimulants et désinhibiteurs — est documentée chez les membres de groupes armés. Chez les civils, la dépendance aux substances est fortement stigmatisée, et l'absence de traitements validés conduit à des pratiques coercitives non thérapeutiques.</p>
+    </div>
+
+    <div class="pays-card">
+      <div class="pays-header">
+        <div class="pays-flag rdc">🇨🇩</div>
+        <div>
+          <div class="pays-name">République Démocratique du Congo</div>
+          <div class="pays-tag">Conflits intercommunautaires · Instabilité chronique</div>
+        </div>
+      </div>
+      <div class="pays-stats">
+        <div class="pays-stat"><div class="n">50,1%</div><div class="l">ESPT (méta-analyse)</div></div>
+        <div class="pays-stat"><div class="n">22%</div><div class="l">Troubles anxieux</div></div>
+        <div class="pays-stat"><div class="n">13–23%</div><div class="l">Troubles de l'humeur</div></div>
+      </div>
+      <p>D'après une méta-analyse portant sur les populations exposées aux violences en RDC, 75 % des personnes souffrant de troubles mentaux n'accèdent à aucune prise en charge formelle. Le recours aux guérisseurs traditionnels et aux chefs religieux reste prévalent. Le coût des interventions spécialisées — une séance d'EMDR est facturée environ 25 USD dans ce contexte — est prohibitif pour une population vivant en moyenne avec 2 USD par jour.</p>
+    </div>
+  </div>
+
+  <!-- INTERVENTIONS -->
+  <div class="article-section">
+    <div class="section-label">Interventions psychosociales</div>
+    <h2>Évaluation des dispositifs <em>MHPSS</em></h2>
+    <p>Une étude PubMed a suivi deux cohortes : 6 413 victimes de violence (RDC, Mali, Nigeria) en milieu communautaire, et 2 008 blessés de guerre hospitalisés en RDC. Les programmes évalués comprenaient le counseling individuel, des groupes de soutien, des interventions par pairs et l'intégration du soutien psychologique aux soins médicaux.</p>
+    <div class="interventions-grid">
+      <div class="intervention-card success">
+        <h5>✓ Résultats positifs</h5>
+        <ul>
+          <li>Amélioration significative de la détresse psychologique (stress, anxiété, dépression)</li>
+          <li>Renforcement des liens sociaux et du soutien communautaire</li>
+          <li>Résultats particulièrement positifs en milieu hospitalier chez les blessés de guerre</li>
+          <li>Efficacité du peer-support en contexte nigérian</li>
+        </ul>
+      </div>
+      <div class="intervention-card limit">
+        <h5>⚠ Limites identifiées</h5>
+        <ul>
+          <li>Efficacité réduite chez les victimes de violences extrêmes</li>
+          <li>Durée des programmes souvent insuffisante</li>
+          <li>Engagement variable selon le contexte et le format</li>
+          <li>Difficultés d'accès dans les zones d'insécurité active</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERSPECTIVES -->
+  <div class="article-section">
+    <div class="section-label">Perspectives</div>
+    <h2>Recommandations pour <em>l'action publique</em></h2>
+    <div class="perspectives-list">
+      <div class="perspective-item">
+        <div class="ico">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
+        </div>
+        <p><strong>Soutien communautaire de première ligne</strong> — Former les leaders communautaires et les familles à assurer un soutien psychosocial de proximité via des points MHPSS fixes dans les villages.</p>
+      </div>
+      <div class="perspective-item">
+        <div class="ico">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M5 7h6M5 10h4"/></svg>
+        </div>
+        <p><strong>Groupes de soutien mobiles et peer-support</strong> — Des survivants formés assurent un suivi de petits groupes localement, avec des ateliers de thérapie par le récit et l'art-thérapie.</p>
+      </div>
+      <div class="perspective-item">
+        <div class="ico">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="2" width="10" height="13" rx="1"/><path d="M6 6h4M6 9h4M6 12h2"/></svg>
+        </div>
+        <p><strong>e-Santé mentale</strong> — Applications mobiles ou chatbots MHPSS pour le soutien de première ligne, les exercices de relaxation et le suivi des symptômes. Encore peu évaluée dans ce contexte, cette piste reste conditionnée à l'accès aux infrastructures technologiques.</p>
+      </div>
+      <div class="perspective-item">
+        <div class="ico">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 2v4M8 10v4M2 8h4M10 8h4"/></svg>
+        </div>
+        <p><strong>Infrastructures et déstigmatisation</strong> — Construction d'établissements de santé mentale accessibles, intégration systématique du soutien psychologique aux soins primaires, et campagnes de lutte contre la stigmatisation des troubles mentaux.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCLUSION -->
+  <div class="conclusion-box">
+    <p>Malgré les avancées des programmes MHPSS documentées dans cette revue, <strong>la santé mentale en Afrique sahélienne et équatoriale reste une priorité de santé publique largement sous-financée.</strong> Une amélioration durable nécessite une convergence de conditions : apaisement des conflits, sécurité alimentaire, développement des infrastructures sanitaires et réduction de la stigmatisation. En l'état actuel, la situation demeure critique et appelle une mobilisation internationale accrue.</p>
+  </div>
+
+  <!-- RÉFÉRENCES -->
+  <div class="refs">
+    <h4>Références</h4>
+    <ol>
+      <li>Institute for Economics & Peace. <em>Global Terrorism Index 2025.</em> <a href="https://www.visionofhumanity.org/wp-content/uploads/2025/03/Global-Terrorism-Index-2025.pdf" >visionofhumanity.org</a></li>
+      <li>Nature. <em>Mental health in conflict-affected populations in sub-Saharan Africa.</em> <a href="https://www.nature.com/articles/s44184-023-00051-w" >nature.com</a></li>
+      <li>PMC / NCBI. <em>Mental health and psychosocial support needs among Boko Haram-displaced persons.</em> <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7028461/" >pmc.ncbi.nlm.nih.gov</a></li>
+      <li>PubMed. <em>Psychosocial interventions for conflict-affected populations in DRC, Mali and Nigeria.</em> <a href="https://pubmed.ncbi.nlm.nih.gov/35419344/" >pubmed.ncbi.nlm.nih.gov</a></li>
+    </ol>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">Pulse<span>Santé</span>
+    <svg width="22" height="11" viewBox="0 0 28 14" fill="none">
+      <polyline points="0,7 6,7 8,2 10,12 12,5 14,9 16,7 28,7" stroke="#4da6ff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <p>© 2025 Pulse Santé — France</p>
+  <div class="footer-links">
+    <a href="mentions-legales.html">Mentions légales</a>
+    <a href="confidentialite.html">Confidentialité</a>
+    <a href="index.html#rdv">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>

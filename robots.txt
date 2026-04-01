@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /.env
+Disallow: /*.env
+Disallow: /config/
+Disallow: /private/
+
+# Délai de crawl crawl-delay: 1
+
+# Sitemap (adapter l'URL à votre domaine)
+Sitemap: https://pulsesante.fr/sitemap.xml
+
+# Eviter les crawleurs agressifs
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /

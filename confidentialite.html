@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Politique de confidentialité — Pulse Santé</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230a2540'/><polyline points='2,16 8,16 10,8 13,24 16,12 19,20 22,16 30,16' stroke='%234da6ff' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --deep:   #0a2540;
+  --accent: #1a73e8;
+  --light:  #4da6ff;
+  --cream:  #f0f4fa;
+  --cream2: #dde6f5;
+  --white:  #ffffff;
+  --txt:    #0a1628;
+  --txt2:   #2d4a6e;
+  --txt3:   #6b8eb5;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--txt); }
+nav {
+  position:fixed; top:0; left:0; width:100%; z-index:300;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.2rem 6vw;
+  background:rgba(240,244,250,0.97); backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(10,37,64,0.07); will-change:transform; transform:translateZ(0);
+}
+.nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:600; color:var(--deep); display:flex; align-items:center; gap:8px; text-decoration:none; transition:opacity 0.2s; }
+.nav-logo:hover { opacity:0.7; }
+.nav-logo span { color:var(--accent); }
+.back-link { font-size:0.78rem; letter-spacing:0.09em; text-transform:uppercase; color:var(--txt2); text-decoration:none; display:flex; align-items:center; gap:0.4rem; transition:color 0.2s; }
+.back-link:hover { color:var(--accent); }
+
+.page-hero { padding:9rem 6vw 4rem; background:linear-gradient(135deg,var(--cream) 55%,#ddeeff 100%); }
+.page-tag { display:inline-flex; align-items:center; gap:0.5rem; font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); font-weight:500; margin-bottom:1.2rem; }
+.page-tag::before { content:''; width:2rem; height:1px; background:var(--accent); }
+.page-hero h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(2.2rem,4vw,3.5rem); font-weight:300; line-height:1.1; color:var(--deep); }
+.page-hero p { font-size:0.82rem; color:var(--txt3); margin-top:0.8rem; font-weight:300; }
+
+.content { max-width:760px; margin:0 auto; padding:4rem 6vw 7rem; }
+.content section { margin-bottom:3rem; }
+.content h2 { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:500; color:var(--deep); margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid var(--cream2); }
+.content h3 { font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:500; color:var(--deep); margin:1.2rem 0 0.5rem; }
+.content p, .content li { font-size:0.88rem; line-height:1.85; color:var(--txt2); font-weight:300; margin-bottom:0.7rem; }
+.content ul { padding-left:1.2rem; }
+.content strong { font-weight:500; color:var(--txt); }
+.content a { color:var(--accent); text-decoration:none; }
+.content a:hover { text-decoration:underline; }
+.rgpd-badge { display:inline-flex; align-items:center; gap:0.5rem; background:rgba(26,115,232,0.1); color:var(--accent); font-size:0.75rem; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:0.45rem 1rem; border-radius:20px; margin-bottom:2rem; }
+
+footer { background:var(--txt); padding:2.8rem 6vw; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+.footer-logo { font-family:'Cormorant Garamond',serif; font-size:1.25rem; font-weight:600; color:var(--cream); display:flex; align-items:center; gap:7px; text-decoration:none; transition:opacity 0.2s; }
+.footer-logo:hover { opacity:0.7; }
+.footer-logo span { color:var(--light); }
+footer p { font-size:0.72rem; color:rgba(247,244,239,0.28); }
+.footer-links { display:flex; gap:1.5rem; }
+.footer-links a { font-size:0.72rem; color:rgba(247,244,239,0.35); text-decoration:none; transition:color 0.2s; }
+.footer-links a:hover { color:var(--light); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    Pulse<span>Santé</span>
+    <svg width="26" height="13" viewBox="0 0 28 14" fill="none">
+      <polyline points="0,7 6,7 8,2 10,12 12,5 14,9 16,7 28,7" stroke="#1a73e8" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+  <a href="index.html" class="back-link">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 8H3M7 4l-4 4 4 4"/></svg>
+    Retour au site
+  </a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-tag">Données personnelles</div>
+  <h1>Politique de confidentialité</h1>
+  <p>Dernière mise à jour : juin 2025</p>
+</div>
+
+<div class="content">
+
+  <div class="rgpd-badge">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 1l5 2v5c0 3.5-2.2 6-5 7C5.2 14 3 11.5 3 8V3z"/></svg>
+    Conforme RGPD
+  </div>
+
+  <section>
+    <h2>Responsable du traitement</h2>
+    <p><strong>Pulse Santé</strong> — [Adresse complète]</p>
+    <p><strong>Contact :</strong> <a href="/cdn-cgi/l/email-protection#4d2c2329346329283f38340d28393863382324212420632b3f"><span class="__cf_email__" data-cfemail="ddbcb3b9a4f3b9b8afa8a49db8a9a8f3a8b3b4b1b4b0f3bbaf">[email&#160;protected]</span></a></p>
+  </section>
+
+  <section>
+    <h2>Données collectées</h2>
+    <p>Dans le cadre de l'utilisation de notre site et de notre formulaire de contact, nous collectons les données suivantes :</p>
+    <ul>
+      <li>Nom et prénom</li>
+      <li>Adresse email professionnelle</li>
+      <li>Numéro de téléphone (optionnel)</li>
+      <li>Nom de l'organisation</li>
+      <li>Objet de la demande et message libre</li>
+    </ul>
+    <p>Aucune donnée de santé personnelle n'est collectée via ce formulaire.</p>
+  </section>
+
+  <section>
+    <h2>Finalités du traitement</h2>
+    <p>Les données collectées sont utilisées exclusivement pour :</p>
+    <ul>
+      <li>Répondre à vos demandes de contact et d'information</li>
+      <li>Préparer et envoyer une proposition commerciale adaptée</li>
+      <li>Assurer le suivi de la relation client</li>
+    </ul>
+    <p>Vos données ne sont jamais utilisées à des fins de prospection commerciale non sollicitée ni cédées à des tiers.</p>
+  </section>
+
+  <section>
+    <h2>Base légale</h2>
+    <p>Le traitement de vos données repose sur votre <strong>consentement explicite</strong> (art. 6.1.a RGPD) matérialisé par l'envoi volontaire du formulaire de contact, ainsi que sur l'<strong>intérêt légitime</strong> de Pulse Santé à répondre aux demandes professionnelles entrantes (art. 6.1.f RGPD).</p>
+  </section>
+
+  <section>
+    <h2>Durée de conservation</h2>
+    <p>Vos données sont conservées pendant une durée maximale de <strong>3 ans</strong> à compter du dernier contact, conformément aux recommandations de la CNIL pour les données de prospection B2B.</p>
+    <p>Au-delà de cette période, vos données sont supprimées ou anonymisées.</p>
+  </section>
+
+  <section>
+    <h2>Destinataires des données</h2>
+    <p>Vos données sont traitées par l'équipe Pulse Santé uniquement. Elles peuvent être transmises à :</p>
+    <ul>
+      <li><strong>EmailJS</strong> — prestataire technique d'envoi d'emails (données transitent via leurs serveurs)</li>
+    </ul>
+    <p>Aucun transfert de données hors de l'Union Européenne n'est effectué.</p>
+  </section>
+
+  <section>
+    <h2>Vos droits</h2>
+    <p>Conformément au RGPD, vous disposez des droits suivants sur vos données personnelles :</p>
+
+    <h3>Droit d'accès</h3>
+    <p>Vous pouvez demander à consulter les données que nous détenons sur vous.</p>
+
+    <h3>Droit de rectification</h3>
+    <p>Vous pouvez demander la correction de données inexactes ou incomplètes.</p>
+
+    <h3>Droit à l'effacement</h3>
+    <p>Vous pouvez demander la suppression de vos données dans les cas prévus par la loi.</p>
+
+    <h3>Droit à la limitation</h3>
+    <p>Vous pouvez demander la suspension temporaire du traitement de vos données.</p>
+
+    <h3>Droit d'opposition</h3>
+    <p>Vous pouvez vous opposer à tout moment au traitement de vos données pour des motifs légitimes.</p>
+
+    <p>Pour exercer ces droits, contactez-nous à : <a href="/cdn-cgi/l/email-protection#0a6b646e73246e6f787f734a6f7e7f247f6463666367246c78"><span class="__cf_email__" data-cfemail="90f1fef4e9bef4f5e2e5e9d0f5e4e5bee5fef9fcf9fdbef6e2">[email&#160;protected]</span></a>. Nous nous engageons à répondre dans un délai d'un mois.</p>
+    <p>Vous avez également le droit d'introduire une réclamation auprès de la <strong>CNIL</strong> (<a href="https://www.cnil.fr" >www.cnil.fr</a>).</p>
+  </section>
+
+  <section>
+    <h2>Cookies</h2>
+    <p>Ce site n'utilise pas de cookies de tracking ou de publicité. Seuls des cookies techniques strictement nécessaires au bon fonctionnement du site peuvent être déposés.</p>
+  </section>
+
+  <section>
+    <h2>Sécurité</h2>
+    <p>Pulse Santé met en œuvre les mesures techniques et organisationnelles appropriées pour protéger vos données contre tout accès non autorisé, modification, divulgation ou destruction. Les échanges avec notre site sont sécurisés via le protocole HTTPS.</p>
+  </section>
+
+  <section>
+    <h2>Modifications</h2>
+    <p>Nous nous réservons le droit de modifier cette politique de confidentialité à tout moment. Toute modification sera publiée sur cette page avec une date de mise à jour révisée.</p>
+  </section>
+
+</div>
+
+<footer>
+  <a href="index.html" class="footer-logo">
+    Pulse<span>Santé</span>
+    <svg width="22" height="11" viewBox="0 0 28 14" fill="none">
+      <polyline points="0,7 6,7 8,2 10,12 12,5 14,9 16,7 28,7" stroke="#4da6ff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+  <

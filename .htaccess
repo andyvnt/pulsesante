@@ -1,0 +1,169 @@
+# ============================================================
+# PULSE SANTÉ — Sécurité Équilibrée (2026)
+# ============================================================
+
+# Sécurité : En-têtes HTTP essentiels
+<IfModule mod_headers.c>
+  # HSTS : Force HTTPS pendant 2 ans
+  Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains" env=HTTPS
+  
+  # X-Frame-Options : Refuse tout embedding
+  Header always set X-Frame-Options "SAMEORIGIN"
+  
+  # X-Content-Type-Options : Prévient le MIME sniffing
+  Header always set X-Content-Type-Options "nosniff"
+  
+  # X-XSS-Protection : Protection XSS
+  Header always set X-XSS-Protection "1; mode=block"
+  
+  # Referrer-Policy : Sécurisée mais compatible
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  
+  # Permissions-Policy : Dénie les features risquées
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=()"
+  
+  # CSP : Moins restrictive pour EmailJS
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdn.emailjs.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self' https://cdn.emailjs.com https://api.emailjs.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self';"
+  
+  # Remove server info
+  Header always unset X-Powered-By
+  Header always unset Server
+</IfModule>
+
+# Désactiver les signatures de serveur
+# (ignoré si mod_security n'est pas installé)
+<IfModule mod_security.c>
+  SecServerSignature " "
+</IfModule>
+
+# ============================================================
+# HTTPS Redirect
+# ============================================================
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+# ============================================================
+# HTTPS Redirect (commenté si développement local)
+# ============================================================
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /PULSEV8/
+  
+  # Décommenter pour forcer HTTPS EN PRODUCTION UNIQUEMENT
+  # RewriteCond %{HTTPS} off
+  # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  
+  # Supprime www si présent (optionnel)
+  # RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+  # RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+</IfModule>
+
+# ============================================================
+# Blocage des répertoires sensibles
+# ============================================================
+# ============================================================
+# Blocage des répertoires sensibles (VRAIMENT sensibles uniquement)
+# ============================================================
+<FilesMatch "^\.">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+<FilesMatch "\.(env|sql|sqlite|db|pem|key|crt|sh|svn|htpasswd)$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# Protéger les répertoires sensibles
+<Directory ~ "^\.|~|/\.">
+  Order allow,deny
+  Deny from all
+</Directory>
+
+# Protéger les fichiers PHP (si utilisés)
+<Files "*.php">
+  Order allow,deny
+  Deny from all
+</Files>
+
+# ============================================================
+# Compression & Caching Optimisé
+# ============================================================
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+  AddOutputFilterByType DEFLATE text/javascript application/javascript application/x-javascript
+  AddOutputFilterByType DEFLATE application/xml application/xhtml+xml application/rss+xml
+  AddOutputFilterByType DEFLATE application/json
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 7 days"
+  
+  # Images (long cache)
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  
+  # CSS & JS (medium cache)
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType text/javascript "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType application/x-javascript "access plus 1 month"
+  
+  # Fonts (long cache)
+  ExpiresByType font/ttf "access plus 1 year"
+  ExpiresByType font/otf "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType application/font-woff "access plus 1 year"
+  
+  # HTML (no cache - always fresh)
+  ExpiresByType text/html "access plus 0 seconds"
+  
+  # JSON (no cache)
+  ExpiresByType application/json "access plus 0 seconds"
+</IfModule>
+
+# ============================================================
+# HTTP/2 Push & Preload
+# ============================================================
+<IfModule mod_http2.c>
+  # Activer HTTP/2
+  Protocols h2 http/1.1
+</IfModule>
+
+# ============================================================
+# Protection contre les attaques évidentes UNIQUEMENT
+# ============================================================
+<IfModule mod_rewrite.c>
+  # Bloquer les tentatives de path traversal flagrantes
+  RewriteCond %{REQUEST_URI} \.\.\/ [NC]
+  RewriteRule ^(.*)$ - [F,L]
+  
+  # Bloquer l'accès au .htaccess lui-même
+  RewriteRule "^\.htaccess$" - [F,L]
+</IfModule>
+
+# ============================================================
+# Rate Limiting (si ModEvasive disponible - optionnel)
+# ============================================================
+# Décommenter si ModEvasive est installé : a2enmod evasive20
+# <IfModule mod_evasive20.c>
+#   DOSHashTableSize 3097
+#   DOSPageCount 2
+#   DOSSiteCount 50
+#   DOSPageInterval 1
+#   DOSSiteInterval 1
+#   DOSBlockingPeriod 600
+# </IfModule>
+
+# ============================================================
+# Permissions de fichiers par défaut
+# ============================================================
+<FilesMatch "^standard_error_log$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>

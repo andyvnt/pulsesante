@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Équipe — Pulse Santé</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230a2540'/><polyline points='2,16 8,16 10,8 13,24 16,12 19,20 22,16 30,16' stroke='%234da6ff' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --deep:   #0a2540;
+  --mid:    #1a4a7a;
+  --accent: #1a73e8;
+  --light:  #4da6ff;
+  --cream:  #f0f4fa;
+  --cream2: #dde6f5;
+  --white:  #ffffff;
+  --txt:    #0a1628;
+  --txt2:   #2d4a6e;
+  --txt3:   #6b8eb5;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--txt); }
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; width:100%; z-index:300;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.2rem 6vw;
+  background:rgba(240,244,250,0.97); backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(10,37,64,0.07); will-change:transform; transform:translateZ(0);
+}
+.nav-logo {
+  font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:600;
+  color:var(--deep); display:flex; align-items:center; gap:8px;
+  text-decoration:none; transition:opacity 0.2s;
+}
+.nav-logo:hover { opacity:0.7; }
+.nav-logo span { color:var(--accent); }
+.back-link { font-size:0.78rem; letter-spacing:0.09em; text-transform:uppercase; color:var(--txt2); text-decoration:none; display:flex; align-items:center; gap:0.4rem; transition:color 0.2s; }
+.back-link:hover { color:var(--accent); }
+
+/* HERO BAND */
+.page-hero { padding:9rem 6vw 5rem; background:linear-gradient(135deg,var(--cream) 55%,#ddeeff 100%); }
+.page-tag { display:inline-flex; align-items:center; gap:0.5rem; font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); font-weight:500; margin-bottom:1.2rem; }
+.page-tag::before { content:''; width:2rem; height:1px; background:var(--accent); }
+.page-hero h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(2.4rem,4.5vw,4rem); font-weight:300; line-height:1.1; color:var(--deep); margin-bottom:1rem; }
+.page-hero h1 em { font-style:italic; color:var(--accent); }
+.page-hero p { font-size:1rem; line-height:1.8; color:var(--txt2); max-width:500px; font-weight:300; }
+
+/* TEAM */
+.team-section { padding:5rem 6vw 7rem; }
+.team-layout { display:flex; flex-direction:column; gap:1.4rem; max-width:900px; margin:0 auto; }
+
+.tcard-lead { display:flex; align-items:center; gap:2rem; background:var(--deep); border-radius:16px; padding:2.4rem 2.8rem; position:relative; overflow:hidden; cursor:pointer; transition:transform 0.25s, box-shadow 0.25s; }
+.tcard-lead::before { content:''; position:absolute; right:-8%; top:-20%; width:40%; height:140%; border-radius:50%; background:radial-gradient(circle,rgba(77,166,255,0.1) 0%,transparent 70%); }
+.tcard-lead:hover { transform:translateY(-2px); box-shadow:0 20px 50px rgba(10,37,64,0.25); }
+.tcard-avatar-lg { width:80px; height:80px; border-radius:50%; flex-shrink:0; background:rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; border:2px solid rgba(77,166,255,0.3); }
+.tcard-avatar-lg svg { color:rgba(255,255,255,0.8); }
+.tcard-lead-body { flex:1; position:relative; z-index:1; }
+.tcard-founder-badge { display:inline-flex; align-items:center; gap:0.4rem; background:rgba(77,166,255,0.18); color:var(--light); font-size:0.62rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; padding:0.28rem 0.8rem; border-radius:20px; margin-bottom:0.7rem; }
+.tcard-lead-name { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:500; color:var(--white); line-height:1; margin-bottom:0.25rem; }
+.tcard-lead-role { font-size:0.7rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--light); margin-bottom:1.1rem; }
+.tcard-lead-tags { display:flex; flex-wrap:wrap; gap:0.35rem; }
+.tcard-lead-tag { font-size:0.65rem; padding:0.26rem 0.7rem; border-radius:20px; background:rgba(77,166,255,0.15); color:var(--light); }
+.tcard-lead-hint { margin-top:0.9rem; font-size:0.72rem; color:rgba(77,166,255,0.5); display:flex; align-items:center; gap:0.4rem; }
+
+.tcard-row { display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; }
+.tcard-member { display:flex; align-items:center; gap:1.5rem; background:var(--white); border-radius:16px; padding:2rem 2.2rem; border:1.5px solid transparent; transition:all 0.25s; cursor:pointer; }
+.tcard-member:hover { border-color:var(--accent); box-shadow:0 10px 30px rgba(10,37,64,0.08); transform:translateY(-2px); }
+.tcard-avatar-sm { width:56px; height:56px; border-radius:50%; flex-shrink:0; background:rgba(26,115,232,0.1); display:flex; align-items:center; justify-content:center; }
+.tcard-avatar-sm svg { color:var(--accent); }
+.tcard-member-body { flex:1; }
+.tcard-member-name { font-family:'Cormorant Garamond',serif; font-size:1.45rem; font-weight:500; color:var(--deep); line-height:1; margin-bottom:0.2rem; }
+.tcard-member-role { font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--txt3); margin-bottom:0.9rem; }
+.tcard-member-tags { display:flex; flex-wrap:wrap; gap:0.35rem; }
+.tcard-member-tag { font-size:0.65rem; padding:0.24rem 0.65rem; border-radius:20px; background:rgba(26,115,232,0.1); color:var(--accent); }
+.tcard-hint { margin-top:0.6rem; font-size:0.7rem; color:var(--txt3); display:flex; align-items:center; gap:0.4rem; }
+
+/* MEMBER POPUP */
+.member-popup-overlay { position:fixed; inset:0; background:rgba(10,22,40,0.55); z-index:500; display:flex; align-items:center; justify-content:center; padding:2rem; opacity:0; pointer-events:none; transition:opacity 0.3s; backdrop-filter:blur(6px); }
+.member-popup-overlay.open { opacity:1; pointer-events:all; }
+.member-popup { background:var(--white); border-radius:18px; padding:2.8rem; max-width:480px; width:100%; transform:translateY(20px) scale(0.97); transition:transform 0.3s; position:relative; max-height:90vh; overflow-y:auto; }
+.member-popup-overlay.open .member-popup { transform:translateY(0) scale(1); }
+.mp-close { position:absolute; top:1.4rem; right:1.6rem; background:none; border:none; cursor:pointer; color:var(--txt3); font-size:1.2rem; transition:color 0.2s; }
+.mp-close:hover { color:var(--deep); }
+.mp-header { display:flex; align-items:center; gap:1.5rem; margin-bottom:1.8rem; }
+.mp-avatar { width:72px; height:72px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.mp-avatar.dark { background:var(--deep); }
+.mp-avatar.light { background:rgba(26,115,232,0.1); }
+.mp-avatar.dark svg { color:rgba(255,255,255,0.8); }
+.mp-avatar.light svg { color:var(--accent); }
+.mp-badge { display:inline-block; font-size:0.62rem; letter-spacing:0.13em; text-transform:uppercase; color:var(--accent); background:rgba(26,115,232,0.1); padding:0.26rem 0.75rem; border-radius:20px; margin-bottom:0.5rem; }
+.mp-name { font-family:'Cormorant Garamond',serif; font-size:1.9rem; font-weight:500; color:var(--deep); line-height:1; }
+.mp-role { font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--txt3); margin-top:0.2rem; }
+.mp-divider { width:100%; height:1px; background:var(--cream2); margin:1.4rem 0; }
+.mp-bio { font-size:0.88rem; line-height:1.8; color:var(--txt2); font-weight:300; margin-bottom:1.4rem; }
+.mp-tags { display:flex; flex-wrap:wrap; gap:0.4rem; }
+.mp-tag { font-size:0.68rem; padding:0.26rem 0.7rem; border-radius:20px; background:rgba(26,115,232,0.1); color:var(--accent); }
+
+/* FOOTER */
+footer { background:var(--txt); padding:2.8rem 6vw; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+.footer-logo { font-family:'Cormorant Garamond',serif; font-size:1.25rem; font-weight:600; color:var(--cream); display:flex; align-items:center; gap:7px; text-decoration:none; transition:opacity 0.2s; }
+.footer-logo:hover { opacity:0.7; }
+.footer-logo span { color:var(--light); }
+footer p { font-size:0.72rem; color:rgba(247,244,239,0.28); }
+.footer-links { display:flex; gap:1.5rem; }
+.footer-links a { font-size:0.72rem; color:rgba(247,244,239,0.35); text-decoration:none; transition:color 0.2s; }
+.footer-links a:hover { color:var(--light); }
+
+@media(max-width:900px){
+  .tcard-row { grid-template-columns:1fr; }
+}
+@media(max-width:600px){
+  .tcard-lead { flex-direction:column; text-align:center; }
+  .tcard-lead-tags { justify-content:center; }
+  .tcard-member { flex-direction:column; text-align:center; }
+  .tcard-member-tags,.tcard-hint { justify-content:center; }
+  .mp-header { flex-direction:column; text-align:center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    Pulse<span>Santé</span>
+    <svg width="26" height="13" viewBox="0 0 28 14" fill="none">
+      <polyline points="0,7 6,7 8,2 10,12 12,5 14,9 16,7 28,7" stroke="#1a73e8" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+  <a href="index.html" class="back-link">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 8H3M7 4l-4 4 4 4"/></svg>
+    Retour au site
+  </a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-tag">L'équipe</div>
+  <h1>Des profils <em>complémentaires</em></h1>
+  <p>Une équipe pluridisciplinaire alliant expertise en santé publique, data science et gestion de projet.</p>
+</div>
+
+<section class="team-section">
+  <div class="team-layout">
+    <div class="tcard-lead" onclick="openMember('andrew')">
+      <div class="tcard-avatar-lg">
+        <svg width="38" height="38" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="20" cy="13" r="6"/><path d="M6 35c0-7.7 6.3-14 14-14s14 6.3 14 14"/></svg>
+      </div>
+      <div class="tcard-lead-body">
+        <div class="tcard-founder-badge">Fondateur &amp; PDG</div>
+        <div class="tcard-lead-name">Andrew</div>
+        <div class="tcard-lead-role">Expert Santé Publique</div>
+        <div class="tcard-lead-tags">
+          <span class="tcard-lead-tag">Biostatistiques</span><span class="tcard-lead-tag">Épidémiologie</span>
+          <span class="tcard-lead-tag">R / Python</span><span class="tcard-lead-tag">SPSS</span>
+          <span class="tcard-lead-tag">Santé au travail</span><span class="tcard-lead-tag">QVT</span>
+          <span class="tcard-lead-tag">Prévention</span><span class="tcard-lead-tag">Recherche clinique</span>
+        </div>
+        <div class="tcard-lead-hint">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>
+          Cliquer pour en savoir plus
+        </div>
+      </div>
+    </div>
+    <div class="tcard-row">
+      <div class="tcard-member" onclick="openMember('luca')">
+        <div class="tcard-avatar-sm">
+          <svg width="28" height="28" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="20" cy="13" r="6"/><path d="M6 35c0-7.7 6.3-14 14-14s14 6.3 14 14"/></svg>
+        </div>
+        <div class="tcard-member-body">
+          <div class="tcard-member-name">Luca</div>
+          <div class="tcard-member-role">Assistant Data Scientist</div>
+          <div class="tcard-member-tags">
+            <span class="tcard-member-tag">Machine Learning</span><span class="tcard-member-tag">Python</span>
+            <span class="tcard-member-tag">Visualisation</span><span class="tcard-member-tag">SQL</span>
+          </div>
+          <div class="tcard-hint"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>Voir le profil</div>
+        </div>
+      </div>
+      <div class="tcard-member" onclick="openMember('jules')">
+        <div class="tcard-avatar-sm">
+          <svg width="28" height="28" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="20" cy="13" r="6"/><path d="M6 35c0-7.7 6.3-14 14-14s14 6.3 14 14"/></svg>
+        </div>
+        <div class="tcard-member-body">
+          <div class="tcard-member-name">Jules</div>
+          <div class="tcard-member-role">Chargé de projet</div>
+          <div class="tcard-member-tags">
+            <span class="tcard-member-tag">Coordination</span><span class="tcard-member-tag">Relation client</span>
+            <span class="tcard-member-tag">Gestion de projet</span>
+          </div>
+          <div class="tcard-hint"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>Voir le profil</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEMBER POPUP -->
+<div class="member-popup-overlay" id="memberPopup" onclick="closeMemberOutside(event)">
+  <div class="member-popup">
+    <button class="mp-close" onclick="closeMember()">✕</button>
+    <div class="mp-header">
+      <div class="mp-avatar" id="mp-avatar">
+        <svg width="36" height="36" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="20" cy="13" r="6"/><path d="M6 35c0-7.7 6.3-14 14-14s14 6.3 14 14"/></svg>
+      </div>
+      <div>
+        <div class="mp-badge" id="mp-badge"></div>
+        <div class="mp-name"  id="mp-name"></div>
+        <div class="mp-role"  id="mp-role"></div>
+      </div>
+    </div>
+    <div class="mp-divider"></div>
+    <p class="mp-bio" id="mp-bio"></p>
+    <div class="mp-tags" id="mp-tags"></div>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html" class="footer-logo">
+    Pulse<span>Santé</span>
+    <svg width="22" height="11" viewBox="0 0 28 14" fill="none">
+      <polyline points="0,7 6,7 8,2 10,12 12,5 14,9 16,7 28,7" stroke="#4da6ff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+  <p>© 2025 Pulse Santé — France</p>
+  <div class="footer-links">
+    <a href="mentions-legales.html" >Mentions légales</a>
+    <a href="confidentialite.html" >Confidentialité</a>
+    <a href="index.html#rdv">Contact</a>
+  </div>
+</footer>
+
+<script>
+const members = {
+  andrew: {
+    badge:'Fondateur & PDG', name:'Andrew', role:'Expert Santé Publique',
+    bio:'Diplômé en santé publique et épidémiologie, Andrew a fondé Pulse Santé avec la conviction que la donnée de santé, bien analysée, est le levier le plus puissant pour améliorer le bien-être des organisations. Il intervient auprès d\'entreprises, d\'ARS et d\'ONG sur des missions alliant rigueur statistique et vision terrain.',
+    tags:['Biostatistiques','Épidémiologie','R / Python','SPSS','Santé au travail','QVT','Prévention','Recherche clinique'],
+    avatarClass:'dark'
+  },
+  luca: {
+    badge:'Data Science', name:'Luca', role:'Assistant Data Scientist',
+    bio:'Passionné par les données et leur pouvoir de révéler des patterns invisibles, Luca développe les pipelines d\'analyse et les tableaux de bord de Pulse Santé. Il contribue à rendre les résultats statistiques accessibles et actionnables pour les clients.',
+    tags:['Machine Learning','Python','Visualisation','SQL','Pandas','Scikit-learn'],
+    avatarClass:'light'
+  },
+  jules: {
+    badge:'Gestion de projet', name:'Jules', role:'Chargé de projet',
+    bio:'Jules est le lien entre l\'équipe et les clients. Il assure le bon déroulement des missions, coordonne les livrables et garantit que chaque intervention de Pulse Santé est délivrée dans les délais avec la qualité attendue.',
+    tags:['Coordination','Relation client','Gestion de projet','Planification','Suivi qualité'],
+    avatarClass:'light'
+  }
+};
+function openMember(key) {
+  const m = members[key]; if(!m) return;
+  document.getElementById('mp-badge').textContent = m.badge;
+  document.getElementById('mp-name').textContent  = m.name;
+  document.getElementById('mp-role').textContent  = m.role;
+  document.getElementById('mp-bio').textContent   = m.bio;
+  const av = document.getElementById('mp-avatar');
+  av.className = 'mp-avatar ' + m.avatarClass;
+  document.getElementById('mp-tags').innerHTML = m.tags.map(t=>`<span class="mp-tag">${t}</span>`).join('');
+  document.getElementById('memberPopup').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeMember() {
+  document.getElementById('memberPopup').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeMemberOutside(e) { if(e.target.id==='memberPopup') closeMember(); }
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeMember(); });
+</script>
+</body>
+</html>
