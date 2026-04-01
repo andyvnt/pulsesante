@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Admin — Pulse Santé</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono&display=swap"
+			rel="stylesheet" />
+		<style>
+			:root {
+				--navy: #07192e;
+				--navy-mid: #0d2540;
+				--navy-light: #1a3a5c;
+				--blue: #1a73e8;
+				--blue-light: #4fc3f7;
+				--cream: #f0f4fa;
+				--text: #e8f0f8;
+				--text-dim: #6b8eb5;
+				--border: rgba(79, 195, 247, 0.15);
+				--card: rgba(13, 37, 64, 0.8);
+				--success: #4caf50;
+				--danger: #e74c3c;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: "DM Sans", sans-serif;
+				background: var(--navy);
+				color: var(--text);
+				min-height: 100vh;
+				display: flex;
+			}
+
+			/* Background effect */
+			body::before {
+				content: "";
+				position: fixed;
+				inset: 0;
+				background:
+					radial-gradient(
+						ellipse at 10% 20%,
+						rgba(26, 115, 232, 0.08) 0%,
+						transparent 50%
+					),
+					radial-gradient(
+						ellipse at 90% 80%,
+						rgba(79, 195, 247, 0.05) 0%,
+						transparent 50%
+					);
+				pointer-events: none;
+				z-index: 0;
+			}
+
+			/* ── SIDEBAR ── */
+			.sidebar {
+				width: 220px;
+				min-height: 100vh;
+				background: rgba(7, 25, 46, 0.95);
+				border-right: 1px solid var(--border);
+				display: flex;
+				flex-direction: column;
+				padding: 2rem 1.25rem;
+				position: fixed;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				z-index: 10;
+				backdrop-filter: blur(12px);
+			}
+
+			.sidebar-logo {
+				font-family: "Cormorant Garamond", serif;
+				font-size: 1.4rem;
+				font-weight: 300;
+				letter-spacing: 0.05em;
+				color: var(--text);
+				margin-bottom: 0.25rem;
+			}
+
+			.sidebar-logo span {
+				color: var(--blue-light);
+				font-weight: 600;
+			}
+
+			.sidebar-sub {
+				font-size: 0.7rem;
+				letter-spacing: 0.15em;
+				text-transform: uppercase;
+				color: var(--text-dim);
+				margin-bottom: 2.5rem;
+			}
+
+			.sidebar-divider {
+				height: 1px;
+				background: var(--border);
+				margin: 1.5rem 0;
+			}
+
+			.nav-item {
+				display: flex;
+				align-items: center;
+				gap: 0.75rem;
+				padding: 0.65rem 0.85rem;
+				border-radius: 6px;
+				cursor: pointer;
+				font-size: 0.875rem;
+				color: var(--text-dim);
+				transition: all 0.2s;
+				margin-bottom: 0.25rem;
+				border: 1px solid transparent;
+			}
+
+			.nav-item:hover {
+				background: rgba(26, 115, 232, 0.08);
+				color: var(--text);
+			}
+
+			.nav-item.active {
+				background: rgba(26, 115, 232, 0.15);
+				color: var(--blue-light);
+				border-color: rgba(79, 195, 247, 0.2);
+			}
+
+			.nav-icon {
+				font-size: 1rem;
+				width: 18px;
+				text-align: center;
+			}
+
+			.sidebar-bottom {
+				margin-top: auto;
+			}
+
+			.logout-btn {
+				width: 100%;
+				padding: 0.65rem 0.85rem;
+				background: rgba(231, 76, 60, 0.1);
+				border: 1px solid rgba(231, 76, 60, 0.2);
+				color: #e57373;
+				border-radius: 6px;
+				cursor: pointer;
+				font-size: 0.875rem;
+				font-family: inherit;
+				transition: all 0.2s;
+				display: flex;
+				align-items: center;
+				gap: 0.75rem;
+			}
+
+			.logout-btn:hover {
+				background: rgba(231, 76, 60, 0.2);
+				border-color: rgba(231, 76, 60, 0.4);
+			}
+
+			/* ── MAIN ── */
+			.main {
+				margin-left: 220px;
+				flex: 1;
+				padding: 2.5rem 3rem;
+				position: relative;
+				z-index: 1;
+			}
+
+			.page-title {
+				font-family: "Cormorant Garamond", serif;
+				font-size: 2rem;
+				font-weight: 300;
+				margin-bottom: 0.25rem;
+				letter-spacing: 0.02em;
+			}
+
+			.page-subtitle {
+				font-size: 0.8rem;
+				color: var(--text-dim);
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				margin-bottom: 2.5rem;
+			}
+
+			/* ── SECTION ── */
+			.section {
+				display: none;
+			}
+			.section.active {
+				display: block;
+			}
+
+			/* ── CARDS ── */
+			.card {
+				background: var(--card);
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				padding: 2rem;
+				backdrop-filter: blur(8px);
+				margin-bottom: 1.5rem;
+			}
+
+			.card-title {
+				font-size: 0.75rem;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: var(--blue-light);
+				margin-bottom: 1.25rem;
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+			}
+
+			.card-title::after {
+				content: "";
+				flex: 1;
+				height: 1px;
+				background: var(--border);
+			}
+
+			/* ── STATUS BADGE ── */
+			.status-badge {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5rem;
+				padding: 0.4rem 1rem;
+				border-radius: 20px;
+				font-size: 0.8rem;
+				font-weight: 500;
+				letter-spacing: 0.05em;
+			}
+
+			.status-online {
+				background: rgba(76, 175, 80, 0.15);
+				border: 1px solid rgba(76, 175, 80, 0.3);
+				color: #81c784;
+			}
+
+			.status-maintenance {
+				background: rgba(255, 152, 0, 0.15);
+				border: 1px solid rgba(255, 152, 0, 0.3);
+				color: #ffb74d;
+			}
+
+			.status-dot {
+				width: 7px;
+				height: 7px;
+				border-radius: 50%;
+				background: currentColor;
+				animation: pulse-dot 2s infinite;
+			}
+
+			@keyframes pulse-dot {
+				0%,
+				100% {
+					opacity: 1;
+				}
+				50% {
+					opacity: 0.4;
+				}
+			}
+
+			/* ── MAINTENANCE TOGGLE ── */
+			.maintenance-row {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				padding: 1.25rem 1.5rem;
+				background: rgba(7, 25, 46, 0.6);
+				border: 1px solid var(--border);
+				border-radius: 8px;
+				margin-bottom: 1rem;
+			}
+
+			.maintenance-label {
+				font-size: 0.95rem;
+				font-weight: 500;
+			}
+
+			.maintenance-desc {
+				font-size: 0.8rem;
+				color: var(--text-dim);
+				margin-top: 0.2rem;
+			}
+
+			/* Toggle switch */
+			.switch {
+				position: relative;
+				width: 52px;
+				height: 28px;
+				flex-shrink: 0;
+			}
+
+			.switch input {
+				display: none;
+			}
+
+			.switch-slider {
+				position: absolute;
+				inset: 0;
+				background: rgba(255, 255, 255, 0.1);
+				border: 1px solid rgba(255, 255, 255, 0.15);
+				border-radius: 14px;
+				cursor: pointer;
+				transition: all 0.3s;
+			}
+
+			.switch-slider::before {
+				content: "";
+				position: absolute;
+				width: 20px;
+				height: 20px;
+				background: white;
+				border-radius: 50%;
+				top: 3px;
+				left: 3px;
+				transition: all 0.3s;
+				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+			}
+
+			.switch input:checked + .switch-slider {
+				background: rgba(26, 115, 232, 0.4);
+				border-color: var(--blue);
+			}
+
+			.switch input:checked + .switch-slider::before {
+				transform: translateX(24px);
+				background: var(--blue-light);
+			}
+
+			/* ── DATETIME INPUT ── */
+			.input-group {
+				margin-bottom: 1rem;
+			}
+
+			.input-label {
+				font-size: 0.8rem;
+				color: var(--text-dim);
+				letter-spacing: 0.05em;
+				margin-bottom: 0.5rem;
+				display: block;
+			}
+
+			.input-field {
+				width: 100%;
+				padding: 0.75rem 1rem;
+				background: rgba(7, 25, 46, 0.6);
+				border: 1px solid var(--border);
+				border-radius: 8px;
+				color: var(--text);
+				font-family: "DM Mono", monospace;
+				font-size: 0.9rem;
+				transition: border-color 0.2s;
+			}
+
+			.input-field:focus {
+				outline: none;
+				border-color: var(--blue);
+				box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+			}
+
+			.input-field::-webkit-calendar-picker-indicator {
+				filter: invert(0.7);
+				cursor: pointer;
+			}
+
+			/* ── SAVE BUTTON ── */
+			.save-btn {
+				width: 100%;
+				padding: 0.9rem;
+				background: linear-gradient(
+					135deg,
+					var(--blue) 0%,
+					#1557b0 100%
+				);
+				color: white;
+				border: none;
+				border-radius: 8px;
+				font-family: inherit;
+				font-size: 0.875rem;
+				font-weight: 600;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				cursor: pointer;
+				transition: all 0.25s;
+				margin-top: 0.5rem;
+			}
+
+			.save-btn:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 8px 24px rgba(26, 115, 232, 0.35);
+			}
+
+			.save-btn:active {
+				transform: translateY(0);
+			}
+
+			/* ── SUCCESS TOAST ── */
+			.toast {
+				position: fixed;
+				bottom: 2rem;
+				right: 2rem;
+				background: rgba(13, 37, 64, 0.95);
+				border: 1px solid rgba(76, 175, 80, 0.4);
+				color: #81c784;
+				padding: 1rem 1.5rem;
+				border-radius: 8px;
+				font-size: 0.875rem;
+				backdrop-filter: blur(12px);
+				transform: translateY(100px);
+				opacity: 0;
+				transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+				z-index: 100;
+			}
+
+			.toast.show {
+				transform: translateY(0);
+				opacity: 1;
+			}
+
+			/* ── STATS GRID ── */
+			.stats-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 1rem;
+				margin-bottom: 1.5rem;
+			}
+
+			.stat-card {
+				background: var(--card);
+				border: 1px solid var(--border);
+				border-radius: 10px;
+				padding: 1.25rem 1.5rem;
+				backdrop-filter: blur(8px);
+			}
+
+			.stat-label {
+				font-size: 0.75rem;
+				color: var(--text-dim);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				margin-bottom: 0.5rem;
+			}
+
+			.stat-value {
+				font-family: "Cormorant Garamond", serif;
+				font-size: 1.8rem;
+				font-weight: 600;
+				color: var(--blue-light);
+			}
+
+			/* ── INFO BOX ── */
+			.info-box {
+				padding: 1rem 1.25rem;
+				background: rgba(26, 115, 232, 0.06);
+				border: 1px solid rgba(26, 115, 232, 0.15);
+				border-radius: 8px;
+				font-size: 0.82rem;
+				color: var(--text-dim);
+				line-height: 1.6;
+				margin-top: 1rem;
+			}
+
+			.info-box strong {
+				color: var(--blue-light);
+			}
+
+			@media (max-width: 768px) {
+				.sidebar {
+					width: 60px;
+					padding: 1.5rem 0.5rem;
+				}
+				.sidebar-logo,
+				.sidebar-sub,
+				.nav-item span {
+					display: none;
+				}
+				.main {
+					margin-left: 60px;
+					padding: 1.5rem;
+				}
+				.stats-grid {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- SIDEBAR -->
+		<aside class="sidebar">
+			<div class="sidebar-logo">Pulse <span>Santé</span></div>
+			<div class="sidebar-sub">Administration</div>
+
+			<nav>
+				<div
+					class="nav-item active"
+					onclick="switchSection('maintenance', this)">
+					<span class="nav-icon">🔧</span>
+					<span>Maintenance</span>
+				</div>
+				<div
+					class="nav-item"
+					onclick="switchSection('dashboard', this)">
+					<span class="nav-icon">📊</span>
+					<span>Tableau de bord</span>
+				</div>
+			</nav>
+
+			<div class="sidebar-divider"></div>
+
+			<div class="sidebar-bottom">
+				<button class="logout-btn" onclick="logout()">
+					<span>🚪</span>
+					<span>Déconnexion</span>
+				</button>
+			</div>
+		</aside>
+
+		<!-- MAIN CONTENT -->
+		<main class="main">
+			<!-- ── MAINTENANCE SECTION ── -->
+			<section id="maintenance" class="section active">
+				<div class="page-title">Mode Maintenance</div>
+				<div class="page-subtitle">Contrôle de l'accès au site</div>
+
+				<div class="card">
+					<div class="card-title">État actuel</div>
+					<div
+						style="
+							display: flex;
+							align-items: center;
+							justify-content: space-between;
+							flex-wrap: wrap;
+							gap: 1rem;
+						">
+						<div>
+							<div
+								id="statusBadge"
+								class="status-badge status-online">
+								<span class="status-dot"></span>
+								Site opérationnel
+							</div>
+							<div
+								style="
+									font-size: 0.8rem;
+									color: var(--text-dim);
+									margin-top: 0.75rem;
+								"
+								id="statusDetail">
+								Tous les visiteurs peuvent accéder au site
+								normalement.
+							</div>
+						</div>
+						<div
+							id="countdown-display"
+							style="
+								display: none;
+								font-family: &quot;DM Mono&quot;, monospace;
+								font-size: 1.1rem;
+								color: var(--blue-light);
+								background: rgba(26, 115, 232, 0.08);
+								border: 1px solid var(--border);
+								padding: 0.75rem 1.25rem;
+								border-radius: 8px;
+							">
+							⏱ <span id="countdown-text">--:--:--</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="card">
+					<div class="card-title">Configuration</div>
+
+					<div class="maintenance-row">
+						<div>
+							<div class="maintenance-label">
+								Activer la maintenance
+							</div>
+							<div class="maintenance-desc">
+								Redirige tous les visiteurs vers la page de
+								maintenance
+							</div>
+						</div>
+						<label class="switch">
+							<input
+								type="checkbox"
+								id="maintenanceToggle"
+								onchange="updateStatus()" />
+							<span class="switch-slider"></span>
+						</label>
+					</div>
+
+					<div class="input-group">
+						<label class="input-label" for="maintenanceEnd"
+							>Date et heure de fin prévue</label
+						>
+						<input
+							type="datetime-local"
+							id="maintenanceEnd"
+							class="input-field" />
+					</div>
+
+					<button class="save-btn" onclick="saveSettings()">
+						💾 Sauvegarder les paramètres
+					</button>
+
+					<div class="info-box">
+						<strong>Comment ça marche :</strong> quand la
+						maintenance est activée, les visiteurs sont redirigés
+						vers une page avec un compte à rebours. Quand le
+						décompte atteint zéro, ils sont automatiquement renvoyés
+						vers le site.
+					</div>
+				</div>
+			</section>
+
+			<!-- ── DASHBOARD SECTION ── -->
+			<section id="dashboard" class="section">
+				<div class="page-title">Tableau de bord</div>
+				<div class="page-subtitle">Vue d'ensemble</div>
+
+				<div class="stats-grid">
+					<div class="stat-card">
+						<div class="stat-label">Pages</div>
+						<div class="stat-value">6</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-label">Admins</div>
+						<div class="stat-value">1</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-label">Statut</div>
+						<div class="stat-value" id="dashStatus">🟢</div>
+					</div>
+				</div>
+
+				<div class="card">
+					<div class="card-title">Informations</div>
+					<p
+						style="
+							color: var(--text-dim);
+							font-size: 0.9rem;
+							line-height: 1.7;
+						">
+						Bienvenue sur le panneau d'administration de
+						<strong style="color: var(--text)">Pulse Santé</strong
+						>.<br />
+						Utilisez la section
+						<strong style="color: var(--blue-light)"
+							>Maintenance</strong
+						>
+						pour contrôler l'accès au site.
+					</p>
+				</div>
+			</section>
+		</main>
+
+		<!-- TOAST -->
+		<div class="toast" id="toast">✅ Paramètres sauvegardés</div>
+
+		<script>
+			// ── AUTH ──
+			function checkAuth() {
+				if (localStorage.getItem("pulse_admin_logged") !== "true") {
+					window.location.href = "login.html";
+				}
+			}
+
+			// ── NAV ──
+			function switchSection(id, el) {
+				document
+					.querySelectorAll(".section")
+					.forEach((s) => s.classList.remove("active"));
+				document
+					.querySelectorAll(".nav-item")
+					.forEach((n) => n.classList.remove("active"));
+				document.getElementById(id).classList.add("active");
+				if (el) el.classList.add("active");
+			}
+
+			// ── LOGOUT ──
+			function logout() {
+				localStorage.removeItem("pulse_admin_logged");
+				localStorage.removeItem("pulse_admin_email");
+				window.location.href = "login.html";
+			}
+
+			// ── STATUS UPDATE ──
+			function updateStatus() {
+				const isOn =
+					document.getElementById("maintenanceToggle").checked;
+				const badge = document.getElementById("statusBadge");
+				const detail = document.getElementById("statusDetail");
+				const dashStatus = document.getElementById("dashStatus");
+
+				if (isOn) {
+					badge.className = "status-badge status-maintenance";
+					badge.innerHTML =
+						'<span class="status-dot"></span> Maintenance activée';
+					detail.textContent =
+						"Les visiteurs voient la page de maintenance.";
+					dashStatus.textContent = "🟠";
+				} else {
+					badge.className = "status-badge status-online";
+					badge.innerHTML =
+						'<span class="status-dot"></span> Site opérationnel';
+					detail.textContent =
+						"Tous les visiteurs peuvent accéder au site normalement.";
+					dashStatus.textContent = "🟢";
+				}
+			}
+
+			// ── SAVE ──
+			function saveSettings() {
+				const isEnabled =
+					document.getElementById("maintenanceToggle").checked;
+				const endTime = document.getElementById("maintenanceEnd").value;
+
+				localStorage.setItem(
+					"pulse_maintenance_settings",
+					JSON.stringify({
+						enabled: isEnabled,
+						endTime: endTime
+							? new Date(endTime).toISOString()
+							: null,
+						lastUpdated: new Date().toISOString(),
+					}),
+				);
+
+				showToast("✅ Paramètres sauvegardés");
+				updateStatus();
+			}
+
+			// ── TOAST ──
+			function showToast(msg) {
+				const t = document.getElementById("toast");
+				t.textContent = msg;
+				t.classList.add("show");
+				setTimeout(() => t.classList.remove("show"), 3000);
+			}
+
+			// ── LOAD ──
+			function loadSettings() {
+				try {
+					const raw = localStorage.getItem(
+						"pulse_maintenance_settings",
+					);
+					if (!raw) return;
+					const s = JSON.parse(raw);
+					document.getElementById("maintenanceToggle").checked =
+						s.enabled || false;
+					if (s.endTime) {
+						const d = new Date(s.endTime);
+						document.getElementById("maintenanceEnd").value = d
+							.toISOString()
+							.slice(0, 16);
+					}
+					updateStatus();
+					startCountdown();
+				} catch (e) {}
+			}
+
+			// ── COUNTDOWN ──
+			function startCountdown() {
+				setInterval(() => {
+					try {
+						const s = JSON.parse(
+							localStorage.getItem(
+								"pulse_maintenance_settings",
+							) || "{}",
+						);
+						const display =
+							document.getElementById("countdown-display");
+						if (!s.enabled || !s.endTime) {
+							display.style.display = "none";
+							return;
+						}
+
+						const diff = new Date(s.endTime) - new Date();
+						if (diff <= 0) {
+							display.style.display = "none";
+							return;
+						}
+
+						display.style.display = "block";
+						const h = Math.floor(diff / 3600000);
+						const m = Math.floor((diff % 3600000) / 60000);
+						const sec = Math.floor((diff % 60000) / 1000);
+						document.getElementById("countdown-text").textContent =
+							`${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+					} catch (e) {}
+				}, 1000);
+			}
+
+			// ── INIT ──
+			checkAuth();
+			loadSettings();
+		</script>
+	</body>
+</html>
