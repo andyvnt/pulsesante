@@ -96,6 +96,19 @@ const readJSON = async (path) => JSON.parse(await readFile(join(SRC, path), "utf
 
 const escape = (value) => String(value).replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;");
 
+// Local environment
+try {
+	process.loadEnvFile(join(ROOT, ".env"));
+} catch {
+	// Variables come from the host
+}
+
+// EmailJS settings
+const EMAILJS_KEYS = { publicKey: "EMAILJS_PUBLIC_KEY", serviceId: "EMAILJS_SERVICE_ID", templateId: "EMAILJS_TEMPLATE_ID" };
+const missing = Object.values(EMAILJS_KEYS).filter((name) => !process.env[name]);
+if (missing.length) throw new Error(`Missing environment variables: ${missing.join(", ")}`);
+const EMAILJS = Object.fromEntries(Object.entries(EMAILJS_KEYS).map(([field, name]) => [field, process.env[name]]));
+
 // Clean output
 await rm(DIST, { recursive: true, force: true });
 
@@ -113,6 +126,7 @@ const { metafile } = await build({
 	minify: true,
 	metafile: true,
 	external: ["/assets/*"],
+	define: { __EMAILJS__: JSON.stringify(EMAILJS) },
 	loader: { ".json": "json" },
 	logLevel: "warning",
 });

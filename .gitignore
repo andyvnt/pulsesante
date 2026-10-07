@@ -34,3 +34,4 @@ Thumbs.db
 # Markdown except the readme
 *.md
 !README.md
+src/config/app/

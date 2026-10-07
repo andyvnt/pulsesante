@@ -1,6 +1,13 @@
-import emailjs from "../../config/app/emailjs.json";
 import { RULES } from "../utils/validate.js";
 import { allowAttempt } from "../utils/rateLimit.js";
+
+/**
+ * EmailJS settings injected at build
+ * @type {{ publicKey: string, serviceId: string, templateId: string }}
+ */
+
+// eslint-disable-next-line no-undef
+const emailjs = __EMAILJS__;
 
 const ENDPOINT = "https://api.emailjs.com/api/v1.0/email/send";
 const TIMEOUT_MS = 15000;
