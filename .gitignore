@@ -21,3 +21,7 @@ Thumbs.db
 
 # Legacy credential hashes (delete the file)
 src/config/app/admin.json
+
+# Markdown except the readme
+*.md
+!README.md
