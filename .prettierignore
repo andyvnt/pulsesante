@@ -1,12 +1,4 @@
 dist
 node_modules
 package-lock.json
-src/components
-src/security
-src/utils/index.js
-src/js/components/index.js
-src/js/admin/index.js
-src/js/utils/index.js
-src/config/ConfigLoader.js
-src/config/index.js
 src/styles/ui/*.css
