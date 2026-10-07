@@ -1,3 +1,4 @@
-# Pulse Sante
+# Pulse Santé
 
-Pulse Santé is a complete website & lightweight admin interface for health-focused research and project pages. It centralizes public pages, admin tools, and deployment scripts to simplify content management and secure maintenance modes.
+Website for Pulse Santé, a public health and occupational health consulting firm: services, team, publications and a contact form.
+It also includes a private admin area to switch the site into maintenance mode.
