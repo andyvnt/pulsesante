@@ -1,6 +1,6 @@
 import { StorageKeys } from "../utils/constants.js";
 
-const SUPPORTED = ["fr", "en", "es"];
+const SUPPORTED = new Set(["fr", "en", "es"]);
 const DEFAULT = "fr";
 
 let strings = {};
@@ -14,7 +14,7 @@ let ready;
 const detect = () => {
 	const stored = localStorage.getItem(StorageKeys.LANGUAGE);
 	const browser = navigator.language?.slice(0, 2).toLowerCase();
-	return [stored, browser].find((lang) => SUPPORTED.includes(lang)) ?? DEFAULT;
+	return [stored, browser].find((lang) => SUPPORTED.has(lang)) ?? DEFAULT;
 };
 
 /**

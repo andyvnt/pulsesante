@@ -52,7 +52,12 @@ const key = (intent, field) => `chatbot.intents.${intent}.${field}`;
  * @return {string} - List markup
  */
 
-const list = (items, className = "") => `<ul${className ? ` class="${className}"` : ""}>${items.map((item) => `<li>${item}</li>`).join("")}</ul>`;
+const list = (items, className = "") => {
+	const attribute = className ? ` class="${className}"` : "";
+	const rows = items.map((item) => `<li>${item}</li>`).join("");
+	return `<ul${attribute}>${rows}</ul>`;
+};
+
 /**
  * Inline icon
  * @param {string} name - Icon name
@@ -223,16 +228,25 @@ const addMessage = (role, content = "") => {
  * @return {Promise<void>}
  */
 
-const typeMessage = async (bubble, html) => {
-	if (/<[a-z]/i.test(html)) bubble.innerHTML = html;
-	else {
-		for (const char of html) {
-			bubble.textContent += char;
-			await wait(TYPEWRITER_MS);
+const typeMessage = (bubble, html) =>
+	new Promise((resolve) => {
+		// Markup shows at once
+		if (/<[a-z]/i.test(html)) {
+			bubble.innerHTML = html;
+			scrollBottom();
+			return resolve();
 		}
-	}
-	scrollBottom();
-};
+
+		// Plain text types out
+		const chars = [...html];
+		const timer = setInterval(() => {
+			bubble.textContent += chars.shift();
+			if (chars.length) return;
+			clearInterval(timer);
+			scrollBottom();
+			resolve();
+		}, TYPEWRITER_MS);
+	});
 
 /**
  * Show quick replies
@@ -319,7 +333,7 @@ const setOpen = (open) => {
 	if (hasGreeted) scrollBottom();
 	else {
 		hasGreeted = true;
-		greet();
+		void greet();
 	}
 	setTimeout(() => $("chat-input").focus(), 300);
 };
@@ -335,7 +349,7 @@ const restart = () => {
 		.querySelectorAll(".chat-msg")
 		.forEach((el) => el.remove());
 	$("chat-quick-replies").replaceChildren();
-	greet();
+	void greet();
 };
 
 /**
@@ -346,7 +360,7 @@ const restart = () => {
 const send = () => {
 	const text = $("chat-input").value;
 	$("chat-input").value = "";
-	ask(text);
+	void ask(text);
 };
 
 /**
@@ -384,7 +398,7 @@ const buildUI = () => {
 	document.body.append(root);
 
 	// Quick reply clicks
-	$("chat-quick-replies").addEventListener("click", (event) => event.target.closest(".chat-quick-btn") && ask(event.target.textContent));
+	$("chat-quick-replies").addEventListener("click", (event) => event.target.closest(".chat-quick-btn") && void ask(event.target.textContent));
 	$("chat-input").addEventListener("keydown", (event) => event.key === "Enter" && send());
 };
 
@@ -404,7 +418,15 @@ for (const [name, shown] of [
 	document.addEventListener(name, () => ["chat-toggle", "chat-window"].forEach((id) => $(id)?.classList.toggle("with-banner", shown)));
 }
 
-initLanguage().then(() => {
+/**
+ * Start chatbot
+ * @return {Promise<void>}
+ */
+
+const init = async () => {
+	await initLanguage();
 	buildUI();
 	setTimeout(() => $("chat-badge").classList.add("visible"), BADGE_MS);
-});
+};
+
+void init();

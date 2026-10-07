@@ -191,10 +191,18 @@ registerActions({
 	"cookie-save": () => save(Object.fromEntries(CATEGORIES.map(({ key, required }) => [key, required || $(`cookie-toggle-${key}`).checked]))),
 });
 
-initLanguage().then(() => {
+/**
+ * Start consent UI
+ * @return {Promise<void>}
+ */
+
+const init = async () => {
+	await initLanguage();
 	buildUI();
 
 	// First visit banner
 	if (readConsent()) $("cookie-manage-btn").classList.add("visible");
 	else setTimeout(() => setBanner(true), 600);
-});
+};
+
+void init();

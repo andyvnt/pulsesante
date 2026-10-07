@@ -56,7 +56,7 @@ const trapFocus = (event) => {
 };
 
 registerActions({
-	close: (arg, el) => closeOverlay(el.closest("[data-overlay]")),
+	close: (_arg, el) => closeOverlay(el.closest("[data-overlay]")),
 });
 
 // Backdrop click

@@ -24,16 +24,16 @@ const toggleMenu = () => {
 };
 
 registerActions({
-	scroll: (id, el, event) => {
+	scroll: (id, _el, event) => {
 		event.preventDefault();
 		scrollTo(id);
 	},
-	top: (arg, el, event) => {
+	top: (_arg, _el, event) => {
 		event.preventDefault();
 		window.scrollTo({ top: 0, behavior: "smooth" });
 	},
 	menu: toggleMenu,
-	"mobile-scroll": (id, el, event) => {
+	"mobile-scroll": (id, _el, event) => {
 		event.preventDefault();
 		toggleMenu();
 		setTimeout(() => scrollTo(id), 280);

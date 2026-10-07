@@ -184,7 +184,7 @@
 	height: 28px;
 	border-radius: 50%;
 	border: none;
-	background: rgba(255, 255, 255, 0.1);
+	background: #223b53;
 	color: #fff;
 	cursor: pointer;
 	font-size: 0.95rem;
@@ -196,7 +196,7 @@
 }
 
 .chat-close-btn:hover {
-	background: rgba(255, 255, 255, 0.22);
+	background: #40556a;
 }
 
 .chat-header-actions {
@@ -211,8 +211,8 @@
 	height: 28px;
 	border-radius: 50%;
 	border: none;
-	background: rgba(255, 255, 255, 0.08);
-	color: rgba(255, 255, 255, 0.6);
+	background: #1e364f;
+	color: #c2c8cf;
 	cursor: pointer;
 	display: flex;
 	align-items: center;
@@ -229,7 +229,7 @@
 }
 
 .chat-restart-btn:hover {
-	background: rgba(255, 255, 255, 0.18);
+	background: #364c62;
 	color: #fff;
 }
 
