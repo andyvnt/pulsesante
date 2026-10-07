@@ -1,42 +1,23 @@
-# Environnement
+# Environment
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Build
+# Build and tooling
 node_modules/
 dist/
-build/
-
-# Logs
+.netlify/
 *.log
-npm-debug.log*
 
-# Security
-.security.env
-security-keys/
+# OS and editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
 
-## Configuration
-admin.json
-# Local admin config
-src/config/admin.json
+# Sync conflict copies
+* 2.*
+* 2/
 
-# Deployment and security docs (keep out of VCS)
-DEPLOYMENT.md
-SECURITY.md
-SECURITY.html
-
-# GitHub metadata (local instructions only)
-.github/
+# Legacy credential hashes (delete the file)
+src/config/app/admin.json

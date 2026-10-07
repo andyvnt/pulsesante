@@ -1,0 +1,27 @@
+{
+	"name": "pulse-sante",
+	"version": "2.0.0",
+	"private": true,
+	"type": "module",
+	"description": "Pulse Santé website",
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"build": "node scripts/build.mjs",
+		"dev": "netlify dev",
+		"test": "node --test",
+		"format": "prettier --write .",
+		"format:check": "prettier --check .",
+		"hash-password": "node scripts/hash-password.mjs",
+		"check": "npm run build && npm test && npm run format:check"
+	},
+	"dependencies": {
+		"@netlify/blobs": "^8.1.0"
+	},
+	"devDependencies": {
+		"esbuild": "^0.25.0",
+		"prettier": "^3.3.0"
+	},
+	"packageManager": "yarn@4.17.1+sha512.ccbfabf7d7b6b32075088be9386fb9a2e00bb6887ef07fa56effabc890a56d53da1ccc4128d62db245fcbd3961b236d75335bdf7d5320ed6eafb7588b7ad4697"
+}
