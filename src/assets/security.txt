@@ -1,0 +1,4 @@
+Contact: mailto:contact@pulsesante.fr
+Expires: 2027-10-07T00:00:00.000Z
+Preferred-Languages: fr, en
+Canonical: https://pulsesante.fr/.well-known/security.txt
