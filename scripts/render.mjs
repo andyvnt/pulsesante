@@ -19,11 +19,11 @@ const CLOCK = (size) =>
 	`<svg width="${size}" height="${size}" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="6" /><path d="M8 5v3l2 2" /></svg>`;
 /**
  * Escape HTML
- * @param {unknown} value - Raw text
+ * @param {string} value - Raw text
  * @return {string} - Safe text
  */
 
-const esc = (value) => String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+const esc = (value) => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll('"', "&quot;");
 /**
  * Avatar icon
  * @param {number} size - Pixel size
@@ -47,6 +47,14 @@ const button = (action, arg) => `role="button" tabindex="0" data-action="${actio
  */
 
 const join = (items, fn) => items.map(fn).join("\n");
+
+/**
+ * Read-more link
+ * @param {string|undefined} href - Article path
+ * @return {string} - Link markup or empty
+ */
+
+const readMore = (href) => (href ? `<a href="${href}" class="etude-link">Lire l'article ${ARROW(13)}</a>` : "");
 
 /**
  * Page renderers
@@ -85,12 +93,14 @@ export const renderers = ({ services, sectors, team, studies }) => ({
 	<div class="etude-domain">${esc(domain)}</div>
 	<h4>${esc(title)}</h4>
 	<p>${esc(desc)}</p>
-	${href ? `<a href="${href}" class="etude-link">Lire l'article ${ARROW(13)}</a>` : ""}
+	${readMore(href)}
 </div>`,
 		),
 	works: () =>
 		studies.studies
 			.map(({ done, href, domain, title, desc }, index) => {
+				// Optional arrow and link
+				const arrow = href ? `\n\t<div class="card-arrow">${ARROW(20)}</div>` : "";
 				const inner = `
 	<div class="card-num">${String(index + 1).padStart(2, "0")}</div>
 	<div class="card-body">
@@ -100,7 +110,7 @@ export const renderers = ({ services, sectors, team, studies }) => ({
 		</div>
 		<h3>${esc(title)}</h3>
 		<p>${esc(desc)}</p>
-	</div>${href ? `\n\t<div class="card-arrow">${ARROW(20)}</div>` : ""}`;
+	</div>${arrow}`;
 				return href ? `<a href="${href}" class="travail-card">${inner}\n</a>` : `<div class="travail-card wip">${inner}\n</div>`;
 			})
 			.join("\n"),

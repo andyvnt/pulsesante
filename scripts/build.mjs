@@ -94,7 +94,7 @@ const readJSON = async (path) => JSON.parse(await readFile(join(SRC, path), "utf
  * @return {string} - Safe text
  */
 
-const escape = (value) => String(value).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+const escape = (value) => String(value).replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;");
 
 // Clean output
 await rm(DIST, { recursive: true, force: true });
@@ -130,7 +130,9 @@ const outputOf = (inputPath) => {
 // Static assets and translations
 await cp(join(SRC, "assets"), join(DIST, "assets"), { recursive: true });
 await mkdir(join(DIST, "assets/i18n"), { recursive: true });
-for (const lang of ["fr", "en", "es"]) await writeFile(join(DIST, `assets/i18n/${lang}.json`), JSON.stringify(await readJSON(`config/languages/${lang}.json`)));
+await Promise.all(
+	["fr", "en", "es"].map(async (lang) => writeFile(join(DIST, `assets/i18n/${lang}.json`), JSON.stringify(await readJSON(`config/languages/${lang}.json`)))),
+);
 
 // Load data
 const [seo, site, services, sectors, team, studies] = await Promise.all(
@@ -152,9 +154,13 @@ const template = async (name) => readFile(join(SRC, "views/layouts", `${name}.ht
  */
 
 const expand = async (html) => {
-	let result = html;
-	for (const [, name] of html.matchAll(/<!--include:([\w-]+)-->/g)) result = result.replaceAll(`<!--include:${name}-->`, await expand(await template(name)));
-	return result.replaceAll("{{year}}", String(new Date().getFullYear())).replace(/<!--render:(\w+)-->/g, (_, name) => render[name]());
+	// Resolve includes
+	const names = [...new Set([...html.matchAll(/<!--include:([\w-]+)-->/g)].map(([, name]) => name))];
+	const parts = await Promise.all(names.map(async (name) => expand(await template(name))));
+	const included = names.reduce((result, name, index) => result.replaceAll(`<!--include:${name}-->`, parts[index]), html);
+
+	// Year and renders
+	return included.replaceAll("{{year}}", String(new Date().getFullYear())).replace(/<!--render:(\w+)-->/g, (_, name) => render[name]());
 };
 
 /**
@@ -201,6 +207,7 @@ const head = (page, meta) => {
 	const url = seo.site + page.route;
 	const image = seo.site + seo.image;
 	const schema = schemaFor(page, { ...meta, title });
+	const jsonLd = schema ? `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", ...schema })}</script>` : "";
 	return `<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>${escape(title)}</title>
@@ -221,17 +228,19 @@ ${page.private ? '<meta name="robots" content="noindex, nofollow" />' : ""}
 ${FONT_PRELOADS.map((font) => `<link rel="preload" href="/assets/fonts/${font}.woff2" as="font" type="font/woff2" crossorigin />`).join("\n")}
 <link rel="stylesheet" href="${outputOf(`styles/pages/${page.css}.css`)}" />
 <script type="module" src="${outputOf(page.js)}"></script>
-${schema ? `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", ...schema })}</script>` : ""}`;
+${jsonLd}`;
 };
 
 // Render pages
-for (const page of PAGES) {
-	const body = await expand(await readFile(join(SRC, "views", page.view), "utf8"));
-	const html = `<!doctype html>\n<html lang="fr">\n<head>\n${head(page, seo.pages[page.seo])}\n</head>\n<body>\n${body}\n</body>\n</html>\n`;
-	const target = join(DIST, page.route, "index.html");
-	await mkdir(dirname(target), { recursive: true });
-	await writeFile(target, html);
-}
+await Promise.all(
+	PAGES.map(async (page) => {
+		const body = await expand(await readFile(join(SRC, "views", page.view), "utf8"));
+		const html = `<!doctype html>\n<html lang="fr">\n<head>\n${head(page, seo.pages[page.seo])}\n</head>\n<body>\n${body}\n</body>\n</html>\n`;
+		const target = join(DIST, page.route, "index.html");
+		await mkdir(dirname(target), { recursive: true });
+		await writeFile(target, html);
+	}),
+);
 
 // Crawl files
 await mkdir(join(DIST, ".well-known"), { recursive: true });
