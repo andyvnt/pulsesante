@@ -1,0 +1,143 @@
+@import "../fonts.css";
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body {
+	font-family:
+		"DM Sans",
+		-apple-system,
+		BlinkMacSystemFont,
+		sans-serif;
+	background: linear-gradient(135deg, #f0f4fa 55%, #ddeeff 100%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	color: #0a1628;
+}
+.login-container {
+	background: #ffffff;
+	border-radius: 12px;
+	box-shadow: 0 24px 64px rgba(10, 37, 64, 0.15);
+	padding: 3rem 2.5rem;
+	max-width: 400px;
+	width: 95%;
+	text-align: center;
+}
+.login-header {
+	margin-bottom: 2rem;
+}
+.login-header h1 {
+	font-family: "Cormorant Garamond", serif;
+	font-size: 2.2rem;
+	color: #0a2540;
+	margin-bottom: 0.5rem;
+}
+.login-header p {
+	font-size: 0.85rem;
+	color: #6b8eb5;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+.form-group {
+	margin-bottom: 1.5rem;
+	text-align: left;
+}
+.form-group label {
+	display: block;
+	font-size: 0.9rem;
+	font-weight: 500;
+	color: #0a2540;
+	margin-bottom: 0.5rem;
+}
+.form-group input {
+	width: 100%;
+	padding: 0.75rem;
+	border: 1px solid #d0dce6;
+	border-radius: 6px;
+	font-size: 1rem;
+	font-family: inherit;
+	transition: border-color 0.2s;
+}
+.form-group input:focus {
+	outline: none;
+	border-color: #1a73e8;
+	box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+}
+.login-btn {
+	width: 100%;
+	padding: 0.85rem;
+	background: linear-gradient(135deg, #1a73e8 0%, #1557b0 100%);
+	color: white;
+	border: none;
+	border-radius: 6px;
+	font-size: 1rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition:
+		transform 0.2s,
+		box-shadow 0.2s;
+	margin-top: 1rem;
+}
+.login-btn:hover:not(:disabled) {
+	transform: translateY(-2px);
+	box-shadow: 0 8px 24px rgba(26, 115, 232, 0.3);
+}
+.login-btn:disabled {
+	opacity: 0.7;
+	cursor: not-allowed;
+}
+.error-msg {
+	color: #d32f2f;
+	font-size: 0.85rem;
+	margin-top: 0.5rem;
+	display: none;
+}
+.success-msg {
+	color: #388e3c;
+	font-size: 0.85rem;
+	margin-top: 0.5rem;
+	display: none;
+}
+.back-link {
+	margin-top: 2rem;
+	text-align: center;
+}
+.back-link a {
+	color: #1a73e8;
+	text-decoration: none;
+	font-size: 0.85rem;
+	transition: color 0.2s;
+}
+.back-link a:hover {
+	color: #0a2540;
+}
+.loading {
+	display: none;
+	text-align: center;
+	margin-top: 1rem;
+}
+.spinner {
+	border: 3px solid #f0f4fa;
+	border-top: 3px solid #1a73e8;
+	border-radius: 50%;
+	width: 24px;
+	height: 24px;
+	animation: spin 1s linear infinite;
+	margin: 0 auto;
+}
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.accent {
+	color: #1a73e8;
+}

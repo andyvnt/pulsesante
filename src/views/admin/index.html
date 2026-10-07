@@ -1,0 +1,84 @@
+<aside class="sidebar">
+	<div class="sidebar-logo">Pulse <span>Santé</span></div>
+	<div class="sidebar-sub">Administration</div>
+	<nav aria-label="Administration">
+		<button class="nav-item active" data-action="section" data-arg="maintenance">
+			<span class="nav-icon" aria-hidden="true">🔧</span><span>Maintenance</span>
+		</button>
+		<button class="nav-item" data-action="section" data-arg="dashboard"><span class="nav-icon" aria-hidden="true">📊</span><span>Tableau de bord</span></button>
+	</nav>
+	<div class="sidebar-divider"></div>
+	<div class="sidebar-bottom">
+		<button class="logout-btn" data-action="logout"><span aria-hidden="true">🚪</span><span>Déconnexion</span></button>
+	</div>
+</aside>
+
+<main class="main">
+	<section id="maintenance" class="section active">
+		<h1 class="page-title">Mode maintenance</h1>
+		<div class="page-subtitle">Contrôle de l'accès au site</div>
+		<div class="card">
+			<div class="card-title">État actuel</div>
+			<div class="status-row">
+				<div>
+					<div id="statusBadge" class="status-badge status-online"><span class="status-dot"></span>Site opérationnel</div>
+					<div id="statusDetail" class="status-detail">Tous les visiteurs peuvent accéder au site normalement.</div>
+				</div>
+				<div id="countdown-display" class="countdown-display" hidden>
+					<span aria-hidden="true">⏱</span>
+					<span id="countdown-text">--:--:--</span>
+				</div>
+			</div>
+		</div>
+		<form id="maintenanceForm" class="card">
+			<div class="card-title">Configuration</div>
+			<div class="maintenance-row">
+				<div>
+					<label class="maintenance-label" for="maintenanceToggle">Activer la maintenance</label>
+					<div class="maintenance-desc">Redirige tous les visiteurs vers la page de maintenance</div>
+				</div>
+				<label class="switch">
+					<input type="checkbox" id="maintenanceToggle" />
+					<span class="switch-slider"></span>
+				</label>
+			</div>
+			<div class="input-group">
+				<label class="input-label" for="maintenanceEnd">Date et heure de fin prévues</label>
+				<input type="datetime-local" id="maintenanceEnd" class="input-field" />
+			</div>
+			<button class="save-btn" type="submit">Sauvegarder</button>
+			<div class="info-box">
+				<strong>Fonctionnement :</strong> la maintenance activée redirige les visiteurs vers une page avec un compte à rebours. Une fois le décompte terminé,
+				ils retournent sur le site.
+			</div>
+		</form>
+	</section>
+
+	<section id="dashboard" class="section">
+		<h1 class="page-title">Tableau de bord</h1>
+		<div class="page-subtitle">Vue d'ensemble</div>
+		<div class="stats-grid">
+			<div class="stat-card">
+				<div class="stat-label">Pages</div>
+				<div class="stat-value">6</div>
+			</div>
+			<div class="stat-card">
+				<div class="stat-label">Admins</div>
+				<div class="stat-value">1</div>
+			</div>
+			<div class="stat-card">
+				<div class="stat-label">Statut</div>
+				<div class="stat-value" id="dashStatus">🟢</div>
+			</div>
+		</div>
+		<div class="card">
+			<div class="card-title">Informations</div>
+			<p class="admin-note">
+				Bienvenue sur le panneau d'administration de
+				<strong>Pulse Santé</strong>.<br />Utilisez la section <strong class="hl">Maintenance</strong> pour contrôler l'accès au site.
+			</p>
+		</div>
+	</section>
+</main>
+
+<div class="toast" id="toast" role="status"></div>
