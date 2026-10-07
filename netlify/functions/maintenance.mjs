@@ -11,7 +11,7 @@ const OFF = { enabled: false, endTime: null };
  * @return {Promise<Response>} - JSON response
  */
 
-export default async (req, context, deps = runtime()) => {
+export default async function maintenance(req, _context, deps = runtime()) {
 	const { env, store, now } = deps;
 
 	// Public read
@@ -33,6 +33,6 @@ export default async (req, context, deps = runtime()) => {
 	const state = { enabled, endTime: end ? end.toISOString() : null };
 	await store.setJSON(KEY, state);
 	return json(state);
-};
+}
 
 export const config = { path: "/api/maintenance", method: ["GET", "POST"] };

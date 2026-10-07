@@ -20,7 +20,7 @@ const counterKey = (context) => `login-${context?.ip ?? "unknown"}`.replace(/[^\
  * @return {Promise<Response>} - JSON response
  */
 
-export default async (req, context, deps = runtime()) => {
+export default async function login(req, context, deps = runtime()) {
 	const { env, store, now } = deps;
 
 	// Config and origin
@@ -60,6 +60,6 @@ export default async (req, context, deps = runtime()) => {
 	return json({ ok: true }, 200, {
 		"set-cookie": createSessionCookie(env.SESSION_SECRET, now),
 	});
-};
+}
 
 export const config = { path: "/api/login", method: "POST" };
