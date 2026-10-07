@@ -1,0 +1,122 @@
+@import "../fonts.css";
+@import "../base.css";
+@import "../ui/cookie.css";
+@import "../ui/chatbot.css";
+:root {
+	--deep: #0a2540;
+	--accent: #1560c8;
+	--light: #4da6ff;
+	--cream: #f0f4fa;
+	--cream2: #dde6f5;
+	--white: #ffffff;
+	--txt: #0a1628;
+	--txt2: #2d4a6e;
+	--txt3: #46678d;
+}
+body {
+	font-family: "DM Sans", sans-serif;
+	background: var(--cream);
+	color: var(--txt);
+}
+nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 300;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1.2rem 6vw;
+	background: rgba(240, 244, 250, 0.97);
+	backdrop-filter: blur(12px);
+	border-bottom: 1px solid rgba(10, 37, 64, 0.07);
+	will-change: transform;
+	transform: translateZ(0);
+}
+.nav-logo {
+	font-family: "Cormorant Garamond", serif;
+	font-size: 1.5rem;
+	font-weight: 600;
+	color: var(--deep);
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	text-decoration: none;
+	transition: opacity 0.2s;
+}
+.back-link {
+	font-size: 0.78rem;
+	letter-spacing: 0.09em;
+	text-transform: uppercase;
+	color: var(--txt2);
+	text-decoration: none;
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+	transition: color 0.2s;
+}
+.back-link:hover {
+	color: var(--accent);
+}
+.page-hero {
+	padding: 9rem 6vw 4rem;
+	background: linear-gradient(135deg, var(--cream) 55%, #ddeeff 100%);
+}
+.page-tag::before {
+	content: "";
+	width: 2rem;
+	height: 1px;
+	background: var(--accent);
+}
+.page-hero h1 {
+	font-family: "Cormorant Garamond", serif;
+	font-size: clamp(2.2rem, 4vw, 3.5rem);
+	font-weight: 300;
+	line-height: 1.1;
+	color: var(--deep);
+}
+.page-hero p {
+	font-size: 0.82rem;
+	color: var(--txt3);
+	margin-top: 0.8rem;
+	font-weight: 300;
+}
+.content h3 {
+	font-family: "DM Sans", sans-serif;
+	font-size: 0.9rem;
+	font-weight: 500;
+	color: var(--deep);
+	margin: 1.2rem 0 0.5rem;
+}
+.rgpd-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	background: rgba(26, 115, 232, 0.1);
+	color: var(--accent);
+	font-size: 0.75rem;
+	font-weight: 500;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	padding: 0.45rem 1rem;
+	border-radius: 20px;
+	margin-bottom: 2rem;
+}
+.footer-logo {
+	font-family: "Cormorant Garamond", serif;
+	font-size: 1.25rem;
+	font-weight: 600;
+	color: var(--cream);
+	display: flex;
+	align-items: center;
+	gap: 7px;
+	text-decoration: none;
+	transition: opacity 0.2s;
+}
+.footer-links a {
+	font-size: 0.72rem;
+	color: rgba(247, 244, 239, 0.55);
+	text-decoration: none;
+	transition: color 0.2s;
+}

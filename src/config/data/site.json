@@ -1,0 +1,88 @@
+{
+	"name": "PulseSanté",
+	"tagline": "Expert en santé au travail et épidémiologie",
+	"description": "Analyses biostatistiques, diagnostics terrain, recommandations actionnables, pour les entreprises et organisations qui veulent agir sur leur santé.",
+	"shortDescription": "Accompagnement global des risques professionnels.",
+	"url": "https://pulsesante.fr",
+	"contact": {
+		"email": "contact@pulsesante.fr",
+		"phone": "+33 (0)1 23 45 67 89",
+		"country": "France"
+	},
+	"copyrightYear": 2025,
+	"fonts": {
+		"display": "Cormorant Garamond",
+		"body": "DM Sans"
+	},
+	"hero": {
+		"tag": "Consulting · Santé Publique & Entreprise",
+		"headline": "Transformer vos données de santé en décisions éclairées",
+		"cta": {
+			"primary": "Prendre rendez-vous",
+			"secondary": "Nos services"
+		},
+		"statCard": {
+			"badge": "Analyse en cours",
+			"label": "Absentéisme · Secteur Santé",
+			"metric": "−34%",
+			"sub": "après intervention ciblée"
+		}
+	},
+	"stats": [
+		{
+			"type": "badge",
+			"badge": "Pionnier",
+			"label": "Premier outil de calcul budgétaire\nen prévention & promotion santé"
+		},
+		{ "type": "metric", "num": "98%", "label": "Clients satisfaits" },
+		{ "type": "metric", "num": "8+", "label": "Secteurs couverts" }
+	],
+	"method": {
+		"tag": "Approche",
+		"title": "Une méthode rigoureuse",
+		"quote": "La donnée sans interprétation reste du bruit. Notre rôle : la transformer en clarté opérationnelle.",
+		"steps": [
+			{
+				"num": "01",
+				"title": "Diagnostic",
+				"desc": "Recueil des données, entretiens parties prenantes, définition des indicateurs clés."
+			},
+			{
+				"num": "02",
+				"title": "Analyse",
+				"desc": "Modélisation statistique, tests d'hypothèses, visualisation des tendances."
+			},
+			{
+				"num": "03",
+				"title": "Recommandations",
+				"desc": "Actions priorisées par impact, restitution accessible, indicateurs de suivi."
+			},
+			{
+				"num": "04",
+				"title": "Suivi",
+				"desc": "Accompagnement à la mise en œuvre, mesure des effets, ajustements."
+			}
+		],
+		"miniStats": [
+			{ "num": "72h", "label": "Premier rapport" },
+			{ "num": "100%", "label": "Confidentiel" },
+			{ "num": "R · Py", "label": "Outils analytiques" },
+			{ "num": "RGPD", "label": "Conformité totale" }
+		]
+	},
+	"contactSection": {
+		"tag": "Contact",
+		"title": "Parlons de votre projet",
+		"intro": "Un premier échange de 30 min pour cerner vos enjeux, sans engagement. Offre personnalisée sous 48h.",
+		"features": ["Premier appel gratuit & sans engagement", "Réponse sous 24h ouvrées", "Présentiel ou visio", "Confidentialité garantie (NDA sur demande)"],
+		"besoinOptions": [
+			"Absentéisme / arrêts de travail",
+			"Étude épidémiologique",
+			"Audit QVT",
+			"Programme de prévention",
+			"Formation",
+			"Recherche clinique",
+			"Autre"
+		]
+	}
+}

@@ -1,0 +1,339 @@
+<nav id="mainNav">
+	<a href="#" class="nav-logo" data-action="top">
+		Pulse<span>Santé</span>
+		<!--include:pulse-->
+	</a>
+	<ul class="nav-links">
+		<li>
+			<a href="#services" data-action="scroll" data-arg="services">Services</a>
+		</li>
+		<li>
+			<a href="#methode" data-action="scroll" data-arg="methode">Méthode</a>
+		</li>
+		<li>
+			<a href="#secteurs" data-action="scroll" data-arg="secteurs">Secteurs</a>
+		</li>
+		<li><a href="/equipe/">Équipe</a></li>
+		<li><a href="/travaux/">Travaux</a></li>
+		<li>
+			<a href="#rdv" data-action="scroll" data-arg="rdv" class="nav-cta">Prendre RDV</a>
+		</li>
+	</ul>
+	<a href="/admin/login/" class="btn-login" id="adminBtn">Connexion</a>
+	<button class="nav-burger" id="burgerBtn" data-action="menu" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<nav class="nav-mobile" id="mobileMenu">
+	<a href="#services" data-action="mobile-scroll" data-arg="services">Services</a>
+	<a href="#methode" data-action="mobile-scroll" data-arg="methode">Méthode</a>
+	<a href="#secteurs" data-action="mobile-scroll" data-arg="secteurs">Secteurs</a>
+	<a href="/equipe/">Équipe</a>
+	<a href="/travaux/">Travaux</a>
+	<a href="#rdv" data-action="mobile-scroll" data-arg="rdv" class="m-cta">Prendre RDV</a>
+</nav>
+
+<section id="hero">
+	<div class="hero-decor"></div>
+	<div class="hero-content">
+		<div class="hero-tag">Consulting · Santé Publique &amp; Entreprise</div>
+		<h1>Transformer vos données<br />de santé en <em>décisions</em><br />éclairées</h1>
+		<p class="hero-desc">
+			Analyses biostatistiques, diagnostics terrain, recommandations actionnables, pour les entreprises et organisations qui veulent agir sur leur santé.
+		</p>
+		<div class="hero-actions">
+			<a href="#rdv" data-action="scroll" data-arg="rdv" class="btn-primary">Prendre rendez-vous</a>
+			<a href="#services" data-action="scroll" data-arg="services" class="btn-outline">Nos services</a>
+		</div>
+	</div>
+	<div class="hero-visual">
+		<div class="data-card">
+			<div class="card-badge">Analyse en cours</div>
+			<div class="data-card-label">Absentéisme · Secteur Santé</div>
+			<div class="data-card-metric">−34%</div>
+			<div class="data-card-sub">après intervention ciblée</div>
+			<div class="chart-bars">
+				<div class="bar hi"></div>
+				<div class="bar hi"></div>
+				<div class="bar"></div>
+				<div class="bar hi"></div>
+				<div class="bar"></div>
+				<div class="bar hi"></div>
+				<div class="bar"></div>
+				<div class="bar hi"></div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<div class="stats-band stagger">
+	<div class="stat-item">
+		<div class="pioneer-badge">
+			<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+				<polygon points="8,1 10,5.5 15,6 11.5,9.5 12.5,14 8,11.5 3.5,14 4.5,9.5 1,6 6,5.5" />
+			</svg>
+			Pionnier
+		</div>
+		<div class="stat-label stat-label--note">Premier outil de calcul budgétaire<br />en prévention &amp; promotion santé</div>
+	</div>
+	<div class="stat-item">
+		<span class="stat-num">98%</span>
+		<div class="stat-label">Clients satisfaits</div>
+	</div>
+	<div class="stat-item">
+		<span class="stat-num">8+</span>
+		<div class="stat-label">Secteurs couverts</div>
+	</div>
+</div>
+
+<section id="services">
+	<div class="services-intro reveal">
+		<div class="section-tag">Expertises</div>
+		<h2>Ce que nous <em>faisons</em></h2>
+		<p>Cliquez sur un service pour en savoir plus.</p>
+	</div>
+	<div class="services-grid stagger"><!--render:services--></div>
+</section>
+
+<div class="modal-overlay" id="modal-overlay" data-overlay>
+	<div class="modal">
+		<button class="modal-close" data-action="close">✕</button>
+		<svg
+			class="modal-icon"
+			id="modal-icon"
+			viewBox="0 0 40 40"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="1.6"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+		></svg>
+		<h3 id="modal-title"></h3>
+		<p id="modal-body1"></p>
+		<p id="modal-body2"></p>
+		<a href="#rdv" class="modal-cta" data-action="close-scroll" data-arg="rdv">Prendre rendez-vous →</a>
+	</div>
+</div>
+
+<section id="methode">
+	<div class="method-layout">
+		<div class="reveal-left">
+			<div class="section-tag">Approche</div>
+			<h2>Une méthode<br /><em>rigoureuse</em></h2>
+			<div class="method-steps">
+				<div class="method-step">
+					<div class="step-num">01</div>
+					<div class="step-text">
+						<h4>Diagnostic</h4>
+						<p>Recueil des données, entretiens parties prenantes, définition des indicateurs clés.</p>
+					</div>
+				</div>
+				<div class="method-step">
+					<div class="step-num">02</div>
+					<div class="step-text">
+						<h4>Analyse</h4>
+						<p>Modélisation statistique, tests d'hypothèses, visualisation des tendances.</p>
+					</div>
+				</div>
+				<div class="method-step">
+					<div class="step-num">03</div>
+					<div class="step-text">
+						<h4>Recommandations</h4>
+						<p>Actions priorisées par impact, restitution accessible, indicateurs de suivi.</p>
+					</div>
+				</div>
+				<div class="method-step">
+					<div class="step-num">04</div>
+					<div class="step-text">
+						<h4>Suivi</h4>
+						<p>Accompagnement à la mise en œuvre, mesure des effets, ajustements.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="method-visual reveal-right">
+			<div class="visual-quote">"La donnée sans interprétation reste du bruit. Notre rôle : la transformer en clarté opérationnelle."</div>
+			<div class="visual-stats">
+				<div class="mini-stat">
+					<div class="mini-stat-num">72h</div>
+					<div class="mini-stat-label">Premier rapport</div>
+				</div>
+				<div class="mini-stat">
+					<div class="mini-stat-num">100%</div>
+					<div class="mini-stat-label">Confidentiel</div>
+				</div>
+				<div class="mini-stat">
+					<div class="mini-stat-num">R · Py</div>
+					<div class="mini-stat-label">Outils analytiques</div>
+				</div>
+				<div class="mini-stat">
+					<div class="mini-stat-num">RGPD</div>
+					<div class="mini-stat-label">Conformité totale</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section id="secteurs">
+	<div class="reveal">
+		<div class="section-tag">Secteurs</div>
+		<h2>Une expertise <em>transversale</em></h2>
+	</div>
+	<div class="sectors-grid stagger"><!--render:sectors--></div>
+</section>
+
+<div class="sector-modal-overlay" id="sector-modal-overlay" data-overlay>
+	<div class="sector-modal">
+		<button class="sector-modal-close" data-action="close">✕</button>
+		<svg
+			class="sector-modal-icon"
+			id="sector-modal-icon"
+			viewBox="0 0 32 32"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="1.6"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+		></svg>
+		<h3 id="sector-modal-title"></h3>
+		<div class="sector-modal-subtitle" id="sector-modal-subtitle"></div>
+		<div class="sector-risks-title">Risques associés</div>
+		<div class="sector-risks-list" id="sector-risks-list"></div>
+	</div>
+</div>
+
+<section id="equipe">
+	<div class="reveal section-head">
+		<div class="section-tag">L'équipe</div>
+		<h2>Des profils <em>complémentaires</em></h2>
+	</div>
+	<a href="/equipe/" class="equipe-cta reveal">
+		<div class="equipe-cta-left">
+			<div class="equipe-cta-avatars">
+				<div class="equipe-avatar eq-dark">
+					<svg width="22" height="22" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+						<circle cx="20" cy="13" r="6" />
+						<path d="M6 35c0-7.7 6.3-14 14-14s14 6.3 14 14" />
+					</svg>
+				</div>
+				<div class="equipe-avatar eq-light">
+					<svg width="22" height="22" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+						<circle cx="20" cy="13" r="6" />
+						<path d="M6 35c0-7.7 6.3-14 14-14s14 6.3 14 14" />
+					</svg>
+				</div>
+				<div class="equipe-avatar eq-light">
+					<svg width="22" height="22" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+						<circle cx="20" cy="13" r="6" />
+						<path d="M6 35c0-7.7 6.3-14 14-14s14 6.3 14 14" />
+					</svg>
+				</div>
+			</div>
+			<div>
+				<div class="equipe-cta-title">Andrew, Luca &amp; Jules</div>
+				<div class="equipe-cta-sub">Santé publique · Data science · Gestion de projet</div>
+			</div>
+		</div>
+		<div class="equipe-cta-arrow">
+			Découvrir l'équipe
+			<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+				<path d="M3 8h10M9 4l4 4-4 4" />
+			</svg>
+		</div>
+	</a>
+</section>
+
+<section id="travaux">
+	<div class="reveal section-head section-head--tight">
+		<div class="section-tag">Recherche &amp; Publications</div>
+		<h2>Travaux <em>réalisés</em></h2>
+	</div>
+	<div class="etudes-grid stagger"><!--render:studies--></div>
+	<div class="travaux-more reveal">
+		<a href="/travaux/"
+			>Voir tous les travaux
+			<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+				<path d="M3 8h10M9 4l4 4-4 4" /></svg
+		></a>
+	</div>
+</section>
+
+<section id="rdv">
+	<div class="rdv-container">
+		<div class="section-tag">Contact</div>
+		<h2>Parlons de votre <em>projet</em></h2>
+		<div class="rdv-layout">
+			<div class="rdv-info reveal-left">
+				<p>Un premier échange de 30 min pour cerner vos enjeux, sans engagement. Offre personnalisée sous 48h.</p>
+				<div class="rdv-features">
+					<div class="rdv-feature"><!--include:check-->Premier appel gratuit &amp; sans engagement</div>
+					<div class="rdv-feature"><!--include:check-->Réponse sous 24h ouvrées</div>
+					<div class="rdv-feature"><!--include:check-->Présentiel ou visio</div>
+					<div class="rdv-feature"><!--include:check-->Confidentialité garantie (NDA sur demande)</div>
+				</div>
+			</div>
+			<div class="rdv-form reveal-right">
+				<form id="contactForm" novalidate>
+					<div class="form-row">
+						<div class="form-group">
+							<label for="prenom">Prénom</label>
+							<input id="prenom" name="prenom" type="text" autocomplete="given-name" maxlength="50" required placeholder="Marie" />
+						</div>
+						<div class="form-group">
+							<label for="nom">Nom</label>
+							<input id="nom" name="nom" type="text" autocomplete="family-name" maxlength="50" required placeholder="Dupont" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="email">Email</label>
+						<input id="email" name="email" type="email" autocomplete="email" maxlength="254" required placeholder="marie@entreprise.fr" />
+					</div>
+					<div class="form-group">
+						<label for="telephone">Téléphone</label>
+						<input id="telephone" name="telephone" type="tel" autocomplete="tel" maxlength="20" placeholder="06 00 00 00 00" />
+					</div>
+					<div class="form-group">
+						<label for="organisation">Organisation</label>
+						<input id="organisation" name="organisation" type="text" autocomplete="organization" maxlength="100" placeholder="Votre structure" />
+					</div>
+					<div class="form-group">
+						<label for="besoin">Besoin</label>
+						<select id="besoin" name="besoin" required>
+							<option value="">Sélectionner...</option>
+							<option>Absentéisme / arrêts de travail</option>
+							<option>Étude épidémiologique</option>
+							<option>Audit QVT</option>
+							<option>Programme de prévention</option>
+							<option>Formation</option>
+							<option>Recherche clinique</option>
+							<option>Autre</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="message">Message (optionnel)</label>
+						<textarea id="message" name="message" maxlength="2000" placeholder="Décrivez brièvement votre situation..."></textarea>
+					</div>
+					<p class="form-trap" aria-hidden="true">
+						<label>Ne pas remplir <input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
+					</p>
+					<p class="form-status" id="formStatus" role="alert"></p>
+					<button class="form-submit" type="submit">Envoyer →</button>
+					<p class="form-legal">
+						Vos données servent uniquement à répondre à votre demande. Voir la
+						<a href="/confidentialite/">politique de confidentialité</a>.
+					</p>
+				</form>
+				<div class="form-confirm" id="formConfirm" role="status">
+					<svg class="confirm-icon" width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+						<circle cx="24" cy="24" r="20" />
+						<path d="M14 24l7 7 13-14" />
+					</svg>
+					<div class="confirm-msg">Demande reçue !</div>
+					<div class="confirm-sub">Réponse dans les 24h ouvrées.</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!--include:footer-->

@@ -1,0 +1,196 @@
+{
+	"chatbot": {
+		"name": "PULSE AI",
+		"placeholder": "Haz tu pregunta...",
+		"sendLabel": "Enviar",
+		"openLabel": "Abrir PULSE AI",
+		"closeLabel": "Cerrar",
+		"restartLabel": "Reiniciar",
+		"restartTitle": "Reiniciar la conversación",
+		"inputLabel": "Mensaje a PULSE AI",
+		"fallback": "No tengo respuesta a esa pregunta por ahora. Contacta directamente con nuestro equipo, te responderán rápidamente.",
+		"quickReplies": ["Quiero ver sus servicios", "¿En qué sectores trabajan?", "Quiero conocer el equipo", "Quiero contactarles", "¿Cuáles son sus tarifas?"],
+		"defaultFollowUps": ["Quiero ver sus servicios", "Quiero conocer el equipo", "Quiero contactarles", "Quiero un presupuesto"],
+		"intents": {
+			"greeting": {
+				"patterns": ["hola", "buenos dias", "buenas tardes", "buenas", "hey", "ayuda", "ayudarme", "empezar"],
+				"message": "¡Hola! ¿Cómo puedo ayudarle?<br><br>Puedo responder a sus preguntas sobre los servicios de PulseSanté, los sectores de intervención, el equipo, los plazos o las tarifas.",
+				"followUps": ["Quiero ver sus servicios", "¿En qué sectores trabajan?", "Quiero conocer el equipo", "Quiero un presupuesto"]
+			},
+			"about": {
+				"patterns": ["pulsesante", "agencia", "quienes sois", "sobre vosotros", "presentacion", "vuestra empresa"],
+				"template": "<strong>PulseSanté</strong> es una consultora especializada en salud laboral y epidemiología.<br><br>{description}<br><br><span class=\"chat-icon-inline\">{pin}</span> {country}{stats}",
+				"followUps": ["Quiero ver sus servicios", "Quiero conocer el equipo", "¿Cómo trabajáis?", "Quiero contactarles"]
+			},
+			"services_all": {
+				"patterns": ["servicios", "prestaciones", "que haceis", "expertise", "especialidad", "ver todos los servicios"],
+				"intro": "Aquí están nuestras <strong>{count} áreas de expertise</strong>:",
+				"outro": "Dígame cuál le interesa y le daré más detalles.",
+				"followUps": ["Cuéntame sobre bioestadística", "Cuéntame sobre salud laboral", "Quiero un presupuesto", "Quiero contactarles"],
+				"detailFollowUps": ["Quiero ver todos los servicios", "Quiero un presupuesto", "¿Cuáles son sus plazos?", "Quiero contactarles"]
+			},
+			"service_biostats": {
+				"patterns": ["bioestadistica", "estadistica", "analisis de datos", "datos", "modelo", "regresion", "r python"]
+			},
+			"service_travail": {
+				"patterns": ["salud laboral", "absentismo", "riesgos psicosociales", "burnout", "bienestar", "condiciones laborales"]
+			},
+			"service_sante_pub": {
+				"patterns": ["salud publica", "epidemiologia", "estudio", "prevencion", "vigilancia", "poblacion"]
+			},
+			"service_audit": {
+				"patterns": ["auditoria", "cumplimiento", "normativa", "evaluacion", "diagnostico"]
+			},
+			"service_formation": {
+				"patterns": ["formacion", "rrhh", "directivos", "taller", "concienciacion", "profesionales"]
+			},
+			"service_recherche": {
+				"patterns": ["investigacion", "clinica", "protocolo", "ensayo", "diseno de estudio", "publicacion"]
+			},
+			"sectors": {
+				"patterns": ["sector", "industria", "hospital", "clinica", "ong", "colegio", "pyme", "administracion", "sectores"],
+				"intro": "Trabajamos en <strong>{count} sectores</strong>:",
+				"followUps": ["Quiero ver sus servicios", "¿Cómo trabajáis?", "Quiero contactarles"]
+			},
+			"team": {
+				"patterns": ["equipo", "andrew", "luca", "jules", "fundadores", "consultores", "miembros"],
+				"intro": "Nuestro equipo:",
+				"linkLabel": "Ver perfiles detallados",
+				"followUps": ["Quiero ver sus servicios", "¿Cómo trabajáis?", "Quiero contactarles"]
+			},
+			"contact": {
+				"patterns": ["contacto", "llamar", "telefono", "email", "cita", "reunion", "escribir"],
+				"intro": "Aquí cómo contactarnos:",
+				"ctaLabel": "Solicitar una cita",
+				"ctaPage": "/#rdv",
+				"followUps": ["Quiero ver sus servicios", "Quiero un presupuesto", "¿Cuáles son sus plazos?"]
+			},
+			"process": {
+				"patterns": ["metodo", "enfoque", "como trabajais", "proceso", "pasos", "como funciona", "metodologia"],
+				"intro": "Nuestro método en <strong>{count} pasos</strong>:",
+				"followUps": ["Quiero ver sus servicios", "Quiero un presupuesto", "¿Cuáles son sus plazos?", "Quiero contactarles"]
+			},
+			"pricing": {
+				"patterns": ["precio", "coste", "presupuesto", "cuanto cuesta", "facturacion", "honorarios", "oferta", "gratis"],
+				"intro": "Cada proyecto es diferente, elaboramos un <strong>presupuesto personalizado</strong> adaptado a sus necesidades.",
+				"items": [
+					{
+						"icon": "check",
+						"strong": "Primera llamada gratuita",
+						"text": "(30 min)"
+					},
+					{
+						"icon": "check",
+						"strong": "Propuesta económica en 48h",
+						"text": ""
+					},
+					{
+						"icon": "check",
+						"strong": "Confidencialidad garantizada",
+						"text": "(NDA a petición)"
+					}
+				],
+				"ctaLabel": "Solicitar presupuesto",
+				"ctaPage": "/#rdv",
+				"followUps": ["¿Cómo trabajáis?", "¿Cuáles son sus plazos?", "Quiero contactarles"]
+			},
+			"delay": {
+				"patterns": ["plazo", "cuando", "cuanto tiempo", "urgente", "disponible", "rapido"],
+				"intro": "Nuestros plazos habituales:",
+				"items": [
+					{
+						"icon": "clock",
+						"strong": "72h",
+						"text": "primer informe entregado"
+					},
+					{
+						"icon": "calendar",
+						"strong": "48h",
+						"text": "oferta personalizada tras el brief"
+					},
+					{
+						"icon": "phone",
+						"strong": "24h laborables",
+						"text": "respuesta a su solicitud"
+					}
+				],
+				"urgentNote": "Para situaciones urgentes, contáctenos directamente.",
+				"followUps": ["Quiero un presupuesto", "¿Cómo trabajáis?", "Quiero contactarles"]
+			},
+			"rgpd": {
+				"patterns": ["rgpd", "gdpr", "privacidad", "datos personales", "proteccion", "seguridad", "cnil"],
+				"intro": "PulseSanté aplica una <strong>política estricta de RGPD</strong>:",
+				"items": [
+					"Datos usados solo para responder a su solicitud",
+					"Nunca se venden a terceros",
+					"Sin cookies publicitarias ni herramientas de seguimiento",
+					"Acceso, rectificación y supresión previa solicitud"
+				],
+				"linkLabel": "Política de privacidad",
+				"linkPage": "/confidentialite/",
+				"followUps": ["Avisos legales", "Gestionar mis cookies", "Quiero contactarles"]
+			},
+			"results": {
+				"patterns": ["resultados", "impacto", "cifras", "eficacia", "pruebas", "casos"],
+				"intro": "Algunos resultados concretos:",
+				"followUps": ["Quiero ver sus servicios", "¿Cómo trabajáis?", "Quiero contactarles"]
+			},
+			"cookie": {
+				"patterns": ["cookie", "consentimiento", "rastreador", "seguimiento", "preferencias de cookies"],
+				"message": "Puede modificar sus preferencias de cookies en cualquier momento.",
+				"ctaLabel": "Gestionar mis cookies",
+				"followUps": ["Sus datos personales", "Avisos legales", "Quiero contactarles"]
+			},
+			"legal": {
+				"patterns": ["aviso legal", "terminos", "condiciones", "legal"],
+				"intro": "Nuestra información legal:",
+				"links": [
+					{
+						"label": "Avisos legales",
+						"page": "/mentions-legales/"
+					},
+					{
+						"label": "Política de privacidad",
+						"page": "/confidentialite/"
+					}
+				],
+				"followUps": ["Sus datos personales", "Quiero contactarles"]
+			}
+		}
+	},
+	"cookie": {
+		"bannerLabel": "Gestión de cookies",
+		"bannerTitle": "Usamos cookies",
+		"bannerDesc": "PulseSanté no utiliza cookies publicitarias ni herramientas de medición de audiencia. Solo se guardan en su dispositivo elementos técnicos imprescindibles.",
+		"learnMore": "Más información",
+		"acceptAll": "Aceptar todo",
+		"rejectAll": "Rechazar todo",
+		"customize": "Personalizar",
+		"save": "Guardar mis preferencias",
+		"manageBtn": "Gestionar cookies",
+		"manageLabel": "Gestionar cookies",
+		"settingsLabel": "Configuración de cookies",
+		"settingsTitle": "Configuración de cookies",
+		"settingsSub": "Elija las categorías que autoriza. Las cookies necesarias no pueden desactivarse.",
+		"required": "Obligatoria",
+		"closeLabel": "Cerrar",
+		"examples": "Ej.: ",
+		"categories": {
+			"necessary": {
+				"label": "Necesarias",
+				"description": "Imprescindibles para el funcionamiento del sitio: recordar sus elecciones, antispam del formulario, sesión de administración.",
+				"examples": ["Sus elecciones de cookies", "Antispam del formulario", "Sesión de administración"]
+			},
+			"analytics": {
+				"label": "Analíticas",
+				"description": "Ninguna herramienta de medición de audiencia está activa en este sitio. Solo se activará con su consentimiento.",
+				"examples": []
+			},
+			"functional": {
+				"label": "Funcionales",
+				"description": "Por el momento no se guarda ninguna preferencia de visualización.",
+				"examples": []
+			}
+		}
+	}
+}

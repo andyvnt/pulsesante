@@ -1,0 +1,230 @@
+{
+	"chatbot": {
+		"name": "PULSE AI",
+		"placeholder": "Posez votre question...",
+		"sendLabel": "Envoyer",
+		"openLabel": "Ouvrir PULSE AI",
+		"closeLabel": "Fermer",
+		"restartLabel": "Recommencer",
+		"restartTitle": "Recommencer la conversation",
+		"inputLabel": "Message à PULSE AI",
+		"fallback": "Je n'ai pas de réponse à cette question pour le moment. Contactez notre équipe directement, elle vous répondra rapidement.",
+		"quickReplies": ["Je veux voir vos services", "Dans quels secteurs ?", "Je veux voir l'équipe", "Je veux vous contacter", "C'est quoi vos tarifs ?"],
+		"defaultFollowUps": ["Je veux voir vos services", "Je veux voir l'équipe", "Je veux vous contacter", "Je veux un devis"],
+		"intents": {
+			"greeting": {
+				"patterns": ["bonjour", "salut", "hello", "bonsoir", "coucou", "hey", "aide", "aide moi", "commencer"],
+				"message": "Bonjour ! Comment puis-je vous aider ?<br><br>Je peux répondre à vos questions sur les services de PulseSanté, les secteurs d'intervention, l'équipe, les délais ou les tarifs.",
+				"followUps": ["Je veux voir vos services", "Dans quels secteurs ?", "Je veux voir l'équipe", "Je veux un devis"]
+			},
+			"about": {
+				"patterns": ["pulsesante", "cabinet", "qui etes vous", "qui vous etes", "presentation", "a propos", "votre histoire", "votre entreprise"],
+				"template": "<strong>PulseSanté</strong> est un cabinet de consulting spécialisé en santé au travail et épidémiologie.<br><br>{description}<br><br><span class=\"chat-icon-inline\">{pin}</span> {country}{stats}",
+				"followUps": ["Je veux voir vos services", "Je veux voir l'équipe", "Comment vous travaillez ?", "Je veux vous contacter"]
+			},
+			"services_all": {
+				"patterns": [
+					"services",
+					"prestations",
+					"offres",
+					"que faites vous",
+					"que proposez vous",
+					"activites",
+					"domaine",
+					"specialite",
+					"expertise",
+					"voir tous les services",
+					"voir vos services"
+				],
+				"intro": "Voici nos <strong>{count} domaines d'expertise</strong> :",
+				"outro": "Dites-moi lequel vous intéresse, je vous donne plus de détails.",
+				"followUps": ["Parlez-moi des biostatistiques", "Parlez-moi de la santé au travail", "Je veux un devis", "Je veux vous contacter"],
+				"detailFollowUps": ["Je veux voir tous les services", "Je veux un devis", "Quels sont vos délais ?", "Je veux vous contacter"]
+			},
+			"service_biostats": {
+				"patterns": ["biostats", "biostatistique", "statistique", "analyse de donnees", "donnees", "modele", "regression", "r python", "analyse stat"]
+			},
+			"service_travail": {
+				"patterns": [
+					"sante au travail",
+					"absenteisme",
+					"rps",
+					"risques psychosociaux",
+					"arrets de travail",
+					"conditions de travail",
+					"turnover",
+					"burnout",
+					"burn out",
+					"bien etre"
+				]
+			},
+			"service_sante_pub": {
+				"patterns": ["sante publique", "epidemiologie", "etude", "prevention", "surveillance", "population", "indicateurs"]
+			},
+			"service_audit": {
+				"patterns": ["audit", "conformite", "duerp", "qvt", "reglementation", "diagnostic", "evaluation"]
+			},
+			"service_formation": {
+				"patterns": ["formation", "drh", "manager", "sensibilisation", "programme", "atelier", "professionnels"]
+			},
+			"service_recherche": {
+				"patterns": ["recherche", "clinique", "protocole", "essai", "design etude", "redaction", "publication"]
+			},
+			"sectors": {
+				"patterns": ["secteur", "industrie", "btp", "hopital", "clinique", "mutuelle", "ong", "etablissement", "scolaire", "pme", "collectivite", "secteurs"],
+				"intro": "Nous intervenons dans <strong>{count} secteurs</strong> :",
+				"followUps": ["Je veux voir vos services", "Comment vous travaillez ?", "Je veux vous contacter"]
+			},
+			"team": {
+				"patterns": ["equipe", "andrew", "luca", "jules", "fondateur", "collaborateurs", "membres", "vos consultants", "qui travaille", "votre equipe"],
+				"intro": "Notre équipe :",
+				"linkLabel": "Voir les profils détaillés",
+				"followUps": ["Je veux voir vos services", "Comment vous travaillez ?", "Je veux vous contacter"]
+			},
+			"contact": {
+				"patterns": ["contact", "joindre", "appeler", "telephone", "email", "rdv", "rendez-vous", "rencontrer", "ecrire", "nous contacter"],
+				"intro": "Voici comment nous joindre :",
+				"ctaLabel": "Prendre rendez-vous",
+				"ctaPage": "/#rdv",
+				"followUps": ["Je veux voir vos services", "Je veux un devis", "Quels sont vos délais ?"]
+			},
+			"process": {
+				"patterns": [
+					"methode",
+					"approche",
+					"comment travaillez vous",
+					"processus",
+					"etapes",
+					"deroulement",
+					"comment ca marche",
+					"fonctionnement",
+					"methodologie",
+					"comment vous travaillez"
+				],
+				"intro": "Notre méthode en <strong>{count} étapes</strong> :",
+				"followUps": ["Je veux voir vos services", "Je veux un devis", "Quels sont vos délais ?", "Je veux vous contacter"]
+			},
+			"pricing": {
+				"patterns": ["tarif", "prix", "cout", "budget", "combien", "facturation", "honoraires", "devis", "gratuit", "offre"],
+				"intro": "Chaque mission est différente, nous établissons un <strong>devis personnalisé</strong> adapté à vos besoins et à votre organisation.",
+				"items": [
+					{
+						"icon": "check",
+						"strong": "Premier appel gratuit",
+						"text": "(30 min)"
+					},
+					{
+						"icon": "check",
+						"strong": "Proposition chiffrée sous 48h",
+						"text": ""
+					},
+					{
+						"icon": "check",
+						"strong": "Confidentialité garantie",
+						"text": "(NDA sur demande)"
+					}
+				],
+				"ctaLabel": "Demander un devis",
+				"ctaPage": "/#rdv",
+				"followUps": ["Comment vous travaillez ?", "Quels sont vos délais ?", "Je veux vous contacter"]
+			},
+			"delay": {
+				"patterns": ["delai", "72h", "combien de temps", "rapidite", "disponible", "urgence", "temps", "quand"],
+				"intro": "Nos délais habituels :",
+				"items": [
+					{
+						"icon": "clock",
+						"strong": "72h",
+						"text": "premier rapport livré"
+					},
+					{
+						"icon": "calendar",
+						"strong": "48h",
+						"text": "offre personnalisée après brief"
+					},
+					{
+						"icon": "phone",
+						"strong": "24h ouvrées",
+						"text": "réponse à votre demande"
+					}
+				],
+				"urgentNote": "Pour les situations urgentes, contactez-nous directement.",
+				"followUps": ["Je veux un devis", "Comment vous travaillez ?", "Je veux vous contacter"]
+			},
+			"rgpd": {
+				"patterns": ["rgpd", "gdpr", "confidentialite", "donnees personnelles", "protection", "securite", "vie privee", "cnil"],
+				"intro": "PulseSanté applique une <strong>politique RGPD stricte</strong> :",
+				"items": [
+					"Données utilisées uniquement pour répondre à votre demande",
+					"Aucune revente à des tiers",
+					"Aucun cookie publicitaire ni outil de suivi",
+					"Accès, rectification et suppression sur simple demande"
+				],
+				"linkLabel": "Politique de confidentialité",
+				"linkPage": "/confidentialite/",
+				"followUps": ["Mentions légales", "Je veux gérer mes cookies", "Je veux vous contacter"]
+			},
+			"results": {
+				"patterns": ["resultats", "impact", "chiffres", "performance", "efficacite", "preuves", "cas concrets", "exemples"],
+				"intro": "Quelques résultats concrets :",
+				"followUps": ["Je veux voir vos services", "Comment vous travaillez ?", "Je veux vous contacter"]
+			},
+			"cookie": {
+				"patterns": ["cookie", "consentement", "traceur", "suivi", "preference cookies"],
+				"message": "Vous pouvez modifier vos préférences de cookies à tout moment.",
+				"ctaLabel": "Gérer mes cookies",
+				"followUps": ["Vos données personnelles", "Mentions légales", "Je veux vous contacter"]
+			},
+			"legal": {
+				"patterns": ["mentions legales", "cgu", "conditions generales", "legal"],
+				"intro": "Nos informations légales :",
+				"links": [
+					{
+						"label": "Mentions légales",
+						"page": "/mentions-legales/"
+					},
+					{
+						"label": "Politique de confidentialité",
+						"page": "/confidentialite/"
+					}
+				],
+				"followUps": ["Vos données personnelles", "Je veux vous contacter"]
+			}
+		}
+	},
+	"cookie": {
+		"bannerLabel": "Gestion des cookies",
+		"bannerTitle": "Nous utilisons des cookies",
+		"bannerDesc": "PulseSanté n'utilise ni cookie publicitaire ni outil de mesure d'audience. Seuls des éléments techniques indispensables sont enregistrés sur votre appareil.",
+		"learnMore": "En savoir plus",
+		"acceptAll": "Tout accepter",
+		"rejectAll": "Tout refuser",
+		"customize": "Personnaliser",
+		"save": "Enregistrer mes choix",
+		"manageBtn": "Gérer les cookies",
+		"manageLabel": "Gérer les cookies",
+		"settingsLabel": "Paramètres des cookies",
+		"settingsTitle": "Paramètres des cookies",
+		"settingsSub": "Choisissez les catégories que vous autorisez. Les cookies nécessaires ne peuvent pas être désactivés.",
+		"required": "Requis",
+		"closeLabel": "Fermer",
+		"examples": "Ex : ",
+		"categories": {
+			"necessary": {
+				"label": "Nécessaires",
+				"description": "Indispensables au fonctionnement du site : mémorisation de vos choix, anti-spam du formulaire, session d'administration.",
+				"examples": ["Vos choix cookies", "Anti-spam du formulaire", "Session d'administration"]
+			},
+			"analytics": {
+				"label": "Analytiques",
+				"description": "Aucun outil de mesure d'audience n'est actif sur ce site. Il ne le deviendra qu'avec votre accord.",
+				"examples": []
+			},
+			"functional": {
+				"label": "Fonctionnels",
+				"description": "Aucune préférence d'affichage n'est enregistrée pour le moment.",
+				"examples": []
+			}
+		}
+	}
+}

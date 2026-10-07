@@ -1,0 +1,45 @@
+{
+	"site": "https://pulsesante.fr",
+	"titleTemplate": "%s | Pulse Santé",
+	"locale": "fr_FR",
+	"image": "/assets/og.png",
+	"themeColor": "#0a2540",
+	"pages": {
+		"home": {
+			"title": "Pulse Santé | Consulting en santé publique et au travail",
+			"description": "Cabinet de consulting en santé au travail et épidémiologie : biostatistiques, diagnostics terrain et plan d'action pour entreprises, collectivités et ONG."
+		},
+		"equipe": {
+			"title": "L'équipe",
+			"description": "Santé publique, data science et gestion de projet : rencontrez Andrew, Luca et Jules, l'équipe pluridisciplinaire de Pulse Santé."
+		},
+		"travaux": {
+			"title": "Travaux et publications",
+			"description": "Revues de littérature, lectures critiques et études de terrain en santé publique et en épidémiologie réalisées par l'équipe de Pulse Santé."
+		},
+		"mentions-legales": {
+			"title": "Mentions légales",
+			"description": "Éditeur, hébergeur et conditions d'utilisation du site pulsesante.fr, édité par Pulse Santé, cabinet de consulting en santé publique."
+		},
+		"confidentialite": {
+			"title": "Politique de confidentialité",
+			"description": "Données collectées par le formulaire de contact, finalités, durées de conservation, sous-traitants et exercice de vos droits RGPD chez Pulse Santé."
+		},
+		"article": {
+			"title": "Conflits armés et santé mentale en Afrique",
+			"description": "Revue de littérature sur les impacts psychosociaux des conflits armés au Sahel et en RDC : ESPT, dépression, accès aux soins et interventions psychosociales."
+		},
+		"maintenance": {
+			"title": "Maintenance",
+			"description": "Le site est temporairement en maintenance."
+		},
+		"login": {
+			"title": "Connexion",
+			"description": "Espace d'administration."
+		},
+		"admin": {
+			"title": "Administration",
+			"description": "Espace d'administration."
+		}
+	}
+}

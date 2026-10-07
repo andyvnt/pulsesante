@@ -1,0 +1,26 @@
+{
+	"studies": [
+		{
+			"key": "conflits",
+			"done": true,
+			"href": "/article-conflits-armes/",
+			"domain": "Santé mentale · Épidémiologie",
+			"title": "Conflits armés et santé mentale en Afrique subsaharienne",
+			"desc": "Revue de littérature sur les impacts psychosociaux des conflits armés au Sahel et en RDC : ESPT, dépression, accès aux soins et interventions psychosociales."
+		},
+		{
+			"key": "risques-soignants",
+			"done": false,
+			"domain": "Santé au travail · Épidémiologie",
+			"title": "Risques professionnels chez les professionnels de santé",
+			"desc": "Étude des expositions aux risques physiques, chimiques, biologiques et psychosociaux en milieu de soins : épuisement professionnel, AES, TMS."
+		},
+		{
+			"key": "leptospirose",
+			"done": false,
+			"domain": "Maladies infectieuses · LCA",
+			"title": "Lecture critique d'article sur la leptospirose",
+			"desc": "Analyse méthodologique d'une étude publiée dans la littérature scientifique internationale : validité interne et externe, biais, interprétation des résultats."
+		}
+	]
+}

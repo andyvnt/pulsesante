@@ -1,0 +1,242 @@
+@import "../fonts.css";
+@import "../base.css";
+@import "../ui/cookie.css";
+@import "../ui/chatbot.css";
+:root {
+	--deep: #0a2540;
+	--accent: #1560c8;
+	--light: #4da6ff;
+	--cream: #f0f4fa;
+	--cream2: #dde6f5;
+	--white: #ffffff;
+	--txt: #0a1628;
+	--txt2: #2d4a6e;
+	--txt3: #46678d;
+}
+body {
+	font-family: "DM Sans", sans-serif;
+	background: var(--cream);
+	color: var(--txt);
+}
+nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 200;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1.3rem 6vw;
+	background: rgba(240, 244, 250, 0.97);
+	backdrop-filter: blur(12px);
+	border-bottom: 1px solid rgba(10, 37, 64, 0.08);
+}
+.nav-logo {
+	font-family: "Cormorant Garamond", serif;
+	font-size: 1.5rem;
+	font-weight: 600;
+	color: var(--deep);
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	text-decoration: none;
+}
+.nav-cta {
+	background: var(--deep);
+	color: var(--cream) !important;
+	padding: 0.55rem 1.3rem;
+	border-radius: 2px;
+}
+.page-header {
+	background: var(--deep);
+	padding: 10rem 6vw 5rem;
+	position: relative;
+	overflow: hidden;
+}
+.page-header::before {
+	content: "";
+	position: absolute;
+	right: -10%;
+	top: -20%;
+	width: 50vw;
+	height: 50vw;
+	border-radius: 50%;
+	background: radial-gradient(circle, rgba(77, 166, 255, 0.12) 0%, transparent 70%);
+}
+.header-tag {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.7rem;
+	letter-spacing: 0.15em;
+	text-transform: uppercase;
+	color: var(--light);
+	font-weight: 500;
+	margin-bottom: 1.2rem;
+}
+.header-tag::before {
+	content: "";
+	width: 2rem;
+	height: 1px;
+	background: var(--light);
+}
+.page-header h1 {
+	font-family: "Cormorant Garamond", serif;
+	font-size: clamp(2.4rem, 4vw, 4rem);
+	font-weight: 300;
+	color: var(--white);
+	line-height: 1.1;
+}
+.page-header h1 em {
+	font-style: italic;
+	color: var(--light);
+}
+.page-header p {
+	margin-top: 1rem;
+	font-size: 0.85rem;
+	color: rgba(247, 244, 239, 0.55);
+}
+.cards-wrap {
+	max-width: 900px;
+	margin: 0 auto;
+	padding: 5rem 6vw 7rem;
+}
+.travaux-grid {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+.travail-card {
+	background: var(--white);
+	border-radius: 14px;
+	border: 1.5px solid var(--cream2);
+	padding: 2.2rem 2.4rem;
+	display: flex;
+	gap: 2rem;
+	align-items: flex-start;
+	text-decoration: none;
+	color: inherit;
+	transition: all 0.25s;
+	cursor: pointer;
+}
+.travail-card:hover {
+	border-color: var(--accent);
+	box-shadow: 0 12px 36px rgba(10, 37, 64, 0.09);
+	transform: translateY(-2px);
+}
+.travail-card.wip {
+	opacity: 0.75;
+	cursor: default;
+}
+.travail-card.wip:hover {
+	transform: none;
+	box-shadow: none;
+	border-color: var(--cream2);
+}
+.card-num {
+	font-family: "Cormorant Garamond", serif;
+	font-size: 2.8rem;
+	font-weight: 300;
+	color: var(--cream2);
+	line-height: 1;
+	min-width: 3rem;
+}
+.travail-card:hover .card-num {
+	color: var(--accent);
+}
+.travail-card.wip:hover .card-num {
+	color: var(--cream2);
+}
+.card-body {
+	flex: 1;
+}
+.card-meta {
+	display: flex;
+	align-items: center;
+	gap: 0.8rem;
+	margin-bottom: 0.75rem;
+}
+.badge-done {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	background: rgba(26, 115, 232, 0.1);
+	color: var(--accent);
+	font-size: 0.65rem;
+	font-weight: 500;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	padding: 0.28rem 0.7rem;
+	border-radius: 20px;
+}
+.badge-done .dot {
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: var(--accent);
+}
+.badge-wip {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	background: rgba(10, 37, 64, 0.07);
+	color: var(--txt3);
+	font-size: 0.65rem;
+	font-weight: 500;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	padding: 0.28rem 0.7rem;
+	border-radius: 20px;
+}
+.badge-wip .dot {
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: var(--txt3);
+}
+.card-domain {
+	font-size: 0.68rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--txt3);
+}
+.card-body h3 {
+	font-family: "Cormorant Garamond", serif;
+	font-size: 1.4rem;
+	font-weight: 500;
+	color: var(--deep);
+	line-height: 1.25;
+	margin-bottom: 0.6rem;
+}
+.card-body p {
+	font-size: 0.83rem;
+	line-height: 1.7;
+	color: var(--txt2);
+	font-weight: 300;
+}
+.card-arrow {
+	margin-left: auto;
+	display: flex;
+	align-items: center;
+	color: var(--accent);
+	opacity: 0;
+	transition: all 0.25s;
+}
+.travail-card:hover .card-arrow {
+	opacity: 1;
+}
+.footer-logo {
+	font-family: "Cormorant Garamond", serif;
+	font-size: 1.25rem;
+	font-weight: 600;
+	color: var(--cream);
+	display: flex;
+	align-items: center;
+	gap: 7px;
+}
+.footer-links a {
+	font-size: 0.72rem;
+	color: rgba(247, 244, 239, 0.55);
+	text-decoration: none;
+}

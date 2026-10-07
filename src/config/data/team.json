@@ -1,0 +1,34 @@
+{
+	"members": [
+		{
+			"key": "andrew",
+			"badge": "Fondateur & PDG",
+			"name": "Andrew",
+			"role": "Expert Santé Publique",
+			"bio": "Diplômé en santé publique et épidémiologie, Andrew a fondé Pulse Santé avec la conviction que la donnée de santé, bien analysée, est le levier le plus puissant pour améliorer le bien-être des organisations. Il intervient auprès d'entreprises, d'ARS et d'ONG sur des missions alliant rigueur statistique et vision terrain.",
+			"tags": ["Biostatistiques", "Épidémiologie", "R / Python", "SPSS", "Santé au travail", "QVT", "Prévention", "Recherche clinique"],
+			"avatarClass": "dark",
+			"lead": true
+		},
+		{
+			"key": "luca",
+			"badge": "Data Science",
+			"name": "Luca",
+			"role": "Assistant Data Scientist",
+			"bio": "Passionné par les données et leur pouvoir de révéler des patterns invisibles, Luca développe les pipelines d'analyse et les tableaux de bord de Pulse Santé. Il contribue à rendre les résultats statistiques accessibles et actionnables pour les clients.",
+			"tags": ["Machine Learning", "Python", "Visualisation", "SQL", "Pandas", "Scikit-learn"],
+			"avatarClass": "light",
+			"lead": false
+		},
+		{
+			"key": "jules",
+			"badge": "Gestion de projet",
+			"name": "Jules",
+			"role": "Chargé de projet",
+			"bio": "Jules est le lien entre l'équipe et les clients. Il assure le bon déroulement des missions, coordonne les livrables et garantit que chaque intervention de Pulse Santé est délivrée dans les délais avec la qualité attendue.",
+			"tags": ["Coordination", "Relation client", "Gestion de projet", "Planification", "Suivi qualité"],
+			"avatarClass": "light",
+			"lead": false
+		}
+	]
+}

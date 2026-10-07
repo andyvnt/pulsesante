@@ -1,0 +1,196 @@
+{
+	"chatbot": {
+		"name": "PULSE AI",
+		"placeholder": "Ask your question...",
+		"sendLabel": "Send",
+		"openLabel": "Open PULSE AI",
+		"closeLabel": "Close",
+		"restartLabel": "Restart",
+		"restartTitle": "Restart the conversation",
+		"inputLabel": "Message to PULSE AI",
+		"fallback": "I don't have an answer to that question right now. Contact our team directly, they'll get back to you quickly.",
+		"quickReplies": ["I want to see your services", "Which sectors do you cover?", "I want to meet the team", "I want to contact you", "What are your rates?"],
+		"defaultFollowUps": ["I want to see your services", "I want to meet the team", "I want to contact you", "I want a quote"],
+		"intents": {
+			"greeting": {
+				"patterns": ["hello", "hi", "good morning", "hey", "help", "help me", "start"],
+				"message": "Hello! How can I help you?<br><br>I can answer your questions about PulseSanté's services, sectors, team, timelines or pricing.",
+				"followUps": ["I want to see your services", "Which sectors do you cover?", "I want to meet the team", "I want a quote"]
+			},
+			"about": {
+				"patterns": ["pulsesante", "agency", "who are you", "about", "your company", "your story"],
+				"template": "<strong>PulseSanté</strong> is a consulting firm specialising in occupational health and epidemiology.<br><br>{description}<br><br><span class=\"chat-icon-inline\">{pin}</span> {country}{stats}",
+				"followUps": ["I want to see your services", "I want to meet the team", "How do you work?", "I want to contact you"]
+			},
+			"services_all": {
+				"patterns": ["services", "offerings", "what do you do", "expertise", "speciality", "see all services", "your services"],
+				"intro": "Here are our <strong>{count} areas of expertise</strong>:",
+				"outro": "Tell me which one interests you and I'll give you more details.",
+				"followUps": ["Tell me about biostatistics", "Tell me about occupational health", "I want a quote", "I want to contact you"],
+				"detailFollowUps": ["I want to see all services", "I want a quote", "What are your timelines?", "I want to contact you"]
+			},
+			"service_biostats": {
+				"patterns": ["biostatistics", "statistics", "data analysis", "data", "model", "regression", "r python"]
+			},
+			"service_travail": {
+				"patterns": ["occupational health", "absenteeism", "psychosocial risks", "burnout", "wellbeing", "working conditions"]
+			},
+			"service_sante_pub": {
+				"patterns": ["public health", "epidemiology", "study", "prevention", "surveillance", "population"]
+			},
+			"service_audit": {
+				"patterns": ["audit", "compliance", "duerp", "qvt", "regulation", "assessment"]
+			},
+			"service_formation": {
+				"patterns": ["training", "hr", "managers", "workshop", "awareness", "professionals"]
+			},
+			"service_recherche": {
+				"patterns": ["research", "clinical", "protocol", "trial", "study design", "writing", "publication"]
+			},
+			"sectors": {
+				"patterns": ["sector", "industry", "hospital", "clinic", "ngo", "school", "sme", "local authority", "sectors"],
+				"intro": "We work across <strong>{count} sectors</strong>:",
+				"followUps": ["I want to see your services", "How do you work?", "I want to contact you"]
+			},
+			"team": {
+				"patterns": ["team", "andrew", "luca", "jules", "founders", "consultants", "members", "who works"],
+				"intro": "Our team:",
+				"linkLabel": "See detailed profiles",
+				"followUps": ["I want to see your services", "How do you work?", "I want to contact you"]
+			},
+			"contact": {
+				"patterns": ["contact", "reach", "call", "phone", "email", "appointment", "meeting", "write"],
+				"intro": "Here is how to reach us:",
+				"ctaLabel": "Book an appointment",
+				"ctaPage": "/#rdv",
+				"followUps": ["I want to see your services", "I want a quote", "What are your timelines?"]
+			},
+			"process": {
+				"patterns": ["method", "approach", "how do you work", "process", "steps", "how it works", "methodology"],
+				"intro": "Our method in <strong>{count} steps</strong>:",
+				"followUps": ["I want to see your services", "I want a quote", "What are your timelines?", "I want to contact you"]
+			},
+			"pricing": {
+				"patterns": ["price", "cost", "budget", "how much", "billing", "fees", "quote", "free", "offer"],
+				"intro": "Every project is different, we build a <strong>personalised quote</strong> tailored to your needs and organisation.",
+				"items": [
+					{
+						"icon": "check",
+						"strong": "Free first call",
+						"text": "(30 min)"
+					},
+					{
+						"icon": "check",
+						"strong": "Costed proposal within 48h",
+						"text": ""
+					},
+					{
+						"icon": "check",
+						"strong": "Guaranteed confidentiality",
+						"text": "(NDA on request)"
+					}
+				],
+				"ctaLabel": "Request a quote",
+				"ctaPage": "/#rdv",
+				"followUps": ["How do you work?", "What are your timelines?", "I want to contact you"]
+			},
+			"delay": {
+				"patterns": ["timeline", "deadline", "how long", "speed", "available", "urgent", "when"],
+				"intro": "Our usual timelines:",
+				"items": [
+					{
+						"icon": "clock",
+						"strong": "72h",
+						"text": "first report delivered"
+					},
+					{
+						"icon": "calendar",
+						"strong": "48h",
+						"text": "personalised offer after brief"
+					},
+					{
+						"icon": "phone",
+						"strong": "24 business hours",
+						"text": "response to your request"
+					}
+				],
+				"urgentNote": "For urgent situations, contact us directly.",
+				"followUps": ["I want a quote", "How do you work?", "I want to contact you"]
+			},
+			"rgpd": {
+				"patterns": ["gdpr", "privacy", "personal data", "protection", "security", "cnil"],
+				"intro": "PulseSanté enforces a <strong>strict GDPR policy</strong>:",
+				"items": [
+					"Data used only to answer your request",
+					"Never sold to third parties",
+					"No advertising cookies or tracking tools",
+					"Access, correction and deletion on request"
+				],
+				"linkLabel": "Privacy policy",
+				"linkPage": "/confidentialite/",
+				"followUps": ["Legal notices", "I want to manage my cookies", "I want to contact you"]
+			},
+			"results": {
+				"patterns": ["results", "impact", "figures", "performance", "efficiency", "proof", "case studies"],
+				"intro": "Some concrete results:",
+				"followUps": ["I want to see your services", "How do you work?", "I want to contact you"]
+			},
+			"cookie": {
+				"patterns": ["cookie", "consent", "tracker", "tracking", "cookie preferences"],
+				"message": "You can update your cookie preferences at any time.",
+				"ctaLabel": "Manage my cookies",
+				"followUps": ["Your personal data", "Legal notices", "I want to contact you"]
+			},
+			"legal": {
+				"patterns": ["legal", "terms", "conditions", "legal notices"],
+				"intro": "Our legal information:",
+				"links": [
+					{
+						"label": "Legal notices",
+						"page": "/mentions-legales/"
+					},
+					{
+						"label": "Privacy policy",
+						"page": "/confidentialite/"
+					}
+				],
+				"followUps": ["Your personal data", "I want to contact you"]
+			}
+		}
+	},
+	"cookie": {
+		"bannerLabel": "Cookie consent",
+		"bannerTitle": "We use cookies",
+		"bannerDesc": "PulseSanté uses no advertising cookies and no audience measurement tool. Only essential technical items are stored on your device.",
+		"learnMore": "Learn more",
+		"acceptAll": "Accept all",
+		"rejectAll": "Reject all",
+		"customize": "Customise",
+		"save": "Save my choices",
+		"manageBtn": "Manage cookies",
+		"manageLabel": "Manage cookies",
+		"settingsLabel": "Cookie settings",
+		"settingsTitle": "Cookie settings",
+		"settingsSub": "Choose which categories you allow. Necessary cookies cannot be disabled.",
+		"required": "Required",
+		"closeLabel": "Close",
+		"examples": "e.g. ",
+		"categories": {
+			"necessary": {
+				"label": "Necessary",
+				"description": "Essential for the site to work: remembering your choices, form anti-spam, administration session.",
+				"examples": ["Your cookie choices", "Form anti-spam", "Administration session"]
+			},
+			"analytics": {
+				"label": "Analytics",
+				"description": "No audience measurement tool is active on this site. It will only become active with your consent.",
+				"examples": []
+			},
+			"functional": {
+				"label": "Functional",
+				"description": "No display preference is stored at the moment.",
+				"examples": []
+			}
+		}
+	}
+}

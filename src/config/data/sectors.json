@@ -1,0 +1,125 @@
+{
+	"sectors": [
+		{
+			"key": "industrie",
+			"title": "Industrie & BTP",
+			"subtitle": "Environnements à risques physiques et chimiques élevés",
+			"risks": [
+				"Troubles musculo-squelettiques (TMS)",
+				"Accidents du travail",
+				"Expositions aux agents chimiques",
+				"Chutes de hauteur",
+				"Risques psychosociaux (RPS)",
+				"Bruit et vibrations",
+				"Poussières et amiante",
+				"Stress thermique"
+			],
+			"icon": "<rect x=\"3\" y=\"14\" width=\"26\" height=\"15\" rx=\"1\"/><path d=\"M7 14V10a9 9 0 0118 0v4\"/><path d=\"M11 22v5M21 22v5\"/>"
+		},
+		{
+			"key": "hopitaux",
+			"title": "Hôpitaux & Cliniques",
+			"subtitle": "Secteur sous tension à forte charge émotionnelle",
+			"risks": [
+				"Épuisement professionnel soignant",
+				"Accidents exposant au sang (AES)",
+				"Infections nosocomiales",
+				"Absentéisme chronique",
+				"Violences et incivilités",
+				"TMS liés aux manutentions",
+				"Stress et burnout",
+				"Exposition aux agents biologiques"
+			],
+			"icon": "<rect x=\"4\" y=\"6\" width=\"24\" height=\"20\" rx=\"2\"/><circle cx=\"16\" cy=\"16\" r=\"5\"/><path d=\"M16 6v4M16 22v4M4 16h4M24 16h4\"/>"
+		},
+		{
+			"key": "collectivites",
+			"title": "Collectivités & ARS",
+			"subtitle": "Enjeux de santé publique territoriale",
+			"risks": [
+				"Déserts médicaux",
+				"Inégalités territoriales de santé",
+				"Épidémies et crises sanitaires locales",
+				"Vieillissement de la population",
+				"Pollution environnementale",
+				"Faible couverture vaccinale",
+				"Précarité et exclusion sociale"
+			],
+			"icon": "<path d=\"M16 3l13 7v12l-13 7L3 22V10z\"/><path d=\"M16 3v26M3 10l13 7 13-7\"/>"
+		},
+		{
+			"key": "pharma",
+			"title": "Pharma & Biotech",
+			"subtitle": "Environnement réglementaire et expérimental exigeant",
+			"risks": [
+				"Non-conformité CPP / ANSM",
+				"Biais méthodologiques d'étude",
+				"Défaut de pharmacovigilance",
+				"Exposition aux agents CMR",
+				"Puissance statistique insuffisante",
+				"Fraude et intégrité scientifique",
+				"Gestion des données cliniques (RGPD)"
+			],
+			"icon": "<path d=\"M8 6h16v20H8z\"/><path d=\"M16 10v12M10 16h12\"/>"
+		},
+		{
+			"key": "education",
+			"title": "Éducation",
+			"subtitle": "Milieu scolaire et universitaire",
+			"risks": [
+				"Burnout enseignant",
+				"Santé mentale des élèves et étudiants",
+				"Harcèlement scolaire",
+				"Troubles anxieux et dépressifs",
+				"Addictions",
+				"Sédentarité",
+				"Violences en milieu scolaire"
+			],
+			"icon": "<path d=\"M4 29h24M8 29V17l8-11 8 11v12\"/><rect x=\"13\" y=\"21\" width=\"6\" height=\"8\"/>"
+		},
+		{
+			"key": "ess",
+			"title": "ESS & Associations",
+			"subtitle": "Structures à faibles ressources et forte implication",
+			"risks": [
+				"Surcharge des bénévoles et salariés",
+				"Précarité professionnelle",
+				"Isolement social des publics accompagnés",
+				"Risques psychosociaux",
+				"Épuisement de compassion",
+				"Manque de formations SST"
+			],
+			"icon": "<circle cx=\"10\" cy=\"11\" r=\"4\"/><circle cx=\"22\" cy=\"11\" r=\"4\"/><circle cx=\"16\" cy=\"23\" r=\"4\"/><path d=\"M14 11h4M20 21l3-10M12 21l-3-10\"/>"
+		},
+		{
+			"key": "tech",
+			"title": "Tech & Numérique",
+			"subtitle": "Métiers sédentaires à forte intensité cognitive",
+			"risks": [
+				"Sédentarité et troubles posturaux",
+				"Fatigue visuelle (écrans)",
+				"RPS liés au télétravail",
+				"Déconnexion et droit au repos",
+				"Hyperconnectivité",
+				"Stress cognitif chronique",
+				"Isolement social en télétravail"
+			],
+			"icon": "<rect x=\"3\" y=\"8\" width=\"26\" height=\"17\" rx=\"2\"/><path d=\"M10 29h12M16 25v4\"/><path d=\"M10 17l4 4 8-7\"/>"
+		},
+		{
+			"key": "ong",
+			"title": "ONG & International",
+			"subtitle": "Interventions en contextes précaires et instables",
+			"risks": [
+				"Maladies tropicales et endémiques",
+				"Faible couverture vaccinale",
+				"Accès limité aux soins",
+				"Traumatismes et ESPT (terrain)",
+				"Malnutrition",
+				"Épidémies (choléra, Ebola…)",
+				"Inégalités de genre en santé"
+			],
+			"icon": "<path d=\"M16 3a8 8 0 018 8c0 6-8 16-8 16S8 17 8 11a8 8 0 018-8z\"/><circle cx=\"16\" cy=\"11\" r=\"3\"/>"
+		}
+	]
+}

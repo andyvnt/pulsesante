@@ -1,0 +1,46 @@
+<nav>
+	<a href="/" class="nav-logo">
+		Pulse<span>Santé</span>
+		<!--include:pulse-->
+	</a>
+	<a href="/" class="back-link">
+		<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+			<path d="M13 8H3M7 4l-4 4 4 4" />
+		</svg>
+		Retour au site
+	</a>
+</nav>
+
+<div class="page-hero">
+	<div class="page-tag">L'équipe</div>
+	<h1>Des profils <em>complémentaires</em></h1>
+	<p>Une équipe pluridisciplinaire alliant expertise en santé publique, data science et gestion de projet.</p>
+</div>
+
+<section class="team-section">
+	<div class="team-layout"><!--render:team--></div>
+</section>
+
+<div class="member-popup-overlay" id="memberPopup" data-overlay>
+	<div class="member-popup">
+		<button class="mp-close" data-action="close">✕</button>
+		<div class="mp-header">
+			<div class="mp-avatar" id="mp-avatar">
+				<svg width="36" height="36" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+					<circle cx="20" cy="13" r="6" />
+					<path d="M6 35c0-7.7 6.3-14 14-14s14 6.3 14 14" />
+				</svg>
+			</div>
+			<div>
+				<div class="mp-badge" id="mp-badge"></div>
+				<div class="mp-name" id="mp-name"></div>
+				<div class="mp-role" id="mp-role"></div>
+			</div>
+		</div>
+		<div class="mp-divider"></div>
+		<p class="mp-bio" id="mp-bio"></p>
+		<div class="mp-tags" id="mp-tags"></div>
+	</div>
+</div>
+
+<!--include:footer-->
