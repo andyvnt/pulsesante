@@ -1,13 +1,25 @@
-# Environment
+# Environment and secrets
 .env
 .env.*
 !.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+.htpasswd
+secrets/
+security-keys/
+credentials*.json
+admin.json
+.netlify/
 
 # Build and tooling
 node_modules/
 dist/
-.netlify/
 *.log
+*.bak
+.claude/
 
 # OS and editors
 .DS_Store
