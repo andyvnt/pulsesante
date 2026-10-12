@@ -99,6 +99,9 @@ nav {
 	padding: 0.3rem 0.8rem;
 	border-radius: 20px;
 }
+.badge-published[hidden] {
+	display: none;
+}
 .badge-published .dot {
 	width: 6px;
 	height: 6px;
@@ -190,6 +193,18 @@ nav {
 	color: var(--cream);
 	margin-bottom: 1.2rem;
 }
+.article-section .geo-visual > p {
+	position: relative;
+	z-index: 1;
+	color: rgba(247, 244, 239, 0.75);
+	font-size: 0.83rem;
+	font-weight: 300;
+	line-height: 1.7;
+	margin-bottom: 0.75rem;
+}
+.geo-visual > p:last-child {
+	margin-bottom: 0;
+}
 .geo-zones {
 	display: flex;
 	flex-direction: column;
@@ -228,6 +243,9 @@ nav {
 	border-radius: 10px;
 	padding: 1.4rem;
 	border-left: 3px solid var(--accent);
+}
+.article-definition-box {
+	grid-template-columns: 1fr;
 }
 .def-card h5 {
 	font-family: "Cormorant Garamond", serif;
@@ -274,12 +292,29 @@ nav {
 	font-style: italic;
 	color: var(--accent);
 }
+.article-section h2 strong {
+	font-weight: 700;
+}
 .article-section p {
 	font-size: 0.9rem;
 	line-height: 1.85;
 	color: var(--txt2);
 	font-weight: 300;
 	margin-bottom: 1rem;
+}
+.article-section p strong {
+	font-weight: 700;
+}
+.article-section p em {
+	font-style: italic;
+}
+.article-section p u {
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.12em;
+}
+.article-section .geo-visual strong,
+.article-section .conclusion-box strong {
+	color: var(--cream);
 }
 .article-section p:last-child {
 	margin-bottom: 0;

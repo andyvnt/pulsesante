@@ -3,6 +3,7 @@ import { test } from "node:test";
 import { createSessionCookie, hashPassword, hasSession, verifyPassword } from "../netlify/functions/_lib/auth.mjs";
 import login from "../netlify/functions/login.mjs";
 import maintenance from "../netlify/functions/maintenance.mjs";
+import studies from "../netlify/functions/studies.mjs";
 
 const SECRET = "x".repeat(40);
 const ORIGIN = "https://pulsesante.fr";
@@ -127,4 +128,136 @@ test("maintenance write needs a session", async () => {
 	// Invalid payload
 	const invalid = post("/api/maintenance", { enabled: "yes" }, withCookie(createSessionCookie(SECRET, NOW)));
 	assert.equal((await maintenance(invalid, {}, deps)).status, 400);
+});
+
+test("article drafts are private until published", async () => {
+	const deps = {
+		env: { SESSION_SECRET: SECRET },
+		store: memoryStore(),
+		now: NOW,
+	};
+	const cookie = withCookie(createSessionCookie(SECRET, NOW));
+	const draft = {
+		slug: "sante-mentale",
+		status: "in-progress",
+		title: "Santé mentale",
+		domain: "Santé publique",
+		desc: "Une revue de littérature.",
+		intro: "Introduction de l’article.",
+		sections: [
+			{
+				label: "Introduction",
+				title: "Contexte",
+				body: "Premier paragraphe.",
+				boxes: [
+					{ type: "definition", title: "Définition", body: "Explication." },
+					{ type: "highlight", title: "À retenir", body: "Point important." },
+					{ type: "stats", items: [{ value: "50 %", label: "Indicateur" }] },
+					{ type: "conclusion", body: "Conclusion importante." },
+				],
+			},
+		],
+		references: [],
+	};
+	const planned = { ...draft, slug: "article-prevu", status: "planned" };
+	const save = (articles, headers = cookie) => studies(post("/api/studies", { articles }, headers), {}, deps);
+
+	assert.equal((await studies(new Request(`${ORIGIN}/api/studies?admin=1`), {}, deps)).status, 401);
+	assert.equal((await save([draft], {})).status, 401);
+	assert.equal((await save([draft, planned])).status, 200);
+
+	const publicList = await studies(new Request(`${ORIGIN}/api/studies`), {}, deps);
+	const publishedStudies = await publicList.json();
+	const publicDraft = publishedStudies.find(({ slug }) => slug === draft.slug);
+	assert.equal(publicDraft.status, "in-progress");
+	assert.equal("intro" in publicDraft, false);
+	assert.equal(publishedStudies.find(({ slug }) => slug === planned.slug).status, "planned");
+	assert.equal((await studies(new Request(`${ORIGIN}/api/studies?slug=${draft.slug}`), {}, deps)).status, 404);
+	assert.equal((await studies(new Request(`${ORIGIN}/api/studies?slug=${planned.slug}`), {}, deps)).status, 404);
+
+	const published = { ...draft, status: "published" };
+	assert.equal((await save([published, planned])).status, 200);
+	const article = await studies(new Request(`${ORIGIN}/api/studies?slug=${draft.slug}`), {}, deps);
+	assert.equal(article.status, 200);
+	assert.deepEqual((await article.json()).sections[0].boxes, draft.sections[0].boxes);
+});
+
+test("article writes validate origin, publication content, and references", async () => {
+	const deps = {
+		env: { SESSION_SECRET: SECRET },
+		store: memoryStore(),
+		now: NOW,
+	};
+	const headers = { ...withCookie(createSessionCookie(SECRET, NOW)), origin: "https://evil.example" };
+	const valid = {
+		slug: "article-test",
+		status: "published",
+		title: "Article test",
+		domain: "Santé publique",
+		desc: "Résumé",
+		intro: "",
+		sections: [{ label: "Analyse", title: "Résultats", body: "Contenu." }],
+		references: [{ title: "Source", url: "javascript:alert(1)" }],
+	};
+	assert.equal((await studies(post("/api/studies", { articles: [valid] }, headers), {}, deps)).status, 403);
+	assert.equal(
+		(await studies(post("/api/studies", { articles: [{ ...valid, sections: [] }] }, withCookie(createSessionCookie(SECRET, NOW))), {}, deps)).status,
+		400,
+	);
+	assert.equal((await studies(post("/api/studies", { articles: [valid] }, withCookie(createSessionCookie(SECRET, NOW))), {}, deps)).status, 400);
+	const invalidBox = {
+		...valid,
+		slug: "article-encadre-invalide",
+		sections: [{ label: "Analyse", title: "Résultats", body: "Contenu.", boxes: [{ type: "stats", items: [] }] }],
+	};
+	assert.equal((await studies(post("/api/studies", { articles: [invalidBox] }, withCookie(createSessionCookie(SECRET, NOW))), {}, deps)).status, 400);
+});
+
+test("existing works can be updated, republished with article sections, and deleted", async () => {
+	const deps = {
+		env: { SESSION_SECRET: SECRET },
+		store: memoryStore(),
+		now: NOW,
+	};
+	const cookie = withCookie(createSessionCookie(SECRET, NOW));
+	const adminRead = () => studies(new Request(`${ORIGIN}/api/studies?admin=1`, { headers: cookie }), {}, deps);
+	const save = (articles) => studies(post("/api/studies", { articles }, cookie), {}, deps);
+
+	const initial = await adminRead();
+	assert.equal(initial.status, 200);
+	const records = (await initial.json()).articles;
+	const conflicts = records.find(({ slug }) => slug === "conflits");
+	const unfinished = records.find(({ slug }) => slug === "risques-soignants");
+	assert.equal(conflicts.builtin, true);
+	assert.equal((await save(records.map((article) => (article.slug === unfinished.slug ? { ...unfinished, status: "published" } : article)))).status, 400);
+	const updated = { ...conflicts, title: "Titre modifié", status: "planned" };
+	assert.equal((await save(records.map((article) => (article.slug === updated.slug ? updated : article)))).status, 200);
+
+	let publicStudies = await studies(new Request(`${ORIGIN}/api/studies`), {}, deps);
+	let publicItems = await publicStudies.json();
+	assert.equal(publicItems.find(({ slug }) => slug === "conflits").title, "Titre modifié");
+	assert.equal(publicItems.find(({ slug }) => slug === "conflits").status, "planned");
+	assert.equal((await studies(new Request(`${ORIGIN}/api/studies?slug=conflits`), {}, deps)).status, 404);
+
+	const published = {
+		...updated,
+		status: "published",
+		sections: [{ label: "Introduction", title: "Nouvelle version", body: "Contenu de l’article." }],
+	};
+	const current = (await adminRead()).json();
+	const currentRecords = (await current).articles;
+	assert.equal((await save(currentRecords.map((article) => (article.slug === published.slug ? published : article)))).status, 200);
+	publicStudies = await studies(new Request(`${ORIGIN}/api/studies`), {}, deps);
+	publicItems = await publicStudies.json();
+	assert.equal(publicItems.find(({ slug }) => slug === "conflits").href, "/publication/conflits/");
+	assert.equal((await studies(new Request(`${ORIGIN}/api/studies?slug=conflits`), {}, deps)).status, 200);
+
+	const remaining = (await adminRead()).json();
+	const remainingRecords = (await remaining).articles.filter(({ slug }) => slug !== "conflits");
+	assert.equal((await save(remainingRecords)).status, 200);
+	publicStudies = await studies(new Request(`${ORIGIN}/api/studies`), {}, deps);
+	assert.equal(
+		(await publicStudies.json()).some(({ slug }) => slug === "conflits"),
+		false,
+	);
 });

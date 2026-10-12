@@ -1,141 +1,124 @@
 @import "../fonts.css";
 
+:root {
+	color-scheme: light;
+	font-family:
+		"DM Sans",
+		-apple-system,
+		BlinkMacSystemFont,
+		"Segoe UI",
+		sans-serif;
+	color: #172b3c;
+	background: #f7f8f7;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+* {
+	box-sizing: border-box;
+}
+
 body {
+	min-width: 320px;
+	min-height: 100vh;
 	margin: 0;
-	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-	background: radial-gradient(circle at top, #0b1d3a, #050d1f 80%);
-	color: white;
-	overflow: hidden;
-}
-
-.glow {
-	position: absolute;
-	width: 800px;
-	height: 800px;
-	background: radial-gradient(circle, rgba(79, 195, 247, 0.1), transparent 70%);
-	animation: pulseGlow 4s infinite;
-}
-
-@keyframes pulseGlow {
-	0% {
-		transform: scale(1);
-		opacity: 0.4;
-	}
-	50% {
-		transform: scale(1.3);
-		opacity: 0.2;
-	}
-	100% {
-		transform: scale(1.6);
-		opacity: 0;
-	}
+	border-top: 3px solid #2769a6;
+	display: grid;
+	place-items: center;
+	padding: 48px 24px;
 }
 
 .container {
+	width: min(100%, 520px);
 	text-align: center;
-	z-index: 2;
 }
 
-.hero {
-	position: relative;
-	width: 360px;
-	height: 120px;
-	margin: 0 auto 30px;
+.brand {
+	margin: 0 0 52px;
+	color: #2769a6;
+	font-size: 0.78rem;
+	font-weight: 600;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
 }
 
-.hero svg {
-	width: 100%;
-	height: 100%;
-}
-
-#ecg-path {
-	stroke: #4fc3f7;
-	stroke-width: 3;
-	fill: none;
-	stroke-dasharray: 1000;
-	stroke-dashoffset: 1000;
-	animation: ecgMove 2s linear infinite;
-}
-
-@keyframes ecgMove {
-	0% {
-		stroke-dashoffset: 1000;
-		opacity: 1;
-	}
-	60% {
-		stroke-dashoffset: 0;
-		opacity: 1;
-	}
-	80% {
-		opacity: 0.3;
-	}
-	100% {
-		stroke-dashoffset: 0;
-		opacity: 0;
-	}
-}
-
-.loader {
-	margin: 20px auto;
-	width: 50px;
-	height: 50px;
-	border-radius: 50%;
-	border: 3px solid transparent;
-	border-top: 3px solid #4fc3f7;
-	animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-	to {
-		transform: rotate(360deg);
-	}
+.eyebrow {
+	margin: 0 0 14px;
+	color: #687985;
+	font-size: 0.78rem;
+	font-weight: 500;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
 }
 
 h1 {
-	font-size: 2rem;
-	margin: 10px 0;
+	margin: 0;
+	color: #172b3c;
+	font-family: "Cormorant Garamond", Georgia, serif;
+	font-size: clamp(2.8rem, 8vw, 4rem);
 	font-weight: 500;
+	letter-spacing: -0.035em;
+	line-height: 1.05;
 }
 
-p {
-	opacity: 0.6;
-	font-size: 0.95rem;
+.message {
+	max-width: 390px;
+	margin: 20px auto 0;
+	color: #64727d;
+	font-size: 1rem;
+	line-height: 1.75;
 }
 
 .countdown-panel {
 	display: flex;
-	gap: 25px;
 	justify-content: center;
-	margin-top: 30px;
+	gap: 0;
+	margin: 42px auto 0;
+	padding-top: 26px;
+	border-top: 1px solid #dce2e5;
+}
+
+.countdown-panel[hidden] {
+	display: none;
+}
+
+.time-box {
+	min-width: 92px;
+	padding: 0 18px;
+}
+
+.time-box + .time-box {
+	border-left: 1px solid #dce2e5;
 }
 
 .time-box span {
 	display: block;
-	font-size: 2.6rem;
+	color: #172b3c;
+	font-size: 2rem;
+	font-variant-numeric: tabular-nums;
 	font-weight: 500;
-	letter-spacing: 1px;
-	color: #e6f7ff;
-	transition: all 0.25s ease;
+	letter-spacing: 0.02em;
+	line-height: 1.2;
 }
 
 .time-box small {
+	display: block;
+	margin-top: 7px;
+	color: #78858e;
 	font-size: 0.7rem;
-	opacity: 0.4;
-	letter-spacing: 1px;
+	letter-spacing: 0.08em;
 	text-transform: uppercase;
 }
 
-.separator {
-	font-size: 2.2rem;
-	opacity: 0.3;
-	transform: translateY(5px);
-}
+@media (max-width: 420px) {
+	.brand {
+		margin-bottom: 40px;
+	}
 
-.updated {
-	transform: translateY(-4px);
-	opacity: 0.6;
+	.time-box {
+		min-width: 0;
+		padding: 0 14px;
+	}
 }

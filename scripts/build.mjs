@@ -29,7 +29,7 @@ const PAGES = [
 		route: "/travaux/",
 		seo: "travaux",
 		css: "travaux",
-		js: "js/index.js",
+		js: "js/pages/works.js",
 	},
 	{
 		view: "pages/mentions-legales.html",
@@ -52,6 +52,15 @@ const PAGES = [
 		css: "article",
 		js: "js/index.js",
 		schema: "article",
+	},
+	{
+		view: "articles/publication.html",
+		route: "/publication/",
+		seo: "article",
+		css: "article",
+		js: "js/pages/publication.js",
+		schema: "article",
+		sitemap: false,
 	},
 	{
 		view: "maintenance/index.html",
@@ -261,7 +270,7 @@ await mkdir(join(DIST, ".well-known"), { recursive: true });
 await cp(join(SRC, "assets/security.txt"), join(DIST, ".well-known/security.txt"));
 await rm(join(DIST, "assets/security.txt"));
 // Indexable pages
-const indexable = PAGES.filter(({ private: hidden }) => !hidden);
+const indexable = PAGES.filter(({ private: hidden, sitemap }) => !hidden && sitemap !== false);
 /**
  * Last modified date
  * @param {object} page - Page definition

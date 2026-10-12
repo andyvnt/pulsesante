@@ -97,11 +97,23 @@ export const renderers = ({ services, sectors, team, studies }) => ({
 </div>`,
 		),
 	works: () =>
-		studies.studies
-			.map(({ done, href, domain, title, desc }, index) => {
-				// Optional arrow and link
-				const arrow = href ? `\n\t<div class="card-arrow">${ARROW(20)}</div>` : "";
-				const inner = `
+		[
+			{ title: "Publications", published: true },
+			{ title: "En cours et à venir", published: false },
+		]
+			.map(({ title: groupTitle, published }) => {
+				const items = studies.studies
+					.map((study, index) => ({ ...study, index }))
+					.filter(({ done, status }) => (status ? status === "published" : done) === published);
+				if (!items.length) return "";
+				return `
+<section class="works-group">
+	<h2 class="works-group-title">${groupTitle}</h2>
+	<div class="travaux-grid">${items
+		.map(({ key, done, href, domain, title, desc, index }) => {
+			// Optional arrow and link
+			const arrow = href ? `\n\t<div class="card-arrow">${ARROW(20)}</div>` : "";
+			const inner = `
 	<div class="card-num">${String(index + 1).padStart(2, "0")}</div>
 	<div class="card-body">
 		<div class="card-meta">
@@ -111,7 +123,12 @@ export const renderers = ({ services, sectors, team, studies }) => ({
 		<h3>${esc(title)}</h3>
 		<p>${esc(desc)}</p>
 	</div>${arrow}`;
-				return href ? `<a href="${href}" class="travail-card">${inner}\n</a>` : `<div class="travail-card wip">${inner}\n</div>`;
+			return href
+				? `<a href="${href}" class="travail-card" data-key="${esc(key)}">${inner}\n</a>`
+				: `<div class="travail-card wip" data-key="${esc(key)}">${inner}\n</div>`;
+		})
+		.join("\n")}</div>
+</section>`;
 			})
 			.join("\n"),
 	team: () => {

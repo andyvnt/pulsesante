@@ -9,6 +9,12 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
+# Dynamic article pages use the shared publication template.
+[[redirects]]
+  from = "/publication/:slug/"
+  to = "/publication/?slug=:slug"
+  status = 200
+
 # Legacy URLs
 [[redirects]]
   from = "/src/views/pages/index.html"

@@ -119,12 +119,12 @@
 			},
 			"rgpd": {
 				"patterns": ["gdpr", "privacy", "personal data", "protection", "security", "cnil"],
-				"intro": "PulseSanté enforces a <strong>strict GDPR policy</strong>:",
+				"intro": "Here is how information submitted through this site is handled:",
 				"items": [
-					"Data used only to answer your request",
+					"Form data is used to handle and follow up on your request",
 					"Never sold to third parties",
-					"No advertising cookies or tracking tools",
-					"Access, correction and deletion on request"
+					"No audience measurement tools or advertising cookies are active",
+					"Your rights and further details are in the privacy policy"
 				],
 				"linkLabel": "Privacy policy",
 				"linkPage": "/confidentialite/",

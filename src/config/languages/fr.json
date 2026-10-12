@@ -153,12 +153,12 @@
 			},
 			"rgpd": {
 				"patterns": ["rgpd", "gdpr", "confidentialite", "donnees personnelles", "protection", "securite", "vie privee", "cnil"],
-				"intro": "PulseSanté applique une <strong>politique RGPD stricte</strong> :",
+				"intro": "Voici comment les informations transmises sur ce site sont traitées :",
 				"items": [
-					"Données utilisées uniquement pour répondre à votre demande",
+					"Données du formulaire utilisées pour traiter votre demande et son suivi",
 					"Aucune revente à des tiers",
-					"Aucun cookie publicitaire ni outil de suivi",
-					"Accès, rectification et suppression sur simple demande"
+					"Aucun outil de mesure d'audience ni cookie publicitaire actif",
+					"Vos droits et les détails figurent dans la politique de confidentialité"
 				],
 				"linkLabel": "Politique de confidentialité",
 				"linkPage": "/confidentialite/",

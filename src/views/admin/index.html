@@ -1,19 +1,61 @@
 <aside class="sidebar">
-	<div class="sidebar-logo">Pulse <span>Santé</span></div>
-	<div class="sidebar-sub">Administration</div>
+	<a class="sidebar-brand" href="/" aria-label="Pulse Santé, retour au site">
+		<span class="sidebar-brand-mark" aria-hidden="true">P</span>
+		<span class="sidebar-brand-copy"
+			><span class="sidebar-logo">Pulse <span>Santé</span></span
+			><span class="sidebar-sub">Espace de gestion</span></span
+		>
+	</a>
+	<div class="sidebar-section-label">Espace de travail</div>
 	<nav aria-label="Administration">
-		<button class="nav-item active" data-action="section" data-arg="maintenance">
-			<span class="nav-icon" aria-hidden="true">🔧</span><span>Maintenance</span>
+		<button class="nav-item active" data-action="section" data-arg="maintenance" aria-label="Maintenance">
+			<span class="nav-icon" aria-hidden="true">
+				<svg viewBox="0 0 24 24" fill="none">
+					<path
+						d="M14.2 6.1a5 5 0 0 0-6.3 6.3L3.8 16.5a2 2 0 0 0 2.8 2.8l4.1-4.1a5 5 0 0 0 6.3-6.3l-3 3-3-3 3.2-2.8Z"
+						stroke="currentColor"
+						stroke-width="1.6"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					/>
+				</svg> </span
+			><span>Maintenance</span>
 		</button>
-		<button class="nav-item" data-action="section" data-arg="dashboard"><span class="nav-icon" aria-hidden="true">📊</span><span>Tableau de bord</span></button>
+		<button class="nav-item" data-action="section" data-arg="articles" aria-label="Travaux">
+			<span class="nav-icon" aria-hidden="true">
+				<svg viewBox="0 0 24 24" fill="none">
+					<path
+						d="M5 4.8A2.8 2.8 0 0 1 7.8 2H20v17H7.8A2.8 2.8 0 0 0 5 21V4.8ZM5 5v16M9 6h7M9 10h7M9 14h5"
+						stroke="currentColor"
+						stroke-width="1.6"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					/>
+				</svg> </span
+			><span>Travaux</span>
+		</button>
+		<button class="nav-item" data-action="section" data-arg="dashboard" aria-label="Tableau de bord">
+			<span class="nav-icon" aria-hidden="true">
+				<svg viewBox="0 0 24 24" fill="none">
+					<rect x="3" y="3" width="8" height="8" rx="2" stroke="currentColor" stroke-width="1.6" />
+					<rect x="13" y="3" width="8" height="5" rx="2" stroke="currentColor" stroke-width="1.6" />
+					<rect x="13" y="10" width="8" height="11" rx="2" stroke="currentColor" stroke-width="1.6" />
+					<rect x="3" y="13" width="8" height="8" rx="2" stroke="currentColor" stroke-width="1.6" />
+				</svg> </span
+			><span>Tableau de bord</span>
+		</button>
 	</nav>
-	<div class="sidebar-divider"></div>
 	<div class="sidebar-bottom">
-		<button class="logout-btn" data-action="logout"><span aria-hidden="true">🚪</span><span>Déconnexion</span></button>
+		<a class="sidebar-site-link" href="/" target="_blank" rel="noopener noreferrer">Voir le site <span aria-hidden="true">↗</span></a>
+		<button class="logout-btn" data-action="logout"><span aria-hidden="true">↪</span><span>Déconnexion</span></button>
 	</div>
 </aside>
 
 <main class="main">
+	<header class="admin-topbar">
+		<div class="admin-breadcrumb"><span>Pulse Santé</span><span aria-hidden="true">/</span><strong>Administration</strong></div>
+		<div class="admin-private-label"><span aria-hidden="true"></span>Espace privé</div>
+	</header>
 	<section id="maintenance" class="section active">
 		<h1 class="page-title">Mode maintenance</h1>
 		<div class="page-subtitle">Contrôle de l'accès au site</div>
@@ -54,6 +96,99 @@
 		</form>
 	</section>
 
+	<section id="articles" class="section">
+		<div class="article-list-view">
+			<div class="admin-page-heading">
+				<div>
+					<h1 class="page-title">Travaux & publications</h1>
+					<div class="page-subtitle">Rédigez et gérez vos articles</div>
+				</div>
+				<button class="save-btn article-new-btn" type="button" data-action="article-new">+ Nouvel article</button>
+			</div>
+			<div class="info-box article-template-note">
+				<strong>Modèle éditorial :</strong> chaque article reprend la présentation de « Conflits armés et santé mentale » : introduction, sections titrées et
+				références. Les articles « En cours » et « Prévu » restent indisponibles aux visiteurs jusqu’à leur publication.
+			</div>
+			<div id="article-list" class="article-list" aria-live="polite"></div>
+		</div>
+
+		<div class="article-editor-view" hidden>
+			<form id="articleForm" class="card article-editor">
+				<div class="article-editor-heading">
+					<div>
+						<h1 class="page-title" id="article-editor-title">Nouvel article</h1>
+						<div class="page-subtitle">Modèle d’article scientifique</div>
+					</div>
+					<button class="article-back-btn" type="button" data-action="article-list">← Tous les travaux</button>
+				</div>
+				<div id="article-format-toolbar" class="article-format-toolbar" role="toolbar" aria-label="Mise en forme du texte" hidden>
+					<button type="button" data-format="bold" aria-label="Mettre en gras"><strong>G</strong></button>
+					<button type="button" data-format="italic" aria-label="Mettre en italique"><em>I</em></button>
+					<button type="button" data-format="underline" aria-label="Souligner"><u>S</u></button>
+					<label class="article-format-color" aria-label="Choisir la couleur du texte">
+						<span aria-hidden="true">A</span>
+						<input type="color" data-format-color aria-label="Couleur du texte" value="#1560c8" />
+					</label>
+				</div>
+
+				<div class="card-title">Présentation</div>
+				<div class="article-form-grid">
+					<div class="input-group article-form-wide">
+						<label class="input-label" for="articleTitle">Titre de l’article</label>
+						<input class="article-input" id="articleTitle" name="title" maxlength="180" data-rich-text required />
+					</div>
+					<div class="input-group">
+						<label class="input-label" for="articleDomain">Thématique</label>
+						<input class="article-input" id="articleDomain" name="domain" maxlength="180" placeholder="Santé mentale · Épidémiologie" required />
+					</div>
+					<div class="input-group">
+						<label class="input-label" for="articleStatus">Statut de publication</label>
+						<select class="article-input" id="articleStatus" name="status">
+							<option value="in-progress">En cours — non accessible</option>
+							<option value="planned">Prévu — non accessible</option>
+							<option value="published">Publié — accessible</option>
+						</select>
+					</div>
+					<div class="input-group article-form-wide">
+						<label class="input-label" for="articleDesc">Résumé pour la page Travaux</label>
+						<textarea class="article-input" id="articleDesc" name="desc" maxlength="600" rows="3" data-rich-text required></textarea>
+					</div>
+					<div class="input-group article-form-wide">
+						<label class="input-label" for="articleIntro">Introduction de l’article</label>
+						<textarea class="article-input" id="articleIntro" name="intro" maxlength="2400" rows="4" data-rich-text></textarea>
+					</div>
+				</div>
+
+				<div class="article-builder-heading">
+					<div class="card-title">Contenu de l’article</div>
+					<button class="article-add-btn" type="button" data-action="article-add-section">+ Ajouter une section</button>
+				</div>
+				<div class="info-box article-builtin-note" hidden>
+					<strong>Travail existant :</strong> vous pouvez modifier son titre, sa thématique, son résumé et son statut sans altérer son contenu déjà publié.
+					Ajouter des sections créera une nouvelle version d’article avec le modèle éditorial.
+				</div>
+				<p class="article-help">
+					Sélectionnez un passage pour afficher les outils de mise en forme : gras, italique, souligné ou couleur. Syntaxe prise en charge :
+					<strong>**gras**</strong>, *italique*, ++souligné++ et [[#1560c8|couleur]]. Ajoutez aussi des encadrés éditoriaux, chiffres clés, définitions ou
+					conclusions. Pour transformer un passage en encadré, sélectionnez-le dans le texte, choisissez un format puis cliquez sur « Ajouter un encadré ».
+					Séparez les paragraphes par une ligne vide.
+				</p>
+				<div id="article-sections" class="article-section-fields"></div>
+
+				<div class="article-builder-heading article-references-heading">
+					<div class="card-title">Références</div>
+					<button class="article-add-btn" type="button" data-action="article-add-reference">+ Ajouter une référence</button>
+				</div>
+				<div id="article-references" class="article-reference-fields"></div>
+
+				<div class="article-form-actions">
+					<button class="article-back-btn" type="button" data-action="article-list">Annuler</button>
+					<button class="save-btn article-save-btn" type="submit">Enregistrer l’article</button>
+				</div>
+			</form>
+		</div>
+	</section>
+
 	<section id="dashboard" class="section">
 		<h1 class="page-title">Tableau de bord</h1>
 		<div class="page-subtitle">Vue d'ensemble</div>
@@ -75,7 +210,8 @@
 			<div class="card-title">Informations</div>
 			<p class="admin-note">
 				Bienvenue sur le panneau d'administration de
-				<strong>Pulse Santé</strong>.<br />Utilisez la section <strong class="hl">Maintenance</strong> pour contrôler l'accès au site.
+				<strong>Pulse Santé</strong>.<br />Utilisez les sections <strong class="hl">Maintenance</strong> et <strong class="hl">Travaux</strong> pour gérer le
+				site.
 			</p>
 		</div>
 	</section>

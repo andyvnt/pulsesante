@@ -102,6 +102,20 @@ nav {
 	margin: 0 auto;
 	padding: 5rem 6vw 7rem;
 }
+.works-groups {
+	display: flex;
+	flex-direction: column;
+	gap: 3.5rem;
+}
+.works-group-title {
+	font-family: "Cormorant Garamond", serif;
+	font-size: clamp(1.8rem, 3vw, 2.35rem);
+	font-weight: 400;
+	color: var(--deep);
+	margin-bottom: 1.25rem;
+	padding-bottom: 0.75rem;
+	border-bottom: 1px solid var(--cream2);
+}
 .travaux-grid {
 	display: flex;
 	flex-direction: column;
@@ -176,7 +190,8 @@ nav {
 	border-radius: 50%;
 	background: var(--accent);
 }
-.badge-wip {
+.badge-wip,
+.badge-planned {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.4rem;
@@ -189,11 +204,19 @@ nav {
 	padding: 0.28rem 0.7rem;
 	border-radius: 20px;
 }
-.badge-wip .dot {
+.badge-wip .dot,
+.badge-planned .dot {
 	width: 6px;
 	height: 6px;
 	border-radius: 50%;
 	background: var(--txt3);
+}
+.badge-planned {
+	background: rgba(150, 112, 40, 0.1);
+	color: #8a6828;
+}
+.badge-planned .dot {
+	background: #8a6828;
 }
 .card-domain {
 	font-size: 0.68rem;
@@ -209,11 +232,25 @@ nav {
 	line-height: 1.25;
 	margin-bottom: 0.6rem;
 }
+.card-body h3 strong {
+	font-weight: 700;
+}
 .card-body p {
 	font-size: 0.83rem;
 	line-height: 1.7;
 	color: var(--txt2);
 	font-weight: 300;
+}
+.card-body p strong {
+	color: var(--deep);
+	font-weight: 700;
+}
+.card-body em {
+	font-style: italic;
+}
+.card-body u {
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.12em;
 }
 .card-arrow {
 	margin-left: auto;

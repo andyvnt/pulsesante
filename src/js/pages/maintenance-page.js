@@ -33,6 +33,7 @@ if (!state.enabled) location.replace(HOME);
 else if (state.endTime) {
 	// Countdown loop
 	const end = new Date(state.endTime).getTime();
+	document.querySelector(".countdown-panel").hidden = false;
 
 	/**
 	 * Update countdown
