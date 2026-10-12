@@ -7,6 +7,7 @@ const HOME = "/";
  */
 
 const pad = (value) => String(value).padStart(2, "0");
+let maintenanceEnd = null;
 
 /**
  * Show remaining time
@@ -24,27 +25,38 @@ const show = (ms) => {
 	for (const [id, value] of Object.entries(parts)) document.getElementById(id).textContent = pad(value);
 };
 
-// Current state
-const state = await fetch("/api/maintenance")
-	.then((response) => response.json())
-	.catch(() => ({ enabled: false }));
+let checkingMaintenance = false;
 
-if (!state.enabled) location.replace(HOME);
-else if (state.endTime) {
-	// Countdown loop
-	const end = new Date(state.endTime).getTime();
-	document.querySelector(".countdown-panel").hidden = false;
+const checkMaintenance = async () => {
+	if (checkingMaintenance) return;
+	checkingMaintenance = true;
+	try {
+		const response = await fetch("/api/maintenance", { cache: "no-store" });
+		if (!response.ok) throw new Error(`Maintenance request failed (${response.status})`);
+		const { enabled, endTime } = await response.json();
+		if (!enabled) return location.replace(HOME);
 
-	/**
-	 * Update countdown
-	 * @return {void}
-	 */
+		maintenanceEnd = endTime ? new Date(endTime).getTime() : null;
+		if (maintenanceEnd !== null && maintenanceEnd <= Date.now()) return location.replace(HOME);
+		document.querySelector(".countdown-panel").hidden = maintenanceEnd === null;
+		tickCountdown();
+	} catch (error) {
+		console.error(error);
+	} finally {
+		checkingMaintenance = false;
+	}
+};
 
-	const tick = () => {
-		const remaining = end - Date.now();
-		if (remaining <= 0) return location.replace(HOME);
-		show(remaining);
-	};
-	tick();
-	setInterval(tick, 1000);
-}
+const tickCountdown = () => {
+	if (maintenanceEnd === null) return;
+	const remaining = maintenanceEnd - Date.now();
+	if (remaining <= 0) return location.replace(HOME);
+	show(remaining);
+};
+
+checkMaintenance();
+setInterval(checkMaintenance, 3000);
+document.addEventListener("visibilitychange", () => {
+	if (document.visibilityState === "visible") checkMaintenance();
+});
+setInterval(tickCountdown, 1000);

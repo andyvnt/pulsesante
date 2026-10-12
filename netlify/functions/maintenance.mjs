@@ -17,7 +17,7 @@ export default async function maintenance(req, _context, deps = runtime()) {
 	// Public read
 	if (req.method === "GET")
 		return json((await store.get(KEY, { type: "json" })) ?? OFF, 200, {
-			"cache-control": "public, max-age=15",
+			"cache-control": "no-store",
 		});
 
 	// Admin guard

@@ -157,6 +157,15 @@
 						<label class="input-label" for="articleIntro">Introduction de l’article</label>
 						<textarea class="article-input" id="articleIntro" name="intro" maxlength="2400" rows="4" data-rich-text></textarea>
 					</div>
+					<div class="input-group article-form-wide article-image-upload">
+						<label class="input-label" for="articleHeroImage">Image à droite du titre (facultative)</label>
+						<input class="article-input" id="articleHeroImage" type="file" accept="image/jpeg,image/png,image/webp" />
+						<img class="article-image-preview" id="articleHeroPreview" alt="" hidden />
+						<p class="article-image-upload-status" id="articleHeroImageStatus" aria-live="polite"></p>
+						<label class="input-label" for="articleHeroAlt">Description de l’image (facultative)</label>
+						<input class="article-input" id="articleHeroAlt" maxlength="240" placeholder="Décrivez l’image pour l’accessibilité" />
+						<button class="article-remove-btn" id="articleHeroImageClear" type="button" hidden>Retirer l’image</button>
+					</div>
 				</div>
 
 				<div class="article-builder-heading">

@@ -7,6 +7,13 @@ const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const BUILT_INS = new Map(seed.studies.map((study) => [study.key, study]));
 
 const isText = (value, max) => typeof value === "string" && value.length <= max;
+const isArticleImage = (image) =>
+	image &&
+	typeof image === "object" &&
+	!Array.isArray(image) &&
+	/^\/api\/article-images\?id=[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(image.src) &&
+	isText(image.alt, 240) &&
+	(image.caption === undefined || isText(image.caption, 300));
 
 const validBox = (box) => {
 	if (!box || typeof box !== "object" || Array.isArray(box)) return false;
@@ -17,6 +24,7 @@ const validBox = (box) => {
 			box.items.length <= 3 &&
 			box.items.every((item) => item && isText(item.value, 32) && item.value.trim() && isText(item.label, 160) && item.label.trim())
 		);
+	if (box.type === "image") return isArticleImage(box);
 	if (box.type === "conclusion") return isText(box.body, 2000) && box.body.trim();
 	return ["definition", "highlight"].includes(box.type) && isText(box.title, 180) && box.title.trim() && isText(box.body, 2000) && box.body.trim();
 };
@@ -38,10 +46,12 @@ const validArticle = (article) => {
 				isText(section.label, 80) &&
 				isText(section.title, 180) &&
 				isText(section.body, 12000) &&
+				(section.image === undefined || isArticleImage(section.image)) &&
 				(section.boxes === undefined || (Array.isArray(section.boxes) && section.boxes.length <= 12 && section.boxes.every(validBox))),
 		)
 	)
 		return false;
+	if (article.heroImage !== undefined && !isArticleImage(article.heroImage)) return false;
 	if (
 		article.status === "published" &&
 		((!article.sections.length && !(article.builtin && BUILT_INS.get(article.slug).href)) ||
@@ -122,7 +132,7 @@ export default async function studies(req, _context, deps = runtime()) {
 			return article ? json(article) : json({ error: "not_found" }, 404);
 		}
 
-		return json(articles.map(publicStudy), 200, { "cache-control": "public, max-age=15" });
+		return json(articles.map(publicStudy), 200, { "cache-control": "no-store" });
 	}
 
 	if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405, { allow: "GET, POST" });

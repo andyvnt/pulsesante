@@ -725,6 +725,29 @@ select.article-input {
 	margin: 0.75rem 0 1.25rem;
 }
 
+.article-image-upload,
+.article-image-fields {
+	display: grid;
+	gap: 0.65rem;
+}
+
+.article-image-preview {
+	display: block;
+	width: min(100%, 26rem);
+	max-height: 18rem;
+	aspect-ratio: 16 / 9;
+	object-fit: cover;
+	border: 1px solid var(--border);
+	border-radius: 8px;
+	background: rgba(7, 25, 46, 0.6);
+}
+
+.article-image-upload-status {
+	min-height: 1.2em;
+	color: var(--text-dim);
+	font-size: 0.75rem;
+}
+
 .article-format-toolbar {
 	position: fixed;
 	z-index: 1000;

@@ -4,6 +4,7 @@ import { createSessionCookie, hashPassword, hasSession, verifyPassword } from ".
 import login from "../netlify/functions/login.mjs";
 import maintenance from "../netlify/functions/maintenance.mjs";
 import studies from "../netlify/functions/studies.mjs";
+import articleImages from "../netlify/functions/article-images.mjs";
 
 const SECRET = "x".repeat(40);
 const ORIGIN = "https://pulsesante.fr";
@@ -124,6 +125,7 @@ test("maintenance write needs a session", async () => {
 	// Public read
 	const read = await maintenance(new Request(`${ORIGIN}/api/maintenance`), {}, deps);
 	assert.deepEqual(await read.json(), state);
+	assert.equal(read.headers.get("cache-control"), "no-store");
 
 	// Invalid payload
 	const invalid = post("/api/maintenance", { enabled: "yes" }, withCookie(createSessionCookie(SECRET, NOW)));
@@ -211,6 +213,67 @@ test("article writes validate origin, publication content, and references", asyn
 		sections: [{ label: "Analyse", title: "Résultats", body: "Contenu.", boxes: [{ type: "stats", items: [] }] }],
 	};
 	assert.equal((await studies(post("/api/studies", { articles: [invalidBox] }, withCookie(createSessionCookie(SECRET, NOW))), {}, deps)).status, 400);
+});
+
+test("article images require an admin session and are served from blob storage", async () => {
+	const data = new Map();
+	const store = {
+		get: async (key, { type } = {}) => {
+			const entry = data.get(key);
+			if (!entry) return null;
+			return type === "arrayBuffer" ? entry.bytes.buffer : entry.value;
+		},
+		set: async (key, bytes, { metadata }) => data.set(key, { bytes: new Uint8Array(bytes), metadata }),
+		setJSON: async (key, value) => data.set(key, { value }),
+		getMetadata: async (key) => {
+			const entry = data.get(key);
+			return entry ? { metadata: entry.metadata } : null;
+		},
+	};
+	const deps = { env: { SESSION_SECRET: SECRET }, store, now: NOW };
+	const makeRequest = (form, headers = {}) =>
+		new Request(`${ORIGIN}/api/article-images`, {
+			method: "POST",
+			headers: { origin: ORIGIN, ...headers },
+			body: form,
+		});
+	const file = new File([Uint8Array.from([0xff, 0xd8, 0xff, 0x00])], "article.jpg", { type: "image/jpeg" });
+	const form = new FormData();
+	form.append("file", file);
+
+	assert.equal((await articleImages(makeRequest(form), {}, deps)).status, 401);
+	const upload = await articleImages(makeRequest(form, withCookie(createSessionCookie(SECRET, NOW))), {}, deps);
+	assert.equal(upload.status, 200);
+	const { src } = await upload.json();
+	const image = await articleImages(new Request(`${ORIGIN}${src}`), {}, deps);
+	assert.equal(image.headers.get("content-type"), "image/jpeg");
+	assert.deepEqual([...new Uint8Array(await image.arrayBuffer())], [0xff, 0xd8, 0xff, 0x00]);
+
+	const article = {
+		slug: "article-avec-images",
+		status: "published",
+		title: "Article avec images",
+		domain: "Santé publique",
+		desc: "Résumé de l’article.",
+		intro: "",
+		heroImage: { src, alt: "Illustration principale" },
+		sections: [
+			{
+				label: "Analyse",
+				title: "Résultats",
+				body: "Contenu de la section.",
+				boxes: [{ type: "image", src, alt: "Illustration dans l’article", caption: "Légende" }],
+			},
+		],
+		references: [],
+	};
+	const saved = await studies(post("/api/studies", { articles: [article] }, withCookie(createSessionCookie(SECRET, NOW))), {}, deps);
+	assert.equal(saved.status, 200);
+	const published = await studies(new Request(`${ORIGIN}/api/studies?slug=${article.slug}`), {}, deps);
+	assert.deepEqual(await published.json().then(({ heroImage, sections }) => [heroImage, sections[0].boxes[0]]), [
+		article.heroImage,
+		article.sections[0].boxes[0],
+	]);
 });
 
 test("existing works can be updated, republished with article sections, and deleted", async () => {

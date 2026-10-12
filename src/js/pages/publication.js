@@ -29,7 +29,7 @@ const paragraphBlock = (text) => {
 const renderBox = (box) => {
 	if (box.type === "stats") {
 		const row = document.createElement("div");
-		row.className = "stat-row";
+		row.className = "stat-row article-stat-row";
 		for (const item of box.items) {
 			const card = document.createElement("div");
 			card.className = "stat-box";
@@ -43,6 +43,19 @@ const renderBox = (box) => {
 			row.append(card);
 		}
 		return row;
+	}
+
+	if (box.type === "image") {
+		const figure = document.createElement("figure");
+		figure.className = "article-image-box";
+		const image = document.createElement("img");
+		image.src = box.src;
+		image.alt = box.alt;
+		image.loading = "lazy";
+		const caption = document.createElement("figcaption");
+		caption.textContent = box.caption ?? "";
+		figure.append(image, caption);
+		return figure;
 	}
 
 	if (box.type === "conclusion") {
@@ -83,6 +96,14 @@ else {
 			document.querySelector(".badge-published").hidden = false;
 			title.replaceChildren();
 			appendInlineMarkdown(title, article.title);
+			if (article.heroImage?.src) {
+				document.getElementById("publication-hero-layout").classList.add("has-image");
+				const heroImage = document.getElementById("publication-hero-image");
+				const image = document.getElementById("publication-hero-image-src");
+				image.src = article.heroImage.src;
+				image.alt = article.heroImage.alt;
+				heroImage.hidden = false;
+			}
 			document.getElementById("publication-domain").textContent = article.domain;
 			const intro = document.getElementById("publication-intro");
 			intro.replaceChildren();

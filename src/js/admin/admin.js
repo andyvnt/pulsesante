@@ -57,6 +57,84 @@ const toast = (message) => {
 	setTimeout(() => $("toast").classList.remove("show"), 3000);
 };
 
+const imageUploads = new Set();
+
+const wireImageUpload = (input, preview, source, status) => {
+	input.addEventListener("change", () => {
+		const file = input.files?.[0];
+		if (!file) return;
+		const uploadId = String(Number(input.dataset.uploadId ?? 0) + 1);
+		input.dataset.uploadId = uploadId;
+		input.dataset.uploadError = "";
+		status.textContent = "Téléversement de l’image…";
+		if (input.dataset.previewUrl) URL.revokeObjectURL(input.dataset.previewUrl);
+		input.dataset.previewUrl = URL.createObjectURL(file);
+		preview.hidden = false;
+		preview.src = input.dataset.previewUrl;
+		const form = new FormData();
+		form.append("file", file);
+
+		const task = fetch("/api/article-images", {
+			method: "POST",
+			body: form,
+			signal: AbortSignal.timeout(30000),
+		})
+			.then(async (response) => {
+				if (response.status === 401) {
+					location.replace(LOGIN);
+					throw new Error("Session expirée pendant le téléversement");
+				}
+				if (!response.ok) throw new Error(`Image upload failed (${response.status})`);
+				return response.json();
+			})
+			.then(({ src }) => {
+				if (input.dataset.uploadId !== uploadId) return;
+				source.dataset.imageSrc = src;
+				preview.src = src;
+				URL.revokeObjectURL(input.dataset.previewUrl);
+				delete input.dataset.previewUrl;
+				input.dataset.uploadError = "";
+				status.textContent = "Image prête à être enregistrée avec l’article.";
+				if (source === heroImageInput) $("articleHeroImageClear").hidden = false;
+				else source.nextElementSibling.hidden = false;
+			})
+			.catch((error) => {
+				if (input.dataset.uploadId !== uploadId) return;
+				input.dataset.uploadError = "true";
+				if (input.dataset.previewUrl) URL.revokeObjectURL(input.dataset.previewUrl);
+				delete input.dataset.previewUrl;
+				preview.removeAttribute("src");
+				preview.hidden = true;
+				status.textContent = "Échec du téléversement. Réessayez avec une image JPEG, PNG ou WebP de 5 Mo maximum.";
+				console.error(error);
+				toast("Impossible de téléverser l’image");
+			});
+
+		imageUploads.add(task);
+		task.finally(() => imageUploads.delete(task));
+	});
+};
+
+const clearImageUpload = (input, preview, source, status) => {
+	input.dataset.uploadId = String(Number(input.dataset.uploadId ?? 0) + 1);
+	input.dataset.imageSrc = "";
+	input.dataset.uploadError = "";
+	input.value = "";
+	if (input.dataset.previewUrl) URL.revokeObjectURL(input.dataset.previewUrl);
+	delete input.dataset.previewUrl;
+	preview.removeAttribute("src");
+	preview.hidden = true;
+	status.textContent = "";
+	if (source === heroImageInput) $("articleHeroImageClear").hidden = true;
+	else source.nextElementSibling.hidden = true;
+};
+
+const heroImageInput = $("articleHeroImage");
+const heroImagePreview = $("articleHeroPreview");
+const heroImageStatus = $("articleHeroImageStatus");
+wireImageUpload(heroImageInput, heroImagePreview, heroImageInput, heroImageStatus);
+$("articleHeroImageClear").addEventListener("click", () => clearImageUpload(heroImageInput, heroImagePreview, heroImageInput, heroImageStatus));
+
 /**
  * Render status badge
  * @param {boolean} enabled - Maintenance on
@@ -284,6 +362,7 @@ const addArticleSection = (section = {}) => {
 		["definition", "Encadré clair"],
 		["highlight", "Encadré bleu nuit"],
 		["stats", "Chiffres clés"],
+		["image", "Image"],
 		["conclusion", "Encadré de conclusion"],
 	]) {
 		const option = document.createElement("option");
@@ -316,6 +395,7 @@ const addArticleBox = (container, box = {}) => {
 		definition: "Encadré clair",
 		highlight: "Encadré bleu nuit",
 		stats: "Chiffres clés",
+		image: "Image",
 		conclusion: "Encadré de conclusion",
 	};
 	const type = document.createElement("span");
@@ -360,6 +440,43 @@ const addArticleBox = (container, box = {}) => {
 		addItem.dataset.action = "article-add-stat";
 		addItem.textContent = "+ Ajouter un chiffre";
 		wrapper.append(items, addItem);
+	} else if (box.type === "image") {
+		const fields = document.createElement("div");
+		fields.className = "article-image-fields";
+		fields.dataset.imageSrc = box.src ?? "";
+		const input = document.createElement("input");
+		input.type = "file";
+		input.accept = "image/jpeg,image/png,image/webp";
+		input.className = "article-input";
+		const preview = document.createElement("img");
+		preview.className = "article-image-preview";
+		preview.alt = "";
+		preview.hidden = !box.src;
+		if (box.src) preview.src = box.src;
+		const status = document.createElement("p");
+		status.className = "article-image-upload-status";
+		const alt = document.createElement("input");
+		alt.dataset.field = "alt";
+		alt.maxLength = 240;
+		alt.value = box.alt ?? "";
+		appendField(fields, "Description de l’image (facultative)", alt);
+		const caption = document.createElement("input");
+		caption.dataset.field = "caption";
+		caption.maxLength = 300;
+		caption.value = box.caption ?? "";
+		appendField(fields, "Légende (facultative)", caption);
+		const imageLabel = document.createElement("label");
+		imageLabel.className = "input-label";
+		imageLabel.textContent = "Choisir une image";
+		fields.append(imageLabel, input, preview, status);
+		wireImageUpload(input, preview, fields, status);
+		const clear = document.createElement("button");
+		clear.type = "button";
+		clear.className = "article-remove-btn";
+		clear.dataset.action = "article-clear-image";
+		clear.textContent = "Retirer l’image";
+		clear.hidden = !box.src;
+		wrapper.append(fields, clear);
 	} else {
 		if (box.type !== "conclusion") {
 			const title = document.createElement("input");
@@ -409,6 +526,7 @@ const openArticleEditor = (article) => {
 	editingBuiltin = Boolean(article?.builtin);
 	editingHasStaticPage = Boolean(article?.href);
 	$("articleForm").reset();
+	heroImageInput.dataset.uploadId = String(Number(heroImageInput.dataset.uploadId ?? 0) + 1);
 	$("article-sections").replaceChildren();
 	$("article-references").replaceChildren();
 	$("article-editor-title").textContent = article ? (article.builtin ? "Modifier le travail" : "Modifier l’article") : "Nouvel article";
@@ -417,6 +535,15 @@ const openArticleEditor = (article) => {
 	$("articleStatus").value = article?.status ?? "in-progress";
 	$("articleDesc").value = article?.desc ?? "";
 	$("articleIntro").value = article?.intro ?? "";
+	heroImageInput.value = "";
+	heroImageInput.dataset.imageSrc = article?.heroImage?.src ?? "";
+	heroImageInput.dataset.uploadError = "";
+	$("articleHeroAlt").value = article?.heroImage?.alt ?? "";
+	heroImagePreview.hidden = !article?.heroImage?.src;
+	if (article?.heroImage?.src) heroImagePreview.src = article.heroImage.src;
+	else heroImagePreview.removeAttribute("src");
+	heroImageStatus.textContent = "";
+	$("articleHeroImageClear").hidden = !article?.heroImage?.src;
 	const sections =
 		article?.sections ??
 		(article?.builtin
@@ -457,26 +584,44 @@ const collectArticle = () => ({
 	domain: $("articleDomain").value.trim(),
 	desc: $("articleDesc").value.trim(),
 	intro: $("articleIntro").value.trim(),
+	...(heroImageInput.dataset.imageSrc
+		? {
+				heroImage: {
+					src: heroImageInput.dataset.imageSrc,
+					alt: $("articleHeroAlt").value.trim(),
+				},
+			}
+		: {}),
 	sections: [...$("article-sections").children].map((element) => ({
 		label: element.querySelector('[data-field="label"]').value.trim(),
 		title: element.querySelector('[data-field="title"]').value.trim(),
 		body: element.querySelector('[data-field="body"]').value.trim(),
-		boxes: [...element.querySelector(".article-box-fields").children].map((box) => ({
-			type: box.dataset.boxType,
-			...(box.dataset.boxType === "stats"
-				? {
-						items: [...box.querySelector(".article-stat-fields").children].map((item) => ({
-							value: item.querySelector('[data-field="value"]').value.trim(),
-							label: item.querySelector('[data-field="label"]').value.trim(),
-						})),
-					}
-				: box.dataset.boxType === "conclusion"
-					? { body: box.querySelector('[data-field="body"]').value.trim() }
-					: {
-							title: box.querySelector('[data-field="title"]').value.trim(),
-							body: box.querySelector('[data-field="body"]').value.trim(),
-						}),
-		})),
+		boxes: [...element.querySelector(".article-box-fields").children]
+			.map((box) => ({
+				type: box.dataset.boxType,
+				...(box.dataset.boxType === "stats"
+					? {
+							items: [...box.querySelector(".article-stat-fields").children].map((item) => ({
+								value: item.querySelector('[data-field="value"]').value.trim(),
+								label: item.querySelector('[data-field="label"]').value.trim(),
+							})),
+						}
+					: box.dataset.boxType === "conclusion"
+						? { body: box.querySelector('[data-field="body"]').value.trim() }
+						: box.dataset.boxType === "image"
+							? box.querySelector(".article-image-fields").dataset.imageSrc
+								? {
+										src: box.querySelector(".article-image-fields").dataset.imageSrc,
+										alt: box.querySelector('[data-field="alt"]').value.trim(),
+										caption: box.querySelector('[data-field="caption"]').value.trim(),
+									}
+								: null
+							: {
+									title: box.querySelector('[data-field="title"]').value.trim(),
+									body: box.querySelector('[data-field="body"]').value.trim(),
+								}),
+			}))
+			.filter(Boolean),
 	})),
 	references: [...$("article-references").children]
 		.map((element) => ({
@@ -616,16 +761,19 @@ registerActions({
 		const selectedText = body.value.slice(start, end).trim();
 		const type = section.querySelector("[data-box-type]").value;
 		if (selectedText && type === "stats" && selectedText.length > 32) return toast("Sélectionnez uniquement la valeur du chiffre clé (32 caractères maximum)");
-		if (selectedText && type !== "stats" && selectedText.length > 2000) return toast("Le texte sélectionné dépasse la limite de 2 000 caractères");
+		if (selectedText && !["stats", "image"].includes(type) && selectedText.length > 2000)
+			return toast("Le texte sélectionné dépasse la limite de 2 000 caractères");
 
 		const box =
 			type === "stats"
 				? { type, items: [{ value: selectedText, label: "" }] }
-				: type === "conclusion"
-					? { type, body: selectedText }
-					: { type, title: "", body: selectedText };
+				: type === "image"
+					? { type }
+					: type === "conclusion"
+						? { type, body: selectedText }
+						: { type, title: "", body: selectedText };
 		const boxElement = addArticleBox(boxes, box);
-		if (selectedText) {
+		if (selectedText && type !== "image") {
 			const before = body.value.slice(0, start);
 			const after = body.value.slice(end);
 			const separator = before && after && !/\s$/.test(before) && !/^\s/.test(after) ? " " : "";
@@ -639,6 +787,16 @@ registerActions({
 		nextField?.focus();
 	},
 	"article-remove-box": (_arg, element) => element.closest(".article-box-field").remove(),
+	"article-clear-image": (_arg, element) => {
+		const box = element.closest(".article-box-field");
+		const fields = box.querySelector(".article-image-fields");
+		clearImageUpload(
+			fields.querySelector('input[type="file"]'),
+			fields.querySelector(".article-image-preview"),
+			fields,
+			fields.querySelector(".article-image-upload-status"),
+		);
+	},
 	"article-add-stat": (_arg, element) => {
 		const box = element.closest(".article-box-field");
 		const items = box.querySelector(".article-stat-fields");
@@ -674,6 +832,11 @@ registerActions({
 
 $("articleForm").addEventListener("submit", async (event) => {
 	event.preventDefault();
+	if (imageUploads.size) await Promise.all([...imageUploads]);
+	if (document.querySelector('#articleForm [data-upload-error="true"]')) {
+		toast("Réessayez le téléversement des images avant d’enregistrer");
+		return;
+	}
 	const article = collectArticle();
 	if (
 		article.status === "published" &&

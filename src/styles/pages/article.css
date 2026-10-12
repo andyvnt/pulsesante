@@ -114,6 +114,18 @@ nav {
 	text-transform: uppercase;
 	color: rgba(247, 244, 239, 0.55);
 }
+.article-hero-layout {
+	display: grid;
+	grid-template-columns: 1fr;
+	align-items: center;
+	gap: clamp(2rem, 5vw, 4rem);
+}
+.article-hero-layout.has-image {
+	grid-template-columns: minmax(0, 1fr) minmax(220px, 32%);
+}
+.article-hero-copy {
+	min-width: 0;
+}
 .article-hero h1 {
 	font-family: "Cormorant Garamond", serif;
 	font-size: clamp(2rem, 4vw, 3.6rem);
@@ -126,6 +138,23 @@ nav {
 .article-hero h1 em {
 	font-style: italic;
 	color: var(--light);
+}
+.article-hero-image {
+	width: 100%;
+	overflow: hidden;
+	border: 1px solid rgba(247, 244, 239, 0.15);
+	border-radius: 16px;
+	background: var(--navy-mid);
+	box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+}
+.article-hero-image[hidden] {
+	display: none;
+}
+.article-hero-image img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 4 / 3;
+	object-fit: cover;
 }
 .article-intro {
 	font-size: 1rem;
@@ -144,6 +173,37 @@ nav {
 	grid-template-columns: repeat(3, 1fr);
 	gap: 1rem;
 	margin: 2.5rem 0;
+}
+.article-stat-row {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 1rem;
+	width: 100%;
+}
+.article-image-box {
+	width: min(100%, 680px);
+	margin: 2rem auto;
+	overflow: hidden;
+	border-radius: 12px;
+	background: var(--white);
+	box-shadow: 0 4px 20px rgba(10, 37, 64, 0.08);
+}
+.article-image-box img {
+	display: block;
+	width: 100%;
+	max-height: 34rem;
+	aspect-ratio: 16 / 9;
+	object-fit: cover;
+}
+.article-image-box figcaption {
+	padding: 0.75rem 1rem;
+	font-size: 0.72rem;
+	line-height: 1.5;
+	color: var(--txt3);
+	text-align: center;
+}
+.article-image-box figcaption:empty {
+	display: none;
 }
 .stat-box {
 	background: var(--white);
@@ -532,11 +592,38 @@ nav {
 	text-decoration: underline;
 }
 @media (max-width: 700px) {
-	.stat-row,
+	.article-hero-layout {
+		grid-template-columns: 1fr;
+		gap: 1.5rem;
+	}
+	.article-hero-layout.has-image {
+		grid-template-columns: 1fr;
+	}
+	.article-hero-image {
+		max-width: 460px;
+	}
 	.def-grid,
 	.pays-stats,
 	.interventions-grid {
 		grid-template-columns: 1fr;
+	}
+	.stat-row {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 0.4rem;
+	}
+	.article-stat-row {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 0.4rem;
+	}
+	.stat-box {
+		padding: 0.8rem 0.4rem;
+	}
+	.stat-box .num {
+		font-size: 1.7rem;
+	}
+	.stat-box .lbl {
+		font-size: 0.55rem;
+		letter-spacing: 0.04em;
 	}
 }
 .footer-logo {
