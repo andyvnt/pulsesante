@@ -26,6 +26,24 @@ const paragraphBlock = (text) => {
 	return fragment;
 };
 
+const imageFigure = (image, className) => {
+	const figure = document.createElement("figure");
+	figure.className = className;
+	const element = document.createElement("img");
+	const focusX = image.focusX ?? 50;
+	const focusY = image.focusY ?? 50;
+	element.src = image.src;
+	element.alt = image.alt;
+	element.loading = "lazy";
+	element.style.objectPosition = `${focusX}% ${focusY}%`;
+	element.style.transformOrigin = `${focusX}% ${focusY}%`;
+	element.style.transform = `scale(${image.zoom ?? 1})`;
+	const caption = document.createElement("figcaption");
+	caption.textContent = image.caption ?? "";
+	figure.append(element, caption);
+	return figure;
+};
+
 const renderBox = (box) => {
 	if (box.type === "stats") {
 		const row = document.createElement("div");
@@ -46,16 +64,7 @@ const renderBox = (box) => {
 	}
 
 	if (box.type === "image") {
-		const figure = document.createElement("figure");
-		figure.className = "article-image-box";
-		const image = document.createElement("img");
-		image.src = box.src;
-		image.alt = box.alt;
-		image.loading = "lazy";
-		const caption = document.createElement("figcaption");
-		caption.textContent = box.caption ?? "";
-		figure.append(image, caption);
-		return figure;
+		return imageFigure(box, `article-image-box image-position-${box.position ?? "above"}`);
 	}
 
 	if (box.type === "conclusion") {
@@ -97,11 +106,16 @@ else {
 			title.replaceChildren();
 			appendInlineMarkdown(title, article.title);
 			if (article.heroImage?.src) {
-				document.getElementById("publication-hero-layout").classList.add("has-image");
+				const heroLayout = document.getElementById("publication-hero-layout");
+				const heroImageData = article.heroImage;
+				heroLayout.classList.add("has-image", `image-position-${heroImageData.position ?? "right"}`);
 				const heroImage = document.getElementById("publication-hero-image");
 				const image = document.getElementById("publication-hero-image-src");
-				image.src = article.heroImage.src;
-				image.alt = article.heroImage.alt;
+				image.src = heroImageData.src;
+				image.alt = heroImageData.alt;
+				image.style.objectPosition = `${heroImageData.focusX ?? 50}% ${heroImageData.focusY ?? 50}%`;
+				image.style.transformOrigin = `${heroImageData.focusX ?? 50}% ${heroImageData.focusY ?? 50}%`;
+				image.style.transform = `scale(${heroImageData.zoom ?? 1})`;
 				heroImage.hidden = false;
 			}
 			document.getElementById("publication-domain").textContent = article.domain;
@@ -134,7 +148,21 @@ else {
 				appendInlineMarkdown(label, section.label);
 				const heading = document.createElement("h2");
 				appendInlineMarkdown(heading, section.title);
-				sectionElement.append(label, heading, paragraphBlock(section.body));
+				sectionElement.append(label, heading);
+				if (section.image?.src) {
+					const position = section.image.position ?? "above";
+					const layout = document.createElement("div");
+					layout.className = `article-section-content image-position-${position}`;
+					const body = document.createElement("div");
+					body.className = "article-section-copy";
+					body.append(paragraphBlock(section.body));
+					const figure = imageFigure(section.image, "article-section-image");
+					if (position === "above" || position === "left") layout.append(figure, body);
+					else layout.append(body, figure);
+					sectionElement.append(layout);
+				} else {
+					sectionElement.append(paragraphBlock(section.body));
+				}
 				for (const box of section.boxes ?? []) sectionElement.append(renderBox(box));
 				content.append(sectionElement);
 			}

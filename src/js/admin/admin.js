@@ -59,7 +59,43 @@ const toast = (message) => {
 
 const imageUploads = new Set();
 
-const wireImageUpload = (input, preview, source, status) => {
+const updateImageCrop = (source, preview, frame, position, zoom) => {
+	const focusX = Number(source.dataset.imageFocusX ?? 50);
+	const focusY = Number(source.dataset.imageFocusY ?? 50);
+	frame.dataset.orientation = ["left", "right"].includes(position.value) ? "vertical" : "horizontal";
+	preview.style.objectPosition = `${focusX}% ${focusY}%`;
+	preview.style.transformOrigin = `${focusX}% ${focusY}%`;
+	preview.style.transform = `scale(${zoom.value})`;
+	source.dataset.imagePosition = position.value;
+	source.dataset.imageZoom = zoom.value;
+};
+
+const wireImageCrop = (source, preview, frame, position, zoom) => {
+	updateImageCrop(source, preview, frame, position, zoom);
+	position.addEventListener("change", () => updateImageCrop(source, preview, frame, position, zoom));
+	zoom.addEventListener("input", () => updateImageCrop(source, preview, frame, position, zoom));
+	frame.addEventListener("pointerdown", (event) => {
+		if (frame.hidden) return;
+		frame.setPointerCapture(event.pointerId);
+		frame.dataset.dragX = String(event.clientX);
+		frame.dataset.dragY = String(event.clientY);
+		frame.dataset.startFocusX = source.dataset.imageFocusX ?? "50";
+		frame.dataset.startFocusY = source.dataset.imageFocusY ?? "50";
+	});
+	frame.addEventListener("pointermove", (event) => {
+		if (!frame.hasPointerCapture(event.pointerId)) return;
+		const bounds = frame.getBoundingClientRect();
+		source.dataset.imageFocusX = String(
+			Math.max(0, Math.min(100, Number(frame.dataset.startFocusX) - ((event.clientX - Number(frame.dataset.dragX)) / bounds.width) * 100)),
+		);
+		source.dataset.imageFocusY = String(
+			Math.max(0, Math.min(100, Number(frame.dataset.startFocusY) - ((event.clientY - Number(frame.dataset.dragY)) / bounds.height) * 100)),
+		);
+		updateImageCrop(source, preview, frame, position, zoom);
+	});
+};
+
+const wireImageUpload = (input, preview, frame, source, status, clear) => {
 	input.addEventListener("change", () => {
 		const file = input.files?.[0];
 		if (!file) return;
@@ -69,7 +105,7 @@ const wireImageUpload = (input, preview, source, status) => {
 		status.textContent = "Téléversement de l’image…";
 		if (input.dataset.previewUrl) URL.revokeObjectURL(input.dataset.previewUrl);
 		input.dataset.previewUrl = URL.createObjectURL(file);
-		preview.hidden = false;
+		frame.hidden = false;
 		preview.src = input.dataset.previewUrl;
 		const form = new FormData();
 		form.append("file", file);
@@ -95,8 +131,7 @@ const wireImageUpload = (input, preview, source, status) => {
 				delete input.dataset.previewUrl;
 				input.dataset.uploadError = "";
 				status.textContent = "Image prête à être enregistrée avec l’article.";
-				if (source === heroImageInput) $("articleHeroImageClear").hidden = false;
-				else source.nextElementSibling.hidden = false;
+				clear.hidden = false;
 			})
 			.catch((error) => {
 				if (input.dataset.uploadId !== uploadId) return;
@@ -104,7 +139,7 @@ const wireImageUpload = (input, preview, source, status) => {
 				if (input.dataset.previewUrl) URL.revokeObjectURL(input.dataset.previewUrl);
 				delete input.dataset.previewUrl;
 				preview.removeAttribute("src");
-				preview.hidden = true;
+				frame.hidden = true;
 				status.textContent = "Échec du téléversement. Réessayez avec une image JPEG, PNG ou WebP de 5 Mo maximum.";
 				console.error(error);
 				toast("Impossible de téléverser l’image");
@@ -115,25 +150,33 @@ const wireImageUpload = (input, preview, source, status) => {
 	});
 };
 
-const clearImageUpload = (input, preview, source, status) => {
+const clearImageUpload = (input, preview, frame, source, status, clear) => {
 	input.dataset.uploadId = String(Number(input.dataset.uploadId ?? 0) + 1);
 	input.dataset.imageSrc = "";
 	input.dataset.uploadError = "";
 	input.value = "";
+	source.dataset.imageSrc = "";
 	if (input.dataset.previewUrl) URL.revokeObjectURL(input.dataset.previewUrl);
 	delete input.dataset.previewUrl;
 	preview.removeAttribute("src");
-	preview.hidden = true;
+	frame.hidden = true;
 	status.textContent = "";
-	if (source === heroImageInput) $("articleHeroImageClear").hidden = true;
-	else source.nextElementSibling.hidden = true;
+	clear.hidden = true;
 };
 
 const heroImageInput = $("articleHeroImage");
+const heroImageFields = $("articleHeroImageFields");
 const heroImagePreview = $("articleHeroPreview");
+const heroImageCrop = $("articleHeroCrop");
 const heroImageStatus = $("articleHeroImageStatus");
-wireImageUpload(heroImageInput, heroImagePreview, heroImageInput, heroImageStatus);
-$("articleHeroImageClear").addEventListener("click", () => clearImageUpload(heroImageInput, heroImagePreview, heroImageInput, heroImageStatus));
+const heroImagePosition = $("articleHeroPosition");
+const heroImageZoom = $("articleHeroZoom");
+const heroImageClear = $("articleHeroImageClear");
+wireImageCrop(heroImageFields, heroImagePreview, heroImageCrop, heroImagePosition, heroImageZoom);
+wireImageUpload(heroImageInput, heroImagePreview, heroImageCrop, heroImageFields, heroImageStatus, heroImageClear);
+heroImageClear.addEventListener("click", () =>
+	clearImageUpload(heroImageInput, heroImagePreview, heroImageCrop, heroImageFields, heroImageStatus, heroImageClear),
+);
 
 /**
  * Render status badge
@@ -320,6 +363,84 @@ const appendField = (parent, labelText, field, options = {}) => {
 	parent.append(group);
 };
 
+const createSectionImageEditor = (image = {}, fieldNames = ["image-alt", "image-caption"], labelText = "Image de la section (facultative)") => {
+	const fields = document.createElement("div");
+	fields.className = "article-image-fields";
+	fields.dataset.imageSrc = image.src ?? "";
+	fields.dataset.imagePosition = image.position ?? "above";
+	fields.dataset.imageZoom = String(image.zoom ?? 1);
+	fields.dataset.imageFocusX = String(image.focusX ?? 50);
+	fields.dataset.imageFocusY = String(image.focusY ?? 50);
+
+	const fileLabel = document.createElement("label");
+	fileLabel.className = "input-label";
+	fileLabel.textContent = labelText;
+	const input = document.createElement("input");
+	input.type = "file";
+	input.accept = "image/jpeg,image/png,image/webp";
+	input.className = "article-input";
+	const position = document.createElement("select");
+	position.className = "article-input article-image-position";
+	for (const [value, label] of [
+		["above", "Horizontale au-dessus du texte"],
+		["below", "Horizontale en dessous du texte"],
+		["left", "Verticale à gauche du texte"],
+		["right", "Verticale à droite du texte"],
+	]) {
+		const option = document.createElement("option");
+		option.value = value;
+		option.textContent = label;
+		position.append(option);
+	}
+	position.value = image.position ?? "above";
+	appendField(fields, "Disposition de l’image", position);
+	position.classList.add("article-image-position");
+	const frame = document.createElement("div");
+	frame.className = "article-image-crop";
+	frame.hidden = !image.src;
+	const preview = document.createElement("img");
+	preview.className = "article-image-preview";
+	preview.alt = "";
+	preview.draggable = false;
+	if (image.src) preview.src = image.src;
+	frame.append(preview);
+	const zoom = document.createElement("input");
+	zoom.type = "range";
+	zoom.min = "1";
+	zoom.max = "3";
+	zoom.step = "0.05";
+	zoom.value = String(image.zoom ?? 1);
+	appendField(fields, "Zoom du recadrage", zoom);
+	zoom.classList.add("article-image-zoom");
+	const cropHelp = document.createElement("p");
+	cropHelp.className = "article-image-crop-help";
+	cropHelp.textContent = "Faites glisser l’image pour ajuster son cadrage.";
+	const status = document.createElement("p");
+	status.className = "article-image-upload-status";
+	const alt = document.createElement("input");
+	alt.dataset.field = fieldNames[0];
+	alt.maxLength = 240;
+	alt.value = image.alt ?? "";
+	appendField(fields, "Description de l’image (facultative)", alt);
+	const caption = document.createElement("input");
+	caption.dataset.field = fieldNames[1];
+	caption.maxLength = 300;
+	caption.value = image.caption ?? "";
+	appendField(fields, "Légende (facultative)", caption);
+	const clear = document.createElement("button");
+	clear.type = "button";
+	clear.className = "article-remove-btn";
+	clear.textContent = "Retirer l’image";
+	clear.hidden = !image.src;
+	clear.addEventListener("click", () => clearImageUpload(input, preview, frame, fields, status, clear));
+	const positionField = position.parentElement;
+	const zoomField = zoom.parentElement;
+	fields.prepend(fileLabel, input, positionField, frame, zoomField, cropHelp, status);
+	wireImageCrop(fields, preview, frame, position, zoom);
+	wireImageUpload(input, preview, frame, fields, status, clear);
+	return { fields, clear };
+};
+
 const addArticleSection = (section = {}) => {
 	const wrapper = document.createElement("div");
 	wrapper.className = "article-section-field";
@@ -355,6 +476,9 @@ const addArticleSection = (section = {}) => {
 	body.value = section.body ?? "";
 	appendField(fields, "Texte", body);
 	wrapper.append(heading, fields);
+	const imageEditor = createSectionImageEditor(section.image);
+	imageEditor.fields.classList.add("article-section-image-editor");
+	wrapper.append(imageEditor.fields, imageEditor.clear);
 	const boxType = document.createElement("select");
 	boxType.className = "article-input article-box-type";
 	boxType.dataset.boxType = "";
@@ -441,42 +565,8 @@ const addArticleBox = (container, box = {}) => {
 		addItem.textContent = "+ Ajouter un chiffre";
 		wrapper.append(items, addItem);
 	} else if (box.type === "image") {
-		const fields = document.createElement("div");
-		fields.className = "article-image-fields";
-		fields.dataset.imageSrc = box.src ?? "";
-		const input = document.createElement("input");
-		input.type = "file";
-		input.accept = "image/jpeg,image/png,image/webp";
-		input.className = "article-input";
-		const preview = document.createElement("img");
-		preview.className = "article-image-preview";
-		preview.alt = "";
-		preview.hidden = !box.src;
-		if (box.src) preview.src = box.src;
-		const status = document.createElement("p");
-		status.className = "article-image-upload-status";
-		const alt = document.createElement("input");
-		alt.dataset.field = "alt";
-		alt.maxLength = 240;
-		alt.value = box.alt ?? "";
-		appendField(fields, "Description de l’image (facultative)", alt);
-		const caption = document.createElement("input");
-		caption.dataset.field = "caption";
-		caption.maxLength = 300;
-		caption.value = box.caption ?? "";
-		appendField(fields, "Légende (facultative)", caption);
-		const imageLabel = document.createElement("label");
-		imageLabel.className = "input-label";
-		imageLabel.textContent = "Choisir une image";
-		fields.append(imageLabel, input, preview, status);
-		wireImageUpload(input, preview, fields, status);
-		const clear = document.createElement("button");
-		clear.type = "button";
-		clear.className = "article-remove-btn";
-		clear.dataset.action = "article-clear-image";
-		clear.textContent = "Retirer l’image";
-		clear.hidden = !box.src;
-		wrapper.append(fields, clear);
+		const imageEditor = createSectionImageEditor(box, ["alt", "caption"], "Image (facultative)");
+		wrapper.append(imageEditor.fields, imageEditor.clear);
 	} else {
 		if (box.type !== "conclusion") {
 			const title = document.createElement("input");
@@ -536,12 +626,19 @@ const openArticleEditor = (article) => {
 	$("articleDesc").value = article?.desc ?? "";
 	$("articleIntro").value = article?.intro ?? "";
 	heroImageInput.value = "";
-	heroImageInput.dataset.imageSrc = article?.heroImage?.src ?? "";
+	heroImageFields.dataset.imageSrc = article?.heroImage?.src ?? "";
 	heroImageInput.dataset.uploadError = "";
 	$("articleHeroAlt").value = article?.heroImage?.alt ?? "";
-	heroImagePreview.hidden = !article?.heroImage?.src;
+	heroImageFields.dataset.imagePosition = article?.heroImage?.position ?? "right";
+	heroImageFields.dataset.imageZoom = String(article?.heroImage?.zoom ?? 1);
+	heroImageFields.dataset.imageFocusX = String(article?.heroImage?.focusX ?? 50);
+	heroImageFields.dataset.imageFocusY = String(article?.heroImage?.focusY ?? 50);
+	heroImagePosition.value = heroImageFields.dataset.imagePosition;
+	heroImageZoom.value = heroImageFields.dataset.imageZoom;
+	heroImageCrop.hidden = !article?.heroImage?.src;
 	if (article?.heroImage?.src) heroImagePreview.src = article.heroImage.src;
 	else heroImagePreview.removeAttribute("src");
+	updateImageCrop(heroImageFields, heroImagePreview, heroImageCrop, heroImagePosition, heroImageZoom);
 	heroImageStatus.textContent = "";
 	$("articleHeroImageClear").hidden = !article?.heroImage?.src;
 	const sections =
@@ -584,11 +681,15 @@ const collectArticle = () => ({
 	domain: $("articleDomain").value.trim(),
 	desc: $("articleDesc").value.trim(),
 	intro: $("articleIntro").value.trim(),
-	...(heroImageInput.dataset.imageSrc
+	...(heroImageFields.dataset.imageSrc
 		? {
 				heroImage: {
-					src: heroImageInput.dataset.imageSrc,
+					src: heroImageFields.dataset.imageSrc,
 					alt: $("articleHeroAlt").value.trim(),
+					position: heroImageFields.dataset.imagePosition,
+					zoom: Number(heroImageFields.dataset.imageZoom),
+					focusX: Number(heroImageFields.dataset.imageFocusX),
+					focusY: Number(heroImageFields.dataset.imageFocusY),
 				},
 			}
 		: {}),
@@ -596,6 +697,22 @@ const collectArticle = () => ({
 		label: element.querySelector('[data-field="label"]').value.trim(),
 		title: element.querySelector('[data-field="title"]').value.trim(),
 		body: element.querySelector('[data-field="body"]').value.trim(),
+		...(element.querySelector(".article-section-image-editor").dataset.imageSrc
+			? {
+					image: (() => {
+						const image = element.querySelector(".article-section-image-editor");
+						return {
+							src: image.dataset.imageSrc,
+							alt: image.querySelector('[data-field="image-alt"]').value.trim(),
+							caption: image.querySelector('[data-field="image-caption"]').value.trim(),
+							position: image.dataset.imagePosition,
+							zoom: Number(image.dataset.imageZoom),
+							focusX: Number(image.dataset.imageFocusX),
+							focusY: Number(image.dataset.imageFocusY),
+						};
+					})(),
+				}
+			: {}),
 		boxes: [...element.querySelector(".article-box-fields").children]
 			.map((box) => ({
 				type: box.dataset.boxType,
@@ -614,6 +731,10 @@ const collectArticle = () => ({
 										src: box.querySelector(".article-image-fields").dataset.imageSrc,
 										alt: box.querySelector('[data-field="alt"]').value.trim(),
 										caption: box.querySelector('[data-field="caption"]').value.trim(),
+										position: box.querySelector(".article-image-fields").dataset.imagePosition,
+										zoom: Number(box.querySelector(".article-image-fields").dataset.imageZoom),
+										focusX: Number(box.querySelector(".article-image-fields").dataset.imageFocusX),
+										focusY: Number(box.querySelector(".article-image-fields").dataset.imageFocusY),
 									}
 								: null
 							: {

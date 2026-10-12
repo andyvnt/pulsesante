@@ -256,13 +256,14 @@ test("article images require an admin session and are served from blob storage",
 		domain: "Santé publique",
 		desc: "Résumé de l’article.",
 		intro: "",
-		heroImage: { src, alt: "Illustration principale" },
+		heroImage: { src, alt: "Illustration principale", position: "left", zoom: 1.8, focusX: 30, focusY: 65 },
 		sections: [
 			{
 				label: "Analyse",
 				title: "Résultats",
 				body: "Contenu de la section.",
-				boxes: [{ type: "image", src, alt: "Illustration dans l’article", caption: "Légende" }],
+				image: { src, alt: "Image de section", caption: "Section", position: "below", zoom: 2, focusX: 42, focusY: 70 },
+				boxes: [{ type: "image", src, alt: "Illustration dans l’article", caption: "Légende", position: "right", zoom: 1.3, focusX: 51, focusY: 35 }],
 			},
 		],
 		references: [],
@@ -270,10 +271,18 @@ test("article images require an admin session and are served from blob storage",
 	const saved = await studies(post("/api/studies", { articles: [article] }, withCookie(createSessionCookie(SECRET, NOW))), {}, deps);
 	assert.equal(saved.status, 200);
 	const published = await studies(new Request(`${ORIGIN}/api/studies?slug=${article.slug}`), {}, deps);
-	assert.deepEqual(await published.json().then(({ heroImage, sections }) => [heroImage, sections[0].boxes[0]]), [
+	assert.deepEqual(await published.json().then(({ heroImage, sections }) => [heroImage, sections[0].image, sections[0].boxes[0]]), [
 		article.heroImage,
+		article.sections[0].image,
 		article.sections[0].boxes[0],
 	]);
+
+	const invalidCrop = {
+		...article,
+		slug: "article-recadrage-invalide",
+		heroImage: { ...article.heroImage, zoom: 4 },
+	};
+	assert.equal((await studies(post("/api/studies", { articles: [invalidCrop] }, withCookie(createSessionCookie(SECRET, NOW))), {}, deps)).status, 400);
 });
 
 test("existing works can be updated, republished with article sections, and deleted", async () => {

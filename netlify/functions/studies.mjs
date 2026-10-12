@@ -7,13 +7,18 @@ const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const BUILT_INS = new Map(seed.studies.map((study) => [study.key, study]));
 
 const isText = (value, max) => typeof value === "string" && value.length <= max;
+const IMAGE_POSITIONS = new Set(["above", "below", "left", "right"]);
 const isArticleImage = (image) =>
 	image &&
 	typeof image === "object" &&
 	!Array.isArray(image) &&
 	/^\/api\/article-images\?id=[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(image.src) &&
 	isText(image.alt, 240) &&
-	(image.caption === undefined || isText(image.caption, 300));
+	(image.caption === undefined || isText(image.caption, 300)) &&
+	(image.position === undefined || IMAGE_POSITIONS.has(image.position)) &&
+	(image.zoom === undefined || (Number.isFinite(image.zoom) && image.zoom >= 1 && image.zoom <= 3)) &&
+	(image.focusX === undefined || (Number.isFinite(image.focusX) && image.focusX >= 0 && image.focusX <= 100)) &&
+	(image.focusY === undefined || (Number.isFinite(image.focusY) && image.focusY >= 0 && image.focusY <= 100));
 
 const validBox = (box) => {
 	if (!box || typeof box !== "object" || Array.isArray(box)) return false;

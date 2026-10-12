@@ -731,15 +731,43 @@ select.article-input {
 	gap: 0.65rem;
 }
 
+.article-image-crop {
+	width: min(100%, 32rem);
+	aspect-ratio: 16 / 9;
+	overflow: hidden;
+	border: 1px solid var(--border);
+	border-radius: 10px;
+	background: rgba(7, 25, 46, 0.6);
+	cursor: grab;
+	touch-action: none;
+}
+
+.article-image-crop:active {
+	cursor: grabbing;
+}
+
+.article-image-crop[data-orientation="vertical"] {
+	width: min(100%, 15rem);
+	aspect-ratio: 3 / 4;
+}
+
 .article-image-preview {
 	display: block;
-	width: min(100%, 26rem);
-	max-height: 18rem;
-	aspect-ratio: 16 / 9;
+	width: 100%;
+	height: 100%;
 	object-fit: cover;
-	border: 1px solid var(--border);
-	border-radius: 8px;
-	background: rgba(7, 25, 46, 0.6);
+	pointer-events: none;
+	user-select: none;
+}
+
+.article-image-crop-help {
+	color: var(--text-dim);
+	font-size: 0.75rem;
+}
+
+.article-image-zoom {
+	width: min(100%, 32rem);
+	accent-color: var(--blue-light);
 }
 
 .article-image-upload-status {
